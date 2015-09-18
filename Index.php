@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - LNMySR</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>LNMySR</title>
+    <link href="LNMYSR/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -13,14 +13,13 @@
 <body>
 
 <?php include("includes/header.html");?>
-<?php include("includes/navigation.html");?>
+<?php include("includes/principal.html");?>
 <?php include("includes/footer.html");?>
 
 </body>   
 </html>
 
 
-@section GA{
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -31,6 +30,4 @@
 
         ga('create', 'UA-38548366-1', 'auto');
         ga('send', 'pageview');
-
     </script>
-}
