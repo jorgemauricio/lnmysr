@@ -31,6 +31,15 @@
         if (!$_POST['usr']) {
             $errUsr = 'Introduce un nombre de usuario';
             $arrayErrors = $errUsr;
+        }else{
+            // Select all the rows in the markers table
+            $query = "SELECT * FROM usuarios";
+            $result = mysql_query($query);
+            if (!$result) {
+              die('Invalid query: ' . mysql_error());
+            }else{
+                
+            }
         }
 
         // Check if passwords are the same

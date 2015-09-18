@@ -4,13 +4,6 @@
             <title><?php echo $page_title; ?></title>
             <meta http-equiv="description" content="<?php echo $page_description; ?>" />
             <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-            <style>
-                .carousel-inner > .item > img,
-                .carousel-inner > .item > a > img {
-                    width:  80%;
-                    margin: auto;
-                }
-             </style>
         </head>
        <body>
             <div class="container-fluid">
@@ -28,42 +21,42 @@
                         </div>
                      <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
-                            <li class="dropdown-toggle"><a href="#">Inicio</a></li>
+                            <li class="dropdown-toggle"><a href="Index.php">Inicio</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pronósticos<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Pronóstico a 5 días</a></li>
-                                    <li><a href="#">Pronóstico estacional</a></li>
+                                    <li><a href="pronosticos5dias.php">Pronóstico a 5 días</a></li>
+                                    <li><a href="pronosticoEstacional.php">Pronóstico estacional</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Estaciones<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Mapa Estaciones</a></li>
-                                    <li><a href="#">Datos diarios</a></li>
+                                    <li><a href="mapaEstaciones.php">Mapa Estaciones</a></li>
+                                    <li><a href="datosDiarios.php">Datos diarios</a></li>
                                 </ul>
                             </li>
                             <!-- Publicaciones -->
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Publicaciones<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Artículos Científicos</a></li>
-                                    <li><a href="#">Folletos Técnicos</a></li>
-                                    <li><a href="#">Casos de Estudio</a></li>
+                                    <li><a href="articulosCientificos.php">Artículos Científicos</a></li>
+                                    <li><a href="folletosTecnicos.php">Folletos Técnicos</a></li>
+                                    <li><a href="casosDeEstudio.php">Casos de Estudio</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="https://copy.com/X4wFagUvqFMBSKFb" target="_blank">Notas</a></li>
+                                    <li><a href="notas.php">Notas</a></li>
                                 </ul>
                             </li>
                             <!-- Nosotros -->
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Directorio<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Directorio</a></li>
-                                    <li><a href="#">Directorio Colaboradores</a></li>
+                                    <li><a href="directorio.php">Directorio</a></li>
+                                    <li><a href="directorioColaboradores.php">Directorio Colaboradores</a></li>
                                 </ul>
                             </li>
                             <!-- Aplicaciones -->
-                            <li class="inactive"><a href="~/Principal/Aplicaciones">Aplicaciones</a></li>
+                            <li class="inactive"><a href="aplicaciones.php">Aplicaciones</a></li>
                             <!-- Opciones -->
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Opciones<span class="caret"></span></a>
@@ -76,7 +69,7 @@
                         </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="registro.php">Registro</a></li>
-                                <li><a href="#">Iniciar</a></li>
+                                <li><a href="iniciar.php">Iniciar</a></li>
                             </ul>
                     </div>
             </div>
