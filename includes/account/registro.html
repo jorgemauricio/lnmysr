@@ -1,0 +1,62 @@
+<body>
+    <h1 class="text-center">Registro</h1>
+    <br>
+    <div class="container-fluid">
+        <div class="container">
+            <form class="form-horizontal" role="form" method="post" action="registroUsuario.php">
+                <div class="form-group">
+                    <label for="usr">Nombre de usuario:</label>
+                    <input type="text" class="form-control" id="usr">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Contraseña:</label>
+                    <input type="password" class="form-control" id="pwd" placeholder="Contraseña">  
+                </div>
+                <div class="form-group">
+                    <label for="pwd_check">Confirmar Contraseña:</label>  
+                    <input type="password" class="form-control" id="pwd_check" placeholder="Confirma tu contraseña">
+                </div>
+                <div class="form-group">
+                    <label for="usr_name">Nombre completo:</label>
+                    <input type="text" class="form-control" id="usr_name"> 
+                </div>
+                <div class="form-group">
+                    <label for="profesion">Profesión:</label>
+                    <input type="text" class="form-control" id="profesion"> 
+                </div>
+                <div class="form-group">
+                    <label for="institucion">Institución, organización ó productor:</label>
+                    <input type="text" class="form-control" id="institucion"> 
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado de origen:</label>
+                    <select class="form-control" id="estado">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" class="form-control" id="telefono"> 
+                </div>
+                <div class="form-group">
+                    <label for="informacion">Uso de información:</label>
+                    <select class="form-control" id="informacion">
+                        <option>Investigación</option>
+                        <option>Toma de decisiones</option>
+                        <option>Asesoría</option>
+                    </select>
+                </div>
+                <div class="form-group">        
+                    <button id="submit" type="submit" class="btn btn-success">Registrar</button>
+                </div>
+          </form>
+        </div> 
+    </div>
+</body>
