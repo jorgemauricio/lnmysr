@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="includes/WRF/WRF.js"></script>
+    <script src="includes/WRF/WRFanim.js"></script>
+    <script src="includes/WRF/WRFpromedio.js"></script>
+    <script src="includes/WRF/WRFreal.js"></script>
 </head>
 <body>
 
 <?php include("includes/header.html");?>
-<?php include("includes/pronosticos5dias.html");?>
+<?php include("includes/pronosticos/pronosticos5dias.html");?>
 <?php include("includes/footer.html");?>
 
 </body>   

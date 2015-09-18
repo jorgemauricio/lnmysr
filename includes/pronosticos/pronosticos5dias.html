@@ -1,7 +1,144 @@
 <body>
-    <h1 class="text-center">Pronósticos 5 días</h1>
+    <div class="container">
+        <h2 class ="text-center">Pronóstico a 5 días</h2>
     <br>
+    <br>
+    <label for="selProRep">Variables</label>
+    <select id="selProRep">
+        <option selected value="Prec">Lluvia</option>
+        <option value="Tpro">Temperatura promedio</option>
+        <option value="Tmax">Temperatura m&aacute;xima</option>
+        <option value="Tmin">Temperatura m&iacute;nima</option>
+        <option value="Tminhe">Temperatura menor a 10&deg;C</option>
+        <option value="Tmaxca">Temperatura mayor a 30&deg;C</option>
+        <option value="Vpro">Viento promedio</option>
+        <option value="Dppr">Punto de roc&iacute;o</option>
+        <option value="Rhpr">Humedad relativa promedio</option>
+        <option value="Rhmax">Humedad relativa m&aacute;xima</option>
+        <option value="Rhmin">Humedad relativa m&iacute;nima</option>
+    </select>
+    <br>
+    <br>
+
+    <!-- Promedios -->
     <div class="container-fluid">
-        
+        <div class="row">
+            <div class="col-sm-6">
+                 <label id='lblFecha0' class="fecha_wrf"></label>
+                 <br>
+                 <input type='image' id='img0' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+            <div class="col-sm-6">
+                <label id='lblFecha1' class="fecha_wrf"></label>
+                <br>
+                <input type='image' id='img1' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <label id='lblFecha2' class="fecha_wrf"></label>
+                <br>
+                <input type='image' id='img2' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+            <div class="col-sm-6">
+                <label id='lblFecha3' class="fecha_wrf"></label>
+                <br>
+                <input type='image' id='img3' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <label id='lblFecha4' class="fecha_wrf"></label>
+                <br>
+                <input type='image' id='img4' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <!-- RealMini -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <p><b>R&aacute;faga de viento</b></p>
+                <input type='image' id='imgGustMini' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+            <div class="col-sm-6">
+                <p><b>Viento</b></p>
+                <input type='image' id='imgWindMini' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+            <br>
+            <div class="col-sm-6">
+                <p><b>Reflectividad de radar</b></p>
+                <input type='image' id='imgRefdMini' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+            <div class="col-sm-6">
+                <p><b>Temperatura a 2 metros</b></p>
+                <input type='image' id='imgT2mMini' src="/LNMySR/images/search.png" style='width: 330px; height: 226px; border: black solid thin'>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRFInfo -->
+
+    <br>
+    <br>
+    <div class ="container" align ="center">
+        <div>
+            <p align ="justify">Pron&oacute;stico num&eacute;rico con el modelo WRF-EMS (versi&oacute;n 3.2) con una proyecci&oacute;n a 5 d&iacute;as y paso de malla horizontal de 13 km, las parametrizaciones utilizadas son las siguientes:</p>  
+        </div>
+        <br>
+        <table class ="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align: center" >Model Physics</th>
+                </tr>
+                <tr>
+                        <td>
+                            Cumulus Scheme
+                        </td>
+                        <td>
+                            Betts-Miller-Janjic
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Microphysics Scheme
+                        </td>
+                        <td>
+                            Thompson
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PBL Scheme
+                        </td>
+                        <td>
+                            Mellor-Yamada-Janjic
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Land Surface Scheme
+                        </td>
+                        <td>
+                            Noah 4-Layer LSM
+                        </td>
+                    </tr>
+            </thead>
+        </table>
+        <div>
+            <p align ="justify">
+                Las condiciones iniciales y de frontera son
+                del modelo GFS (Global Forecast System) 0000 UTC.
+                <br /><br />
+                Estas simulaciones se encuentran en fase experimental y en proceso de validaci&oacute;n,
+                se ejecuta en un cl&uacute;ster compuesto por 2 servidores IBM, el pron&oacute;stico
+                se actualiza diariamente alrededor de las 6:00 a.m. hora del centro.
+                <br /><br />
+                <b>Para una correcta visualizaci&oacute;n del sitio utilizar Internet Explorer &oacute; Google Chrome.</b>
+            </p>
+        </div>
+        </div>
     </div>
 </body>
