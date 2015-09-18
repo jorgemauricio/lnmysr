@@ -36,7 +36,7 @@ $("#imgT2mMini").click(
         $(document).attr("location", "/LNMySR/WRF/TiempoReal_Hover?source=T2m");
     });
 
-$('#imgGustMini').one('error', function () { this.src = '/LNMySR/Content/images/not_found.png'; });
-$('#imgWindMini').one('error', function () { this.src = '/LNMySR/Content/images/not_found.png'; });
-$('#imgRefdMini').one('error', function () { this.src = '/LNMySR/Content/images/not_found.png'; });
-$('#imgT2mMini').one('error', function () { this.src = '/LNMySR/Content/images/not_found.png'; });
+$('#imgGustMini').one('error', function () { this.src = '/LNMySR/images/not_found.png'; });
+$('#imgWindMini').one('error', function () { this.src = '/LNMySR/images/not_found.png'; });
+$('#imgRefdMini').one('error', function () { this.src = '/LNMySR/images/not_found.png'; });
+$('#imgT2mMini').one('error', function () { this.src = '/LNMySR/images/not_found.png'; });
