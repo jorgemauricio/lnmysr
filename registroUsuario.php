@@ -32,15 +32,15 @@
             // Check if name has been entered
             if (!$_POST['usr']) {
                 $errUsr = 'Introduce un nombre de usuario';
-                $arrayErrors = $errUsr;
+                $arrayErrors += $errUsr;
             }else{
                 // Select all the rows in the markers table
-                $query = "SELECT user FROM usuarios where user =".$usr.;
+                $query = 'SELECT user FROM usuarios WHERE user ='.$usr;
                 $result = mysql_query($query);
                 if (!$result) {
                     die('Invalid query: ' . mysql_error());
                 }else{
-                        
+
                 }
             }
 
@@ -50,17 +50,15 @@
             }
         }else{
             $errPwd = 'La contraseña es diferente';
-            $arrayErrors = $errPwd;
+            $arrayErrors += $errPwd;
         }            
         
      
     // If there are no errors, send the email
-    if (!$errName && !$errEmail && !$errMessage && !$errHuman) {
-        if (mail ($to, $subject, $body, $from)) {
-            $result='<div class="alert alert-success">Thank You! I will be in touch</div>';
-        } else {
-            $result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later</div>';
-        }
+    if (count($arrayErrors) > 0) {
+        echo 'error';
+    }else{
+        echo 'no errors';
     }
-        }
+    }
 ?>
