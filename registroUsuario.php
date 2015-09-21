@@ -27,31 +27,31 @@
         $informacion = $_POST['informacion'];
         $arrayErrors = $array();
          
-        // Check if name has been entered
-        if (!$_POST['usr']) {
-            $errUsr = 'Introduce un nombre de usuario';
-            $arrayErrors = $errUsr;
-        }else{
-            // Select all the rows in the markers table
-            $query = "SELECT * FROM usuarios";
-            $result = mysql_query($query);
-            if (!$result) {
-              die('Invalid query: ' . mysql_error());
+        // check if password is the same
+        if($pwd == $pwd_check){
+            // Check if name has been entered
+            if (!$_POST['usr']) {
+                $errUsr = 'Introduce un nombre de usuario';
+                $arrayErrors = $errUsr;
             }else{
-                
-            }
-        }
+                // Select all the rows in the markers table
+                $query = "SELECT user FROM usuarios where user =".$usr.;
+                $result = mysql_query($query);
+                if (!$result) {
+                  die('Invalid query: ' . mysql_error());
+                }else{
 
-        // Check if passwords are the same
-        if ($_POST['pwd'] != $_POST['pwd_check']){
-            $errPwd = 'Tu contraseña es diferente';
+                }
+            }
+
+            // Check if email has been entered and is valid
+            if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                $errEmail = 'El correo electrónico es inválido';
+            }
+        }else{
+            $errPwd = 'La contraseña es diferente';
             $arrayErrors = $errPwd;
-        }
-        
-        // Check if email has been entered and is valid
-        if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $errEmail = 'El correo electrónico es inválido';
-        }
+        }            
         
      
     // If there are no errors, send the email
