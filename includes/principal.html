@@ -1,3 +1,50 @@
+<?php
+include_once('php_dbinfo.php');
+ 
+$query  = "select * from notas order by no_imagen desc limit 7";
+$result = mysql_query($query);
+if(!$result){
+    die('Invalid query: ' . mysql_error());
+}
+
+$count  =   mysql_num_rows($result);
+$slides='';
+$Indicators='';
+$counter=0;
+ 
+    while($row= mysql_fetch_array($result))
+    {
+ 
+        $title = $row['titulo'];
+        $image = $row['no_imagen'];
+        $nomdoc = $row['nomdoc'];
+        if($counter == 0)
+        {
+            $Indicators .='<li data-target="#carousel-example-generic" data-slide-to="'.$counter.'" class="active"></li>';
+            $slides .= '<div class="item active">
+            <img src="/lnmysr/documentos/notas/'.$image.'.png" alt="'.$title.'" />
+            <div class="carousel-caption">
+              <h3>'.$title.'</h3>
+              <p><a href="/lnmysr/documentos/notas/doc_'.$image.'_'.$nomdoc.'.pdf" target="_blank" >Ver nota</a></p>       
+            </div>
+          </div>';
+ 
+        }
+        else
+        {
+            $Indicators .='<li data-target="#carousel-example-generic" data-slide-to="'.$counter.'"></li>';
+            $slides .= '<div class="item">
+            <img src="/lnmysr/documentos/notas/'.$image.'.png" alt="'.$title.'" />
+            <div class="carousel-caption">
+              <h3>'.$title.'</h3>
+              <p><a href="/lnmysr/documentos/notas/doc_'.$image.'_'.$nomdoc.'.pdf" target="_blank" >Ver nota</a></p>       
+            </div>
+          </div>';
+        }
+        $counter++;
+    }
+ 
+?>
 <style>
     .carousel-inner > .item > img,
     .carousel-inner > .item > a > img {
@@ -12,81 +59,13 @@
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-inteval="7000">
             <!-- Indicators -->
             <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-                <li data-target="#myCarousel" data-slide-to="3"></li>
-                <li data-target="#myCarousel" data-slide-to="4"></li>
-                <li data-target="#myCarousel" data-slide-to="5"></li>
-                <li data-target="#myCarousel" data-slide-to="6"></li>
+                <?php echo $Indicators;?>
             </ol>
 
             <!-- Wrapper for slides -->
 
-            <div class="carousel-inner" role="listbox">
-
-                <!-- 0 -->
-                <div class="item active">
-                    <img src="https://copy.com/6bL1iqYqxAGLfug3" alt="" width="800" height="600">
-                    <div class="carousel-caption">
-                        <h3>El Laboratorio Nacional de Modelaje y Sensores Remotos del INIFAP y el SIAP fortalecen lazos de colaboración</h3>
-                        <p><a href="https://copy.com/mNz0qltb84sPCrgS" target="_blank" >Ver nota</a></p>
-                    </div>
-                </div>
-
-                <!-- 1 -->
-                <div class="item">
-                    <img src="https://copy.com/keDcSZrHSIQbbQ8D" alt="" width="800" height="600">
-                    <div class="carousel-caption">
-                        <h3>Mejoras y nuevo diseño de la página...</h3>
-                        <p><a href="https://copy.com/PN4Jg2qCZuKYvzv8" target="_blank" >Ver nota</a></p>
-                    </div>
-                </div>
-
-                <!-- 2 -->
-                <div class="item">
-                    <img src="https://copy.com/C9BIb6o7RXSGVquR" alt="" width="800" height="600">
-                    <div class="carousel-caption">
-                        <h3>Participa en nuestra encuesta de satisfacción sobre los productos y servicios del LNMySR...</h3>
-                        <p><a href="http://goo.gl/forms/mhJCDCYbYy" target="_blank" >Ver nota</a></p>
-                    </div>
-                </div>
-
-                <!-- 3 -->
-                <div class="item">
-                    <img src="https://copy.com/XgKZrBMAXJMOpuKA" alt="Flower" width="800" height="600">
-                    <div class="carousel-caption">
-                        <h3>El Consejo de Cuenca del Río Santiago (COCURS) celebró la Primera Reunión del Grupo Especializado De Uso Eficiente de Agua en el Campo, en las instalaciones del LNMySR...</h3>
-                        <p><a href="https://copy.com/09ZKKN1wQc9Hxqng" target="_blank" >Ver nota</a></p>
-                    </div>
-                </div>
-
-                <!-- 4 -->
-                <div class="item">
-                    <img src="https://copy.com/XxEfkcdnXUouWre7" alt="Flower" width="800" height="600">
-                    <div class="carousel-caption">
-                        <h3>El Comité Tripartita de América del Norte de Estadísticas Agrícolas visita el LNMySR del INIFAP...</h3>
-                        <p><a href="https://copy.com/X4ZBJaBNknRj7sMB" target="_blank" >Ver nota</a></p>
-                    </div>
-                </div>
-
-                <!-- 5 -->
-                <div class="item">
-                    <img src="https://copy.com/9XfPPqbBAtZdjlwA" alt="Flower" width="800" height="600">
-                    <div class="carousel-caption">
-                        <h3>Taller de capacitación sobre el uso del Accupar para medición de área foliar en maíz...</h3>
-                        <p><a href="https://copy.com/Bp8NjlOJMhbM7PHf" target="_blank" >Ver nota</a></p>
-                    </div>
-                </div>
-
-                 <!-- 5 -->
-                <div class="item">
-                    <img src="https://copy.com/UavlLu7jXSiUDrJP" alt="Flower" width="800" height="600">
-                    <div class="carousel-caption">
-                        <h3>Ahora Clima INIFAP disponible para dispositivos iOS y Android...</h3>
-                        <p><a href="~/Principal/Aplicaciones">Ver nota</a></p>
-                    </div>
-                </div>
+            <div class="carousel-inner">
+                <?php echo $slides;?>
             </div>
 
             <!-- Left and right controls -->
