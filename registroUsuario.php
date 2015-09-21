@@ -38,9 +38,9 @@
                 $query = "SELECT user FROM usuarios where user =".$usr.;
                 $result = mysql_query($query);
                 if (!$result) {
-                  die('Invalid query: ' . mysql_error());
+                    die('Invalid query: ' . mysql_error());
                 }else{
-
+                        
                 }
             }
 
