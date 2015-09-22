@@ -1,23 +1,12 @@
 <?php
     require("php_dbinfo.php");
 
-    if (isset($_POST["submit"])) {
-            
-        // Opens a connection to a MySQL server
-        $connection=mysql_connect ('localhost', $username, $password);
-        if (!$connection) {
-          die('Not connected : ' . mysql_error());
-        }
-
-        // Set the active MySQL database
-        $db_selected = mysql_select_db($database, $connection);
-        if (!$db_selected) {
-          die ('Can\'t use db : ' . mysql_error());
-        }
+    // var_dump($_POST);
+    if(isset($_POST["submit"])){
 
         $usr = $_POST['usr'];
-        $pwd = $POST['pwd'];
-        $pwd_check = $POST['pwd_check'];
+        $pwd = $_POST['pwd'];
+        $pwd_check = $_POST['pwd_check'];
         $usr_name = $_POST['usr_name'];
         $profesion = $_POST['profesion'];
         $institucion = $_POST['institucion'];
@@ -25,40 +14,40 @@
         $email = $_POST['email'];
         $telefono = $_POST['telefono'];
         $informacion = $_POST['informacion'];
-        $arrayErrors = $array();
+        $arrayErrors = array();
          
         // check if password is the same
         if($pwd == $pwd_check){
             // Check if name has been entered
-            if (!$_POST['usr']) {
+            if (!$usr) {
                 $errUsr = 'Introduce un nombre de usuario';
-                $arrayErrors += $errUsr;
+                $arrayErrors[] = $errUsr;
             }else{
                 // Select all the rows in the markers table
-                $query = 'SELECT user FROM usuarios WHERE user ='.$usr;
+                $query = "SELECT user FROM usuarios WHERE user ='".$usr."'";
                 $result = mysql_query($query);
-                if (!$result) {
-                    die('Invalid query: ' . mysql_error());
-                }else{
-
+                if ($result) {
+                    $usrerror = 'usuario duplicado';
                 }
-            }
-
-            // Check if email has been entered and is valid
-            if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                $errEmail = 'El correo electrónico es inválido';
             }
         }else{
             $errPwd = 'La contraseña es diferente';
-            $arrayErrors += $errPwd;
+            $arrayErrors[] = $errPwd;
         }            
-        
-     
-    // If there are no errors, send the email
-    if (count($arrayErrors) > 0) {
-        echo 'error';
-    }else{
-        echo 'no errors';
-    }
+            
+         
+        // If there are no errors, send the email
+        if (count($arrayErrors) > 0) {
+            echo 'error ';
+            print_r($arrayErrors);
+        }else{
+            $query = "INSERT INTO usuarios (user, password, name, profesion, institucion, estado, email, telefono, informacion) VALUES ('".$usr."','".$pwd."','".$usr_name."','".$profesion."','".$institucion."','".$estado."','".$email."',".$telefono.",'".$informacion."')";
+            $result = mysql_query($query);
+            if (!$result) {
+                    die('Invalid query: ' . mysql_error());
+            }else{
+                echo 'ok';
+            }      
+        }
     }
 ?>
