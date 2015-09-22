@@ -16,6 +16,8 @@
         $informacion = $_POST['informacion'];
         $arrayErrors = array();
          
+        // Check if all the fields have information
+        
         // Check if name has been entered
         if (!$usr) {
             $errUsr = 'Introduce un nombre de usuario';
@@ -35,9 +37,8 @@
         }else{
             $errPwd = 'La contraseña es diferente';
             $arrayErrors[] = $errPwd;
-        }            
-            
-         
+        }  
+                  
         // If there are no errors, send the email
         if (count($arrayErrors) > 0) {
             echo 'error ';
