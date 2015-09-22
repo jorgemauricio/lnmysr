@@ -12,6 +12,7 @@
 <body>
 
 <?php include("includes/header.html");?>
+<?php include_once('php_dbinfo.php');?>
 
     <h1 class="text-center">Artículos Científicos</h1>
     <br>
