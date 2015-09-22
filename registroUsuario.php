@@ -16,20 +16,22 @@
         $informacion = $_POST['informacion'];
         $arrayErrors = array();
          
+        // Check if name has been entered
+        if (!$usr) {
+            $errUsr = 'Introduce un nombre de usuario';
+            $arrayErrors[] = $errUsr;
+        }else{
+            // Select all the rows in the markers table
+            $query = "SELECT user FROM usuarios WHERE user ='".$usr."'";
+            $result = mysql_query($query);
+            if ($result) {
+                $usrErrorDuplicado = 'usuario duplicado';
+                $arrayErrors[] = $usrErrorDuplicado;
+            }
+        }
         // check if password is the same
         if($pwd == $pwd_check){
-            // Check if name has been entered
-            if (!$usr) {
-                $errUsr = 'Introduce un nombre de usuario';
-                $arrayErrors[] = $errUsr;
-            }else{
-                // Select all the rows in the markers table
-                $query = "SELECT user FROM usuarios WHERE user ='".$usr."'";
-                $result = mysql_query($query);
-                if ($result) {
-                    $usrerror = 'usuario duplicado';
-                }
-            }
+            
         }else{
             $errPwd = 'La contraseña es diferente';
             $arrayErrors[] = $errPwd;
@@ -46,7 +48,7 @@
             if (!$result) {
                     die('Invalid query: ' . mysql_error());
             }else{
-                echo 'ok';
+                header('Location: /lnmysr/registro.php');
             }      
         }
     }
