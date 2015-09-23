@@ -2,13 +2,16 @@
     require("php_dbinfo.php");
 
     // Declare Variables
-
     $arrayErrors = array();
     $errUsr = null;
     $errPwd = null;
     $errEmail = null;
     $errTel = null;
+    $errName = null;
+    $errProf = null;
+    $errInst = null;
 
+    // Check Submit form
     if(isset($_POST["submit"])){
 
         $usr = $_POST['usr'];
@@ -21,57 +24,75 @@
         $email = $_POST['email'];
         $telefono = $_POST['telefono'];
         $informacion = $_POST['informacion'];
-        
-         
-        // Check if all the fields have information
-        
-        if ((strlen($usr) > 0) && (strlen($pwd) > 0) && (strlen($pwd_check) > 0) && (strlen($usr_name) > 0) && (strlen($profesion) > 0) && (strlen($institucion) > 0) && (strlen($estado) > 0) && (strlen($email) > 0) && (strlen($telefono) > 0) && (strlen($informacion) > 0)){
-            
-            // Check if name has been entered
-            if (!$usr) {
-                $errUsr = 'Introduce un nombre de usuario';
-                $arrayErrors[] = $errUsr;
-            }else{
-                // Select all the rows in the markers table
-                $query = "SELECT user FROM usuarios WHERE user ='".$usr."'";
-                $result = mysql_query($query);
-                if ($result) {
-                    $errUsr = 'Usuario duplicado';
-                    $arrayErrors[] = $errUsr;
+          
+        // Check if user has been entered
+        if (!$usr) {
+            $errUsr = 'Introduce un nombre de usuario';
+            $arrayErrors[] = $errUsr;
+        }else{
+            // Select all the rows in the markers table
+            $query = "SELECT user FROM usuarios WHERE user ='".$usr."'";
+            $result = mysql_query($query);
+            $arrayTemp = array();
+            while ($row = @mysql_fetch_array($result)) {
+                $arrayTemp[] = $row;                
                 }
-            }
-            
-            // Check if password is the same
-            if($pwd != $pwd_check){
-                $errPwd = 'La contraseña es diferente';
-                $arrayErrors[] = $errPwd;
-            }
-
-            // Check if email is correct
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errEmail = "Formato de email invalido"; 
-            }
-
-            // Check if telephone is correct
-            if (!preg_match('/^[0-9]*$/', $telefono)) {
-                $errTel = "Teléfono invalido";
-            }
-
-            // If there are no errors save in the DB
-            if (count($arrayErrors) > 0) {
-                // error
-            }else{
-                $query = "INSERT INTO usuarios (user, password, name, profesion, institucion, estado, email, telefono, informacion) VALUES ('".$usr."','".$pwd."','".$usr_name."','".$profesion."','".$institucion."','".$estado."','".$email."',".$telefono.",'".$informacion."')";
-                $result = mysql_query($query);
-                if (!$result) {
-                        die('Invalid query: ' . mysql_error());
-                }else{
-                    header('Location: /lnmysr/registro.php');
-                }      
+            if (count($arrayTemp) > 0) {
+                $errUsr = 'Usuario duplicado';
+                $arrayErrors[] = $errUsr;
+                unset($arrayTemp);
             }
         }
 
+        // Check if there is a name
+        if (!$usr_name) {
+            $errName = 'Introduce un nombre valido';
+            $arrayErrors[] = $errName;
+        }
+
+        // Check if there is a profession
+        if (!$profesion) {
+            $errProf = 'Introduce una profesión valida';
+            $arrayErrors[] = $errProf;
+        }
+
+        // Check institution
+        if (!$institucion) {
+            $errInst = 'Introduce un nombre valido';
+            $arrayErrors[] = $errInst;
+        }
         
+        // Check if password is the same
+        if($pwd != $pwd_check){
+            $errPwd = 'La contraseña es diferente';
+            $arrayErrors[] = $errPwd;
+        }
+
+        // Check if email is correct
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errEmail = "Formato de email invalido"; 
+        }
+
+        // Check if telephone is correct
+        if (!preg_match('/^[0-9]*$/', $telefono)) {
+            $errTel = "Teléfono invalido";
+        }
+
+        // If there are no errors save in the DB
+        if (count($arrayErrors) > 0) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error en el registro</strong></div>';
+        }else{
+            $query = "INSERT INTO usuarios (user, password, name, profesion, institucion, estado, email, telefono, informacion) VALUES ('".$usr."','".$pwd."','".$usr_name."','".$profesion."','".$institucion."','".$estado."','".$email."',".$telefono.",'".$informacion."')";
+            $result = mysql_query($query);
+            if (!$result) {
+                    die('Invalid query: ' . mysql_error());
+            }else{
+                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Registro Satisfactorio</strong></div>';
+                unset($arrayErrors);
+            }      
+        }
     }
 
 ?>
@@ -136,6 +157,7 @@
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" name="email" placeholder="Enter email">
+                            <?php echo "<p class='text-danger'>$errEmail</p>";?>
                         </div>
                         <div class="form-group">
                             <label for="telefono">Teléfono:</label>
