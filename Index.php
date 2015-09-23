@@ -10,9 +10,87 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <?php include("includes/header.html");?>
+    <?php
+    include_once('php_dbinfo.php');
+     
+    $query  = "select * from notas order by no_imagen desc limit 7";
+    $result = mysql_query($query);
+    if(!$result){
+        die('Invalid query: ' . mysql_error());
+    }
 
-<?php include("includes/header.html");?>
-<?php include("includes/principal.html");?>
+    $count  =   mysql_num_rows($result);
+    $slides='';
+    $Indicators='';
+    $counter=0;
+     
+        while($row= mysql_fetch_array($result))
+        {
+     
+            $title = $row['titulo'];
+            $image = $row['no_imagen'];
+            $nomdoc = $row['nomdoc'];
+            if($counter == 0)
+            {
+                $Indicators .='<li data-target="#carousel-example-generic" data-slide-to="'.$counter.'" class="active"></li>';
+                $slides .= '<div class="item active">
+                <img src="/lnmysr/documentos/notas/'.$image.'.png" alt="'.$title.'" />
+                <div class="carousel-caption">
+                  <h3>'.$title.'</h3>
+                  <p><a href="/lnmysr/documentos/notas/doc_'.$image.'_'.$nomdoc.'.pdf" target="_blank" >Ver nota</a></p>       
+                </div>
+              </div>';
+     
+            }
+            else
+            {
+                $Indicators .='<li data-target="#carousel-example-generic" data-slide-to="'.$counter.'"></li>';
+                $slides .= '<div class="item">
+                <img src="/lnmysr/documentos/notas/'.$image.'.png" alt="'.$title.'" />
+                <div class="carousel-caption">
+                  <h3>'.$title.'</h3>
+                  <p><a href="/lnmysr/documentos/notas/doc_'.$image.'_'.$nomdoc.'.pdf" target="_blank" >Ver nota</a></p>       
+                </div>
+              </div>';
+            }
+            $counter++;
+        }
+     
+    ?>
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width:  80%;
+            margin: auto;
+        }
+     </style>
+        <h1 class="text-center">Bienvenido</h1>
+        <br>
+        <div class="container">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-inteval="7000">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <?php echo $Indicators;?>
+                </ol>
+
+                <!-- Wrapper for slides -->
+
+                <div class="carousel-inner">
+                    <?php echo $slides;?>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
 <?php include("includes/footer.html");?>
 
 </body>   
