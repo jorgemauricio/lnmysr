@@ -1,3 +1,54 @@
+<?php
+    require("php_dbinfo.php");
+
+    //Declare variables
+    
+    // Check if image file is a actual image or fake image
+    
+    if(isset($_POST["submit"])) {
+        $titulo = $_POST['titulo'];
+        $autor = $_POST['autor'];
+        $poptitulo = $_POST['poptitulo'];
+        $infotext = $_POST['infotext'];
+
+        $target_dir = "/documentos/articulos_cientificos/";
+        $target_file = $target_dir . basename($_FILES["archivo"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        $check = getimagesize($_FILES["archivo"]["tmp_name"]);
+        if($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
+
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            echo "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+        
+        // Allow certain file formats
+        if($imageFileType != "pdf") {
+            echo "Lo lamentamos solo puedes subir archivos con extensión .pdf ";
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
+                echo "The file ". basename( $_FILES["archivo"]["name"]). " has been uploaded.";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,15 +68,26 @@
         <div class="container-fluid">
             <div class="container">
                 <div class="col-sm-6">
-                    <form class="form-horizontal" role="form" action="selectUpload.php" method="post">
+                    <form class="form-horizontal" role="form" action="uploadArticulo.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group"> 
+                            <label for="titulo">Título: </label>
+                            <input type="text" class="form-control" name="titulo">
+                        </div>
+                        <div class="form-group"> 
+                            <label for="autor">Autor(s): </label>
+                            <input type="text" class="form-control" name="autor">
+                        </div>
+                        <div class="form-group"> 
+                            <label for="poptitulo">Tipo de Texto Informativo: </label>
+                            <input type="text" class="form-control" name="poptitulo">
+                        </div>
+                        <div class="form-group"> 
+                            <label for="infotext">Texto Informativo: </label>
+                            <input type="text" class="form-control" name="infotext">
+                        </div>
                         <div class="form-group">
-                            <label for="usr">Seleccione el tipo de archivo a subir</label>
-                            <select class="form-control" name="tipo">
-                                <option>Artículo Científico</option>
-                                <option>Folleto Técnico</option>
-                                <option>Caso de Estudio</option>
-                                <option>Nota</option>
-                            </select>
+                            <label for="archivo">Archivo: </label>
+                            <input type="file" class="form-control" name="archivo">
                         </div>
                         <div class="form-group">        
                             <input name="submit" type="submit" value="Seleccionar" class="btn btn-success"></input>
