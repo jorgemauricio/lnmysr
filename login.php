@@ -1,4 +1,5 @@
 <?php
+	session_start();
     require("php_dbinfo.php");
 
     // Declare Variables
@@ -28,13 +29,18 @@
             // Validate user and pwd
             if (count($arrayTemp) > 0) {
                 // Start session 
-                $_SESSION['id'] = session_id();
-                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Bienvenido</strong> Te damos la bienvenida.</div>';
+                if (!isset($_SESSION['userLogged'])) {
+            
+	                $_SESSION['userLogged'] = $usr;
+	                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	                <strong>Bienvenido</strong> Te damos la bienvenida.</div>';
+	                //header("Location: Index.php");
+                }
+                
             }else{
             	echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             	<strong>Error: </strong>Favor de checar sus datos</div>';
-            unset($arrayErrors);
+            	unset($arrayErrors);
             }
         }
     }
