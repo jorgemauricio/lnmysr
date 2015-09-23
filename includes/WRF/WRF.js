@@ -40,8 +40,8 @@ $('#back').click(function () {
 
 $.url = function (t) {
     tipo = t;
-    //con = "http://clima.inifap.gob.mx/wrf/images/"+tipo+"/";     //Clima Inifap
-    con = "https://copy.com/6ittzpwRZznv/WRF/120h/ARW/13km/Images/"+tipo+"/";     // Copy Server
+    con = "http://clima.inifap.gob.mx/wrf/images/"+tipo+"/";     //Clima Inifap
+    //con = "https://copy.com/6ittzpwRZznv/WRF/120h/ARW/13km/Images/"+tipo+"/";     // Copy Server
     //con = "/wrf/images/" + tipo + "/";                                              // Local Server
     //con = "/Content/images/" + tipo + "/";
 }
