@@ -1,32 +1,3 @@
-<?php
-	// Declare Variables
-    //
-   
-    // Check Submit form
-    if(isset($_POST["submit"])){
-
-        $tipo = $_POST['tipo'];
-          
-        // Switch validation
-        switch ($tipo) {
-            case 'Artículo Científico':
-                header ("Location: uploadArticulo.php");
-                break;
-            case 'Folleto Técnico':
-                header ("Location: uploadFolleto.php");
-                break;
-            case 'Caso de Estudio':
-                header ("Location: uploadCaso.php");
-                break;
-            case 'Nota':
-                header ("Location: uploadNota.php");
-                break;
-            default:
-                break;
-        }   
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
