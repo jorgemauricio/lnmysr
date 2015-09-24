@@ -13,13 +13,15 @@
     <?php include("includes/header.html");?>
     <?php
     include_once('php_dbinfo.php');
-     
-    $query  = "select * from notas order by no_imagen desc limit 7";
+    
+    // Query
+    $query  = "SELECT * FROM notasportada order by id desc limit 5;";
     $result = mysql_query($query);
     if(!$result){
         die('Invalid query: ' . mysql_error());
     }
 
+    //Declare variables
     $count  =   mysql_num_rows($result);
     $slides='';
     $Indicators='';
@@ -28,17 +30,17 @@
         while($row= mysql_fetch_array($result))
         {
      
-            $title = $row['titulo'];
-            $image = $row['no_imagen'];
-            $nomdoc = $row['nomdoc'];
+            $titulo = $row['titulo'];
+            $linkimage = $row['linkimagen'];
+            $linkpdf = $row['linkpdf'];
             if($counter == 0)
             {
                 $Indicators .='<li data-target="#carousel-example-generic" data-slide-to="'.$counter.'" class="active"></li>';
                 $slides .= '<div class="item active">
-                <img src="/lnmysr/documentos/notas/'.$image.'.png" alt="'.$title.'" />
+                <img src="/lnmysr/documentos/notas/'.$linkimage.'" alt="'.$titulo.'" />
                 <div class="carousel-caption">
-                  <h3>'.$title.'</h3>
-                  <p><a href="/lnmysr/documentos/notas/doc_'.$image.'_'.$nomdoc.'.pdf" target="_blank" >Ver nota</a></p>       
+                  <h3>'.$titulo.'</h3>
+                  <p><a href="/lnmysr/documentos/notas/'.$linkpdf.'" target="_blank" >Ver nota</a></p>       
                 </div>
               </div>';
      
@@ -47,10 +49,10 @@
             {
                 $Indicators .='<li data-target="#carousel-example-generic" data-slide-to="'.$counter.'"></li>';
                 $slides .= '<div class="item">
-                <img src="/lnmysr/documentos/notas/'.$image.'.png" alt="'.$title.'" />
+                <img src="/lnmysr/documentos/notas/'.$linkimage.'" alt="'.$titulo.'" />
                 <div class="carousel-caption">
-                  <h3>'.$title.'</h3>
-                  <p><a href="/lnmysr/documentos/notas/doc_'.$image.'_'.$nomdoc.'.pdf" target="_blank" >Ver nota</a></p>       
+                  <h3>'.$titulo.'</h3>
+                  <p><a href="/lnmysr/documentos/notas/'.$linkpdf.'" target="_blank" >Ver nota</a></p>       
                 </div>
               </div>';
             }
