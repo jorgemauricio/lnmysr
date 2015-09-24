@@ -23,7 +23,7 @@
             <thead>
               <tr>
                 <th>Título</th>
-                <th>Autor</th>
+                <th>Autor(es)</th>
                 <th>ISBN</th>
                 <th>Información</th>
               </tr>

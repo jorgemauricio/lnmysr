@@ -88,7 +88,7 @@
                             <input type="text" class="form-control" name="titulo">
                         </div>
                         <div class="form-group"> 
-                            <label for="autor">Autor(s): </label>
+                            <label for="autor">Autor(es): </label>
                             <input type="text" class="form-control" name="autor">
                         </div>
                         <div class="form-group"> 
