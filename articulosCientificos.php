@@ -30,7 +30,7 @@
             <tbody>
                 <?php
                             //select all records form tblmember table
-                            $query = 'SELECT * FROM articuloscientificos';
+                            $query = 'SELECT * FROM artcientificos';
                             //execute the query using mysql_query
                             $result = mysql_query($query);
                             //then using while loop, it will display all the records inside the table
@@ -43,7 +43,7 @@
                                 echo $row['autor'];
                                 echo ' </td>';
                                 echo '<td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal';
-                                echo $row['ID'];
+                                echo $row['id'];
                                 echo '">Ver</button></td>';
                             }   
  
@@ -60,13 +60,13 @@
 
 <?php
                             //select all records form tblmember table
-                            $query = 'SELECT * FROM articuloscientificos';
+                            $query = 'SELECT * FROM artcientificos';
                             //execute the query using mysql_query
                             $result = mysql_query($query);
                             //then using while loop, it will display all the records inside the table
                             while ($row = mysql_fetch_array($result)) {
                                 echo '<div class="modal fade" id="myModal';
-                                echo $row['ID'];
+                                echo $row['id'];
                                 echo '" role="dialog">
                                     <div class="modal-dialog">
                                     <!-- Modal content-->
@@ -79,13 +79,13 @@
                                     </div>
                                     <div class="modal-body">
                                     <p align ="justify">';
-                                echo $row['abstract'];
+                                echo $row['infotext'];
                                 echo '</p>
                                     </div>
                                     <div class="modal-footer">
                                     <a href="';
                                 echo '/lnmysr/documentos/articulos_cientificos/';
-                                echo $row['linkpdf'];
+                                echo $row['link'];
                                 echo '" class="btn btn-success" target="_blank" role="button">PDF</a>
                                         </div>
                                         </div>

@@ -2,55 +2,69 @@
     require("php_dbinfo.php");
 
     //Declare variables
-    
+    $titulo = null;
+    $autor = null;
+    $poptitulo = null;
+    $infotext = null;
+    $target_dir = null;
+    $target_file = null;
+    $link = null;
+    $uploadOk = null;
+
     // Check if image file is a actual image or fake image
-    
     if(isset($_POST["submit"])) {
         $titulo = $_POST['titulo'];
         $autor = $_POST['autor'];
         $poptitulo = $_POST['poptitulo'];
         $infotext = $_POST['infotext'];
-
-        $target_dir = "/documentos/articulos_cientificos/";
+        // Path to save the PDF
+        $target_dir = "documentos/articulos_cientificos/";
+        // Complete path
         $target_file = $target_dir . basename($_FILES["archivo"]["name"]);
+        $link = basename($_FILES["archivo"]["name"]);
         $uploadOk = 1;
         $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-        $check = getimagesize($_FILES["archivo"]["tmp_name"]);
-        if($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-
+        
         // Check if file already exists
         if (file_exists($target_file)) {
-            echo "Sorry, file already exists.";
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> El archivo ya existe</div>';
             $uploadOk = 0;
         }
         
         // Allow certain file formats
         if($imageFileType != "pdf") {
-            echo "Lo lamentamos solo puedes subir archivos con extensión .pdf ";
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Solo puedes subier archivos con extensión .pdf</div>';
             $uploadOk = 0;
         }
+        
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> El archivo no fue subido al sistema.</div>';
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
-                echo "The file ". basename( $_FILES["archivo"]["name"]). " has been uploaded.";
+                $query = "INSERT INTO artcientificos (titulo, autor, poptitulo, infotext, link) VALUES ('".$titulo."','".$autor."','".$poptitulo."','".$infotext."','".$link."')";
+                $result = mysql_query($query);
+                // Validate insert in the sql db
+                if (!$result) {
+                    die('Invalid query: ' . mysql_error());
+                }else{
+                    echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Archivo subido correctamente</strong></div>';
+                }      
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Error al momento de subir el archivo, intenta de nuevo</strong></div>';
             }
         }
     }
     
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8" />
         <title>LNMySR</title>
@@ -63,7 +77,7 @@
     <?php include("/includes/header.html");?>
 
     <body>
-        <h1 class="text-center">Subir Archivo</h1>
+        <h1 class="text-center">Subir Artículo Científico</h1>
         <br>
         <div class="container-fluid">
             <div class="container">
@@ -83,14 +97,14 @@
                         </div>
                         <div class="form-group"> 
                             <label for="infotext">Texto Informativo: </label>
-                            <input type="text" class="form-control" name="infotext">
+                            <textarea type="text" class="form-control" name="infotext"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="archivo">Archivo: </label>
                             <input type="file" class="form-control" name="archivo">
                         </div>
                         <div class="form-group">        
-                            <input name="submit" type="submit" value="Seleccionar" class="btn btn-success"></input>
+                            <input name="submit" type="submit" value="Subir" class="btn btn-success"></input>
                         </div> 
                     </form>
                 </div>
