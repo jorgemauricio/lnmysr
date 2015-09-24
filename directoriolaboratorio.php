@@ -42,14 +42,17 @@
                                 echo $row['nombre'];
                                 echo ' </td> ';
                                 echo ' <td>';
-                                echo $row['estado'];
+                                echo $row['responsabilidad'];
                                 echo ' </td>';
                                 echo ' <td>';
-                                echo $row['campo'];
+                                echo $row['telefono'];
                                 echo ' </td>';
                                 echo ' <td>';
                                 echo $row['email'];
                                 echo ' </td>';
+                                echo '<td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal';
+                                echo $row['id'];
+                                echo '">Ver</button></td>';
                             }   
  
                 ?>
@@ -58,6 +61,37 @@
         </div>
     </body>
 </div>
+</html>
+
+<!-- Modals -->
+
+<?php
+                            //select all records form tblmember table
+                            $query = 'SELECT * FROM directoriolab order by nivel';
+                            //execute the query using mysql_query
+                            $result = mysql_query($query);
+                            //then using while loop, it will display all the records inside the table
+                            while ($row = mysql_fetch_array($result)) {
+                                echo '<div class="modal fade" id="myModal';
+                                echo $row['id'];
+                                echo '" role="dialog">
+                                    <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">';
+                                echo $row['nombre'];
+                                echo '</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    <p align ="justify">';
+                                echo $row['info'];
+                                echo '</p>
+                                     </div> </div></div></div>';
+                            }   
+ ?>
+ <?php include("includes/footer.html");?> 
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {

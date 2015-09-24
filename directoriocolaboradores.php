@@ -57,6 +57,9 @@
         </div>
     </body>
 </div>
+<?php include("includes/footer.html");?> 
+</html>
+
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
