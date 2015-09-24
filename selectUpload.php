@@ -21,6 +21,12 @@
             case 'Nota':
                 header ("Location: uploadNota.php");
                 break;
+            case 'Colaborador':
+                header ("Location: uploadcolaborador.php");
+                break;
+            case 'Personal':
+                header ("Location: uploadPersonal.php");
+                break;
             default:
                 break;
         }   
@@ -54,6 +60,8 @@
                                 <option>Folleto Técnico</option>
                                 <option>Caso de Estudio</option>
                                 <option>Nota</option>
+                                <option>Colaborador</option>
+                                <option>Personal</option>
                             </select>
                         </div>
                         <div class="form-group">        
