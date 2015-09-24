@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="modal-footer">
                                     <a href="';
-                                echo '/lnmysr/documentos/articulos_cientificos/';
+                                echo '/lnmysr/documentos/folletos_tecnicos/';
                                 echo $row['link'];
                                 echo '" class="btn btn-success" target="_blank" role="button">PDF</a>
                                         </div>
