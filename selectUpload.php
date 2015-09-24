@@ -9,46 +9,22 @@
           
         // Switch validation
         switch ($tipo) {
-            case 'Artículos Científicos':
-                header ("Location: /uploadArticulo.php");
+            case 'Artículo Científico':
+                header ("Location: uploadArticulo.php");
                 break;
-            
+            case 'Folleto Técnico':
+                header ("Location: uploadFolleto.php");
+                break;
+            case 'Caso de Estudio':
+                header ("Location: uploadCaso.php");
+                break;
+            case 'Nota':
+                header ("Location: uploadNota.php");
+                break;
             default:
-                # code...
                 break;
-        }
-        // Check if user has been entered
-        if ($tipo ) {
-            $errUsr = 'Introduce un nombre de usuario';
-            $arrayErrors[] = $errUsr;
-        }else{
-            
-            // Select all the rows in the markers table
-            $query = "SELECT user FROM usuarios WHERE user ='" .$usr. "' AND password ='".$pwd."'";
-            $result = mysql_query($query);
-            $arrayTemp = array();
-            while ($row = @mysql_fetch_array($result)) {
-                $arrayTemp[] = $row;                
-                }
-            // Validate user and pwd
-            if (count($arrayTemp) > 0) {
-                // Start session 
-                if (!isset($_SESSION['userLogged'])) {
-            
-	                $_SESSION['userLogged'] = $usr;
-	                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	                <strong>Bienvenido</strong> Te damos la bienvenida.</div>';
-	                //header("Location: Index.php");
-                }
-                
-            }else{
-            	echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            	<strong>Error: </strong>Favor de checar sus datos</div>';
-            	unset($arrayErrors);
-            }
-        }
+        }   
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -70,14 +46,14 @@
         <div class="container-fluid">
             <div class="container">
                 <div class="col-sm-6">
-                    <form class="form-horizontal" role="form" action="typeUpload.php" method="post">
+                    <form class="form-horizontal" role="form" action="selectUpload.php" method="post">
                         <div class="form-group">
                             <label for="usr">Seleccione el tipo de archivo a subir</label>
                             <select class="form-control" name="tipo">
                                 <option>Artículo Científico</option>
                                 <option>Folleto Técnico</option>
-                                <option>Casos de Estudio</option>
-                                <option>Notas</option>
+                                <option>Caso de Estudio</option>
+                                <option>Nota</option>
                             </select>
                         </div>
                         <div class="form-group">        

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <title>LNMySR</title>
@@ -12,10 +12,92 @@
 <body>
 
 <?php include("includes/header.html");?>
-<?php include("includes/publicaciones/folletosTecnicos.html");?>
-<?php include("includes/footer.html");?>
+<?php include_once('php_dbinfo.php');?>
 
-</body>   
+    <h1 class="text-center">Folletos Técnicos</h1>
+    <br>
+    <div class="container-fluid">
+        <body>    
+        <div class="container">     
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Autor(es)</th>
+                <th>ISBN</th>
+                <th>Información</th>
+              </tr>
+            </thead>
+            <tbody>
+                <?php
+                            //select all records form tblmember table
+                            $query = 'SELECT * FROM folleto';
+                            //execute the query using mysql_query
+                            $result = mysql_query($query);
+                            //then using while loop, it will display all the records inside the table
+                            while ($row = mysql_fetch_array($result)) {
+                                echo ' <tr> ';
+                                echo ' <td> ';
+                                echo $row['titulo'];
+                                echo ' </td> ';
+                                echo ' <td>';
+                                echo $row['autor'];
+                                echo ' </td>';
+                                echo ' <td>';
+                                echo $row['isbn'];
+                                echo ' </td>';
+                                echo '<td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal';
+                                echo $row['id'];
+                                echo '">Ver</button></td>';
+                            }   
+ 
+                ?>
+            </tbody>
+          </table>
+        </div>
+    </body>
+        
+    </div>
+</body>
+
+<!-- Modals -->
+
+<?php
+                            //select all records form tblmember table
+                            $query = 'SELECT * FROM folleto';
+                            //execute the query using mysql_query
+                            $result = mysql_query($query);
+                            //then using while loop, it will display all the records inside the table
+                            while ($row = mysql_fetch_array($result)) {
+                                echo '<div class="modal fade" id="myModal';
+                                echo $row['id'];
+                                echo '" role="dialog">
+                                    <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">';
+                                echo $row['poptitulo'];
+                                echo '</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    <p align ="justify">';
+                                echo $row['infotext'];
+                                echo '</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <a href="';
+                                echo '/lnmysr/documentos/folletos_tecnicos/';
+                                echo $row['link'];
+                                echo '" class="btn btn-success" target="_blank" role="button">PDF</a>
+                                        </div>
+                                        </div>
+                                       </div>
+                                    </div>';
+                            }   
+ ?>
+<?php include("includes/footer.html");?> 
 </html>
 
 

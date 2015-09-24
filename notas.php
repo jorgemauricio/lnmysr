@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <title>LNMySR</title>
@@ -12,10 +12,45 @@
 <body>
 
 <?php include("includes/header.html");?>
-<?php include("includes/publicaciones/notas.html");?>
-<?php include("includes/footer.html");?>
+<?php include_once('php_dbinfo.php');?>
 
-</body>   
+    <h1 class="text-center">Notas</h1>
+    <br>
+    <div class="container-fluid">
+        <body>    
+        <div class="container">     
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Documento</th>
+              </tr>
+            </thead>
+            <tbody>
+                <?php
+                            //select all records from notasportada table
+                            $query = 'SELECT * FROM notasportada';
+                            //execute the query using mysql_query
+                            $result = mysql_query($query);
+                            //then using while loop, it will display all the records inside the table
+                            while ($row = mysql_fetch_array($result)) {
+                                echo ' <tr> ';
+                                echo ' <td> ';
+                                echo $row['titulo'];
+                                echo ' </td> ';
+                                echo ' </td>';
+                                echo '<td><a href="/LNMYSR/documentos/notas/';
+                                echo $row['linkpdf'];
+                                echo '" class="btn btn-success" target="_blank" role="button">Ver</a>';
+                                echo '</td>';
+                            }   
+                ?>
+            </tbody>
+          </table>
+        </div>
+        </body>
+    </div>
+<?php include("includes/footer.html");?> 
 </html>
 
 
