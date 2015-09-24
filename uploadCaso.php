@@ -24,7 +24,34 @@
         $link = basename($_FILES["archivo"]["name"]);
         $uploadOk = 1;
         $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-        
+
+        // Check Variables
+        // Check Titulo
+        if (!$titulo) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Título</div>';
+            $uploadOk = 0;
+        }
+        // Check Autor
+        if (!$autor) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Autor(es)</div>';
+            $uploadOk = 0;
+        }
+        // Check Poptitulo
+        if (!$poptitulo) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Título Informativo</div>';
+            $uploadOk = 0;
+        }
+        // Check Infotext
+        if (!$infotext) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Información Complementaria</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Archive
         // Check if file already exists
         if (file_exists($target_file)) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

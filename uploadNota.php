@@ -30,7 +30,16 @@
         $uploadOk_pdf = 1;
         $FileType_image = pathinfo($target_file_imagen,PATHINFO_EXTENSION);
         $FileType_pdf = pathinfo($target_file_pdf,PATHINFO_EXTENSION);
-        
+
+        // Check Variables
+        // Check Titulo
+        if (!$titulo) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Título</div>';
+            $uploadOk_image = 0;
+        }
+
+        // Check ARCHIVES
         // Check for IMAGE //
         // Check if file already exists
         if (file_exists($target_file_imagen)) {
@@ -42,7 +51,7 @@
         // Allow certain file formats
         if($FileType_image != "png") {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error:</strong> Solo puedes subir imagenes con extensión .pdf</div>';
+            <strong>Error:</strong> Solo puedes subir imagenes con extensión .png</div>';
             $uploadOk_image = 0;
         }
 
@@ -62,7 +71,7 @@
         }
         
         // Check if $uploadOk is set to 0 by an error
-        if (($uploadOk_image == 0) && ($uploadOk_pdf == 0)) {
+        if (($uploadOk_image == 0) || ($uploadOk_pdf == 0)) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> La imagen y el PDF no fueron subidos al sistema.</div>';
         // if everything is ok, try to upload file
