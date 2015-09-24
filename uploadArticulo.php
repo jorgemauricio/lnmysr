@@ -35,7 +35,7 @@
         // Allow certain file formats
         if($imageFileType != "pdf") {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error:</strong> Solo puedes subier archivos con extensión .pdf</div>';
+            <strong>Error:</strong> Solo puedes subir archivos con extensión .pdf</div>';
             $uploadOk = 0;
         }
         
