@@ -33,7 +33,7 @@
             
 	                $_SESSION['userLogged'] = $usr;
 	                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	                <strong>Bienvenido</strong> Te damos la bienvenida.</div>';
+	                <strong>Bienvenido</strong></div>';
 	                //header("Location: Index.php");
                 }
                 
