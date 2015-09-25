@@ -66,14 +66,14 @@
         // Allow certain file formats
         if($FileType_pdf != "pdf") {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error:</strong> Solo puedes subier archivos con extensión .pdf</div>';
+            <strong>Error:</strong> Solo puedes subir archivos con extensión .pdf</div>';
             $uploadOk_pdf = 0;
         }
         
         // Check if $uploadOk is set to 0 by an error
         if (($uploadOk_image == 0) || ($uploadOk_pdf == 0)) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error:</strong> La imagen y el PDF no fueron subidos al sistema.</div>';
+            <strong>Error:</strong> La imagen y el PDF no se subieron al sistema.</div>';
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["archivoimagen"]["tmp_name"], $target_file_imagen) && move_uploaded_file($_FILES["archivopdf"]["tmp_name"], $target_file_pdf)) {

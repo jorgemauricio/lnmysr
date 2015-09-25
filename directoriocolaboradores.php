@@ -14,7 +14,7 @@
 <?php include("includes/header.html");?>
 <?php include_once('php_dbinfo.php');?>
 
-    <h1 class="text-center">Directorio Colaboradores</h1>
+    <h1 class="text-center">Colaboradores Estatales</h1>
     <br>
     <div class="container-fluid">
         <body>    

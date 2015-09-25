@@ -69,7 +69,7 @@
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error:</strong> El archivo no fue subido al sistema.</div>';
+            <strong>Error:</strong> El archivo no se subió al sistema.</div>';
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $target_file)) {
@@ -80,7 +80,7 @@
                     die('Invalid query: ' . mysql_error());
                 }else{
                     echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Archivo subido correctamente</strong></div>';
+                    <strong>Archivo se subío correctamente</strong></div>';
                 }      
             } else {
                 echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
