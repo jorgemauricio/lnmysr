@@ -15,7 +15,20 @@
     <script type="text/javascript">
     //<![CDATA[
 
+    // Declare variables
     var map;
+    var estado;
+    var municipio;
+    var urlRequestEstaciones;
+    var urlRequestMunicipios;
+    var markers = [];
+    var xml;
+    var statusMarkers = 0;
+    var minLat;
+    var latMunicipio;
+    var lngMunicipio;
+    var maxLng;
+    var infoWindow = new google.maps.InfoWindow;
     var customIcons = {
       1: {
         icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png'
@@ -27,12 +40,32 @@
 
     // Load() Function
     function load() {
-      var map = new google.maps.Map(document.getElementById("map"), {
+        map = new google.maps.Map(document.getElementById("map"), {
         center: new google.maps.LatLng(22.1, -102.283),
         zoom: 5,
         mapTypeId: 'roadmap'
       });
-    var infoWindow = new google.maps.InfoWindow;
+    }
+
+    // Refresh Map Estado
+    function refreshMapEstado() {
+        map = new google.maps.Map(document.getElementById("map"), {
+        center: new google.maps.LatLng(22.1, -102.283),
+        zoom: 5,
+        mapTypeId: 'roadmap'
+      });
+    }
+
+    // Refresh Map Municipio
+    function refreshMapMunicipio() {
+        map = new google.maps.Map(document.getElementById("map"), {
+        center: new google.maps.LatLng(22.1, -102.283),
+        zoom: 5,
+        mapTypeId: 'roadmap'
+      });
+    }
+
+    // Create Marker
 
     // Start Resize Map
     google.maps.event.addDomListener(window,"resize",function(){
@@ -42,31 +75,6 @@
     });
     // End resize Map
 
-    // Change this depending on the name of your PHP file
-    downloadUrl("php_getEstaciones.php", function(data) {
-    var xml = data.responseXML;
-    var markers = xml.documentElement.getElementsByTagName("marker");
-    for (var i = 0; i < markers.length; i++) {
-        var nombre = markers[i].getAttribute("nombre");
-        var numero = markers[i].getAttribute("numero");
-        var activa = markers[i].getAttribute("activa");
-        var point = new google.maps.LatLng(
-            parseFloat(markers[i].getAttribute("lat")),
-            parseFloat(markers[i].getAttribute("lng")));
-        var lat = parseFloat(markers[i].getAttribute("lat"));
-        var lng = parseFloat(markers[i].getAttribute("lng"))
-        var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng;
-        var icon = customIcons[activa] || {};
-        var marker = new google.maps.Marker({
-            map: map,
-            position: point,
-            icon: icon.icon
-        });
-        bindInfoWindow(marker, map, infoWindow, html);
-        }
-      });
-    }
-
     function bindInfoWindow(marker, map, infoWindow, html) {
       google.maps.event.addListener(marker, 'click', function() {
         infoWindow.setContent(html);
@@ -75,11 +83,11 @@
     }
 
     function downloadUrl(url, callback) {
-      var request = window.ActiveXObject ?
-          new ActiveXObject('Microsoft.XMLHTTP') :
-          new XMLHttpRequest;
+        var request = window.ActiveXObject ?
+        new ActiveXObject('Microsoft.XMLHTTP') :
+        new XMLHttpRequest;
 
-      request.onreadystatechange = function() {
+    request.onreadystatechange = function() {
         if (request.readyState == 4) {
           request.onreadystatechange = doNothing;
           callback(request, request.status);
@@ -92,6 +100,95 @@
 
     function doNothing() {}
 
+    function determineMaxMin(temp_lat, temp_lng, temp_i){
+        if (temp_i == 0) {
+            latMunicipio = temp_lat;
+            lngMunicipio = temp_lng;
+        }else{
+            if (temp_lat > latMunicipio) {
+                latMunicipio = temp_lat;
+                console.log(latMunicipio);
+            };
+            if (temp_lng < lngMunicipio) {
+                lngMunicipio = temp_lng;
+                console.log(lngMunicipio);
+            };
+        }
+    }
+
+    function selectEstado(str){
+        console.log("valor de estado: ");
+        console.log(str);
+        estado = str;
+        refreshMapEstado();
+        urlRequestEstaciones = "php_getEstaciones.php?estado=" + estado;
+        urlRequestMunicipios = "php_getMunicipios.php?estado=" + estado;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("Municipio").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", urlRequestMunicipios, true);
+        xmlhttp.send();
+        
+        downloadUrl(urlRequestEstaciones, function(data) {
+            xml = data.responseXML;
+            markers = xml.documentElement.getElementsByTagName("marker");
+            for (var i = 0; i < markers.length; i++) {
+                var nombre = markers[i].getAttribute("nombre");
+                var numero = markers[i].getAttribute("numero");
+                var activa = markers[i].getAttribute("activa");
+                var point = new google.maps.LatLng(
+                    parseFloat(markers[i].getAttribute("lat")),
+                    parseFloat(markers[i].getAttribute("lng")));
+                var lat = parseFloat(markers[i].getAttribute("lat"));
+                var lng = parseFloat(markers[i].getAttribute("lng"))
+                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng;
+                var icon = customIcons[activa] || {};
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: point,
+                    icon: icon.icon
+            });
+            bindInfoWindow(marker, map, infoWindow, html);
+        }
+      });
+    }
+
+
+    function selectMunicipio(str){
+        console.log("valor de municipio: ");
+        console.log(str);
+        municipio = str;
+        refreshMapMunicipio();
+        urlRequestEstaciones = "php_getEstacionesMunicipio.php?estado=" + estado + "&municipio=" + municipio;
+        downloadUrl(urlRequestEstaciones, function(data) {
+            xml = data.responseXML;
+            console.log("valor xml municipios");
+            console.log(xml);
+            markers = xml.documentElement.getElementsByTagName("marker");
+            for (var i = 0; i < markers.length; i++) {
+                var nombre = markers[i].getAttribute("nombre");
+                var numero = markers[i].getAttribute("numero");
+                var activa = markers[i].getAttribute("activa");
+                var point = new google.maps.LatLng(
+                    parseFloat(markers[i].getAttribute("lat")),
+                    parseFloat(markers[i].getAttribute("lng")));
+                var lat = parseFloat(markers[i].getAttribute("lat"));
+                var lng = parseFloat(markers[i].getAttribute("lng"))
+                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng;
+                var icon = customIcons[activa] || {};
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: point,
+                    icon: icon.icon
+            });
+                console.log(marker);
+            bindInfoWindow(marker, map, infoWindow, html);
+        }
+      });
+    }
     //]]>
 
   </script>
@@ -107,7 +204,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <select onchange="selectEstado()" class="form-control" name="estado">
+                            <select id="estado" onchange="selectEstado(this.value)" class="form-control" name="estado">
                                 <?php include_once('php_getEstados.php');?>
                             </select> 
                         </div>
@@ -115,8 +212,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="Municipio">Municipio</label>
-                                <select class="form-control" name="Municipio">
-                                    <?php include_once('php_getMunicipios.php');?>
+                                <select onchange="selectMunicipio(this.value)" class="form-control" id="Municipio" name="Municipio">
                                 </select> 
                             </div>
                         </div>     

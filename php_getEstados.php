@@ -8,6 +8,8 @@
         die('Invalid query: ' . mysql_error());
     }
 
+    echo '<option value="0">Selecciona un Estado</option>';
+
     while($row= mysql_fetch_array($result))
     {
         echo '<option value="';
