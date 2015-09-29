@@ -33,6 +33,7 @@
 	  echo '<marker ';
 	  echo 'nombre="' . parseToXML($row['nombre']) . '" ';
 	  echo 'numero="' . parseToXML($row['numero']) . '" ';
+	  echo 'municipio="' . parseToXML($row['municipioid']) . '" ';
 	  echo 'lat="' . $row['latitud'] . '" ';
 	  echo 'lng="' . $row['longitud'] . '" ';
 	  echo 'activa="' . $row['activa'] . '" ';

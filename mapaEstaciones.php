@@ -18,7 +18,7 @@
     var nombre;
     var estado;
     var municipio;
-    var numero;
+    var estacion;
     var urlRequestEstaciones;
     var urlRequestMunicipios;
     var markers = [];
@@ -97,10 +97,11 @@
     });
     // End resize Map
 
-    function bindInfoWindow(marker, map, infoWindow, html) {
+    function bindInfoWindow(marker, map, infoWindow, html, numero) {
       google.maps.event.addListener(marker, 'click', function() {
         infoWindow.setContent(html);
         infoWindow.open(map, marker);
+        document.getElementById("answerReturned").innerHTML = "";
       });
     }
 
@@ -159,22 +160,23 @@
             xml = data.responseXML;
             markers = xml.documentElement.getElementsByTagName("marker");
             for (var i = 0; i < markers.length; i++) {
-                nombre = markers[i].getAttribute("nombre");
-                numero = markers[i].getAttribute("numero");
+                var nombre = markers[i].getAttribute("nombre");
+                var numero = markers[i].getAttribute("numero");
+                var municipio = markers[i].getAttribute("municipio");
                 var activa = markers[i].getAttribute("activa");
                 var point = new google.maps.LatLng(
                     parseFloat(markers[i].getAttribute("lat")),
                     parseFloat(markers[i].getAttribute("lng")));
                 var lat = parseFloat(markers[i].getAttribute("lat"));
                 var lng = parseFloat(markers[i].getAttribute("lng"))
-                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng;
+                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng + "<br>" + "<button id=\"vEstacion\" value=\"" + numero + "\" type=\"button\" onclick=\"displayInfo(this.value)\">Más Información</button>";
                 var icon = customIcons[activa] || {};
                 var marker = new google.maps.Marker({
                     map: map,
                     position: point,
                     icon: icon.icon
             });
-            bindInfoWindow(marker, map, infoWindow, html);
+            bindInfoWindow(marker, map, infoWindow, html, numero);
         }
       });
     }
@@ -195,13 +197,14 @@
             for (var i = 0; i < markers.length; i++) {
                 var nombre = markers[i].getAttribute("nombre");
                 var numero = markers[i].getAttribute("numero");
+                var municipio = markers[i].getAttribute("municipio");
                 var activa = markers[i].getAttribute("activa");
                 var point = new google.maps.LatLng(
                     parseFloat(markers[i].getAttribute("lat")),
                     parseFloat(markers[i].getAttribute("lng")));
                 var lat = parseFloat(markers[i].getAttribute("lat"));
                 var lng = parseFloat(markers[i].getAttribute("lng"))
-                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng + "<br>" + "<button type=\"button\" onclick=\"displayInfo()\">Más Información</button>";
+                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng + "<br>" + "<button id=\"vEstacion\" value=\"" + numero + "\" type=\"button\" onclick=\"displayInfo(this.value)\">Más Información</button>";
                 var icon = customIcons[activa] || {};
                 var marker = new google.maps.Marker({
                     map: map,
@@ -209,13 +212,14 @@
                     icon: icon.icon
             });
                 console.log(marker);
-            bindInfoWindow(marker, map, infoWindow, html);
+            bindInfoWindow(marker, map, infoWindow, html, numero);
         }
       });
     }
 
-    function displayInfo(){
-        urlRequestEstaciones = "php_getEstacionInfo.php?estado=" + estado + "&municipio=" + municipio + "&estacion=" + numero;
+    function displayInfo(str){
+        estacion = str;
+        urlRequestEstaciones = "php_getEstacionInfo.php?estado=" + estado + "&municipio=" + municipio + "&estacion=" + estacion;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -226,7 +230,7 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("answerReturned").innerHTML = xmlhttp.responseText;
-                document.getElementById("map").height = 300;
+                document.getElementById("alertDisplay").innerHTML = "<div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a><strong>Consulta con éxito</strong> Los datos de la estación se encuentran debajo del mapa.</div>";
             }
         }
         xmlhttp.open("GET",urlRequestEstaciones,true);
@@ -261,6 +265,9 @@
                         </div>     
                     </div>
                 </form>
+                <div class="container">
+                    <div id="alertDisplay"></div>
+                </div>
                 <div class="container">
                     <div id="map" style="height: 600px"></div>
                 </div>
