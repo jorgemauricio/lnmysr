@@ -3,6 +3,7 @@
     
     // GET Variables
     $estado = $_GET['estado'];
+    $municipio = $_GET['municipio'];
     $estacion = $_GET['estacion'];
 
     // Query to know the Estado
@@ -11,63 +12,73 @@
     if (!$result) {
       die('Invalid query: ' . mysql_error());
     }else{
-        echo '<div class="row">';
-        echo '<div class="col-sm-6">';
-        echo '<p><b>Estado: </b></p>';
-        echo $row['nombre'];
-        echo '</div>';
+        while ($row = mysql_fetch_array($result)) {
+            echo '<div class="row">';
+            echo '<div class="col-sm-6">';
+            echo '<div class="well">';
+            echo '<p><b>Estado: </b>';
+            echo $row['nombre'];
+            echo '</p>';
+        }
     }
 
     // Query to know the Municipio
-    $query = "select municipioid from estaciones where numero ='".$estacion."'";
+    $query = "select nombre from municipios where indice ='".$municipio."'";
     $result = mysql_query($query);
     if (!$result) {
       die('Invalid query: ' . mysql_error());
     }else{
-        $queryTemp = "select nombre from municipios where"
-        echo '<div class="col-sm-6">';
-        echo '<p><b>Estado: </b></p>';
-        echo $row['nombre'];
-        echo '</div>';
+        while ($row = mysql_fetch_array($result)) {
+            echo '<p><b>Municipio: </b>';
+            echo $row['nombre'];
+            echo '</p>';
+        }
     }
 
     // Query to know the image
-    $query  = "SELECT * FROM estaciones where estadoid ='".$estado."' AND  numero = '".$estacion."'";
+    $query  = "SELECT * FROM estaciones where numero = '".$estacion."'";
 
     $result = mysql_query($query);
     if (!$result) {
       die('Invalid query: ' . mysql_error());
     }else{
-        // Echo image
-        echo '<div class="row">';
-        echo '<div class="col-sm-6">';
-        echo '</div>';
-        echo '<div class="col-sm-6">';
-        echo '<img src="/images/imagenesEstaciones/'.$row['numero'];
-        echo '.jpg" class="img-responsive" alt="'$row['numero'];
-        echo '" width="155" height="125">';
-        echo '</div>';
+
+        // Echo Nombre Estación
+        while ($row = mysql_fetch_array($result)) {
+            echo '<p><b>Estación: </b>';
+            echo $row['nombre'];
+            echo '</p>';
+            // Echo Latitud
+            echo '<p><b>Latitud: </b>';
+            echo $row['latitud'];
+            echo '</p>';
+            // Echo Longitud
+            echo '<p><b>Longitud: </b>';
+            echo $row['longitud'];
+            echo '</p>';
+
+            // Echo Activa
+            if ($row['activa'] == 1) {
+                echo '<p><b>Activa: </b>SI</p>';
+            }else{
+                echo '<p><b>Activa: </b>NO</p>';
+            }
+            echo '</div>';
+            echo '</div>';
+
+            // Echo Image
+            echo '<div class="col-sm-6">';
+            echo '<div class="well">';
+            echo '<img src="/lnmysr/images/imagenesEstaciones/'.$row['numero'];
+            echo '.jpg" class="img-responsive" alt="'.$row['numero'];
+            echo '" width="155" height="125">'; 
+            echo '</div>';
+            echo '</div>';
+        }
         
         
         // Echo tabla de datos
-        echo '<table class="table">
-        <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Age</th>
-        <th>Hometown</th>
-        <th>Job</th>
-        </tr>';
-        while($row = mysqli_fetch_array($result)) {
-            echo "<tr>";
-            echo "<td>" . $row['FirstName'] . "</td>";
-            echo "<td>" . $row['LastName'] . "</td>";
-            echo "<td>" . $row['Age'] . "</td>";
-            echo "<td>" . $row['Hometown'] . "</td>";
-            echo "<td>" . $row['Job'] . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
+        
     }
     // Echo tabla de abreviaturas
     echo '<div class="container">

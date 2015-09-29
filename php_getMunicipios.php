@@ -9,7 +9,7 @@
         die('Invalid query: ' . mysql_error());
     }
 
-    echo '<option value="0">Todos</option>';
+    echo '<option value="0">Selecciona un Municipio</option>';
 
     while($row= mysql_fetch_array($result))
     {
