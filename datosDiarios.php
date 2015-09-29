@@ -57,6 +57,7 @@
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("Municipio").innerHTML = xmlhttp.responseText;
                 document.getElementById("Estacion").innerHTML = "";
+                document.getElementById("answerEstacion").innerHTML = "";
             }
         }
         xmlhttp.open("GET", urlRequestMunicipios, true);
@@ -76,6 +77,7 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("Estacion").innerHTML = xmlhttp.responseText;
+                document.getElementById("answerEstacion").innerHTML = "";
             }
         }
         xmlhttp.open("GET",urlRequestEstaciones,true);
