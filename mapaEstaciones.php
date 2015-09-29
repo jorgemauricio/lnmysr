@@ -15,8 +15,10 @@
 
     // Declare variables
     var map;
+    var nombre;
     var estado;
     var municipio;
+    var numero;
     var urlRequestEstaciones;
     var urlRequestMunicipios;
     var markers = [];
@@ -41,7 +43,15 @@
         map = new google.maps.Map(document.getElementById("map"), {
         center: new google.maps.LatLng(22.1, -102.283),
         zoom: 5,
-        mapTypeId: 'roadmap'
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+            mapTypeIds: [
+                google.maps.MapTypeId.ROADMAP,
+                google.maps.MapTypeId.TERRAIN,
+                google.maps.MapTypeId.SATELLITE,
+            ]
+        }
       });
     }
 
@@ -50,7 +60,14 @@
         map = new google.maps.Map(document.getElementById("map"), {
         center: new google.maps.LatLng(22.1, -102.283),
         zoom: 5,
-        mapTypeId: 'roadmap'
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+            mapTypeIds: [
+                google.maps.MapTypeId.ROADMAP,
+                google.maps.MapTypeId.TERRAIN,
+                google.maps.MapTypeId.SATELLITE,
+            ]
+        }
       });
     }
 
@@ -59,7 +76,14 @@
         map = new google.maps.Map(document.getElementById("map"), {
         center: new google.maps.LatLng(22.1, -102.283),
         zoom: 5,
-        mapTypeId: 'roadmap'
+         mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+            mapTypeIds: [
+                google.maps.MapTypeId.ROADMAP,
+                google.maps.MapTypeId.TERRAIN,
+                google.maps.MapTypeId.SATELLITE,
+            ]
+        }
       });
     }
 
@@ -125,6 +149,7 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("Municipio").innerHTML = xmlhttp.responseText;
+                document.getElementById("answerReturned").innerHTML = "";
             }
         }
         xmlhttp.open("GET", urlRequestMunicipios, true);
@@ -134,8 +159,8 @@
             xml = data.responseXML;
             markers = xml.documentElement.getElementsByTagName("marker");
             for (var i = 0; i < markers.length; i++) {
-                var nombre = markers[i].getAttribute("nombre");
-                var numero = markers[i].getAttribute("numero");
+                nombre = markers[i].getAttribute("nombre");
+                numero = markers[i].getAttribute("numero");
                 var activa = markers[i].getAttribute("activa");
                 var point = new google.maps.LatLng(
                     parseFloat(markers[i].getAttribute("lat")),
@@ -161,6 +186,7 @@
         municipio = str;
         refreshMapMunicipio();
         urlRequestEstaciones = "php_getEstacionesMunicipio.php?estado=" + estado + "&municipio=" + municipio;
+        document.getElementById("answerReturned").innerHTML = "";
         downloadUrl(urlRequestEstaciones, function(data) {
             xml = data.responseXML;
             console.log("valor xml municipios");
@@ -175,7 +201,7 @@
                     parseFloat(markers[i].getAttribute("lng")));
                 var lat = parseFloat(markers[i].getAttribute("lat"));
                 var lng = parseFloat(markers[i].getAttribute("lng"))
-                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng;
+                var html = "<b>" + nombre + "</b> <br>" + "<b>Latitud: </b>" + lat + "<br><b>Longitud: </b>" + lng + "<br>" + "<button type=\"button\" onclick=\"displayInfo()\">Más Información</button>";
                 var icon = customIcons[activa] || {};
                 var marker = new google.maps.Marker({
                     map: map,
@@ -186,6 +212,25 @@
             bindInfoWindow(marker, map, infoWindow, html);
         }
       });
+    }
+
+    function displayInfo(){
+        urlRequestEstaciones = "php_getEstacionInfo.php?estado=" + estado + "&municipio=" + municipio + "&estacion=" + numero;
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("answerReturned").innerHTML = xmlhttp.responseText;
+                document.getElementById("map").height = 300;
+            }
+        }
+        xmlhttp.open("GET",urlRequestEstaciones,true);
+        xmlhttp.send();
     }
     //]]>
 
@@ -216,7 +261,13 @@
                         </div>     
                     </div>
                 </form>
-            <div id="map" style="height: 600px"></div></div>
+                <div class="container">
+                    <div id="map" style="height: 600px"></div>
+                </div>
+                <br>
+                <div id="answerReturned" class="container">
+                </div>
+            </div>
         </body>
     <?php include("includes/footer.html");?> 
 
