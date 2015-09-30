@@ -137,7 +137,7 @@
                                     <tr>
                                         <td>VV</td>
                                         <td>'.$row['velv'].'</td>
-                                        <td>'.'</td>
+                                        <td><img class="img-responsive" style="width:50px;height:50px" src="/lnmysr/images/icons/'.logoVV($row['velv']).'" alt="'.logoVV($row['velv']).'"></td>
                                         <td>'.'</td>
                                     </tr>
                                     <tr>
@@ -286,5 +286,95 @@
                     break;
             }
         return $logoDv;   
+    }
+
+    function logoVV($vv){
+        switch ($vv) {
+                case ($vv == 0):
+                    $logoVv = 'wind_0.png';
+                    break;
+                case ($vv > 0 && $vv < 2):
+                    $logoVv = 'wind_0.png';
+                    break;
+                case ($vv >= 2 && $vv < 10):
+                    $logoVv = 'wind_1.png';
+                    break;
+                case ($vv >= 10 && $vv < 20):
+                    $logoVv = 'wind_2.png';
+                    break;
+                case ($vv >= 20 && $vv < 29):
+                    $logoVv = 'wind_3.png';
+                    break;
+                case ($vv >= 29 && $vv < 38):
+                    $logoVv = 'wind_4.png';
+                    break;
+                case ($vv >= 38 && $vv < 47):
+                    $logoVv = 'wind_5.png';
+                    break;
+                case ($vv >= 47 && $vv < 57):
+                    $logoVv = 'wind_6.png';
+                    break;
+                case ($vv >= 57 && $vv < 66):
+                    $logoVv = 'wind_7.png';
+                    break;
+                case ($vv >= 66 && $vv < 75):
+                    $logoVv = 'wind_8.png';
+                    break;
+                case ($vv >= 75 && $vv < 84):
+                    $logoVv = 'wind_9.png';
+                    break;
+                case ($vv >= 84 && $vv < 94):
+                    $logoVv = 'wind_10.png';
+                    break;
+                case ($vv >= 94 && $vv < 103):
+                    $logoVv = 'wind_11.png';
+                    break;
+                case ($vv >= 103 && $vv < 112):
+                    $logoVv = 'wind_12.png';
+                    break;
+                case ($vv >= 112 && $vv < 121):
+                    $logoVv = 'wind_13.png';
+                    break;
+                case ($vv >= 121 && $vv < 131):
+                    $logoVv = 'wind_14.png';
+                    break;
+                case ($vv >= 131 && $vv < 140):
+                    $logoVv = 'wind_15.png';
+                    break;
+                case ($vv >= 140 && $vv < 150):
+                    $logoVv = 'wind_16.png';
+                    break;
+                case ($vv >= 150 && $vv < 158):
+                    $logoVv = 'wind_17.png';
+                    break;
+                case ($vv >= 158 && $vv < 168):
+                    $logoVv = 'wind_18.png';
+                    break; 
+                case ($vv >= 168 && $vv < 177):
+                    $logoVv = 'wind_19.png';
+                    break; 
+                case ($vv >= 177 && $vv < 186):
+                    $logoVv = 'wind_20.png';
+                    break; 
+                case ($vv >= 186 && $vv < 195):
+                    $logoVv = 'wind_21.png';
+                    break; 
+                case ($vv >= 195 && $vv < 205):
+                    $logoVv = 'wind_22.png';
+                    break; 
+                case ($vv >= 205 && $vv < 214):
+                    $logoVv = 'wind_23.png';
+                    break;  
+                case ($vv >= 214 && $vv < 223):
+                    $logoVv = 'wind_24.png';
+                    break;  
+                case ($vv >= 223 && $vv <= 231):
+                    $logoVv = 'wind_25.png';
+                    break;     
+                default:
+                    $logoVv = '';
+                    break;
+            }
+        return $logoVv;   
     }
 ?>
