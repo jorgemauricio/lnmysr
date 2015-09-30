@@ -1,6 +1,8 @@
 <?php
     include_once('php_dbinfo.php');
     
+    // Declare variables
+    $lastValueValitation = 0;
     // GET Variables
     $estado = $_GET['estado'];
     $municipio = $_GET['municipio'];
@@ -72,13 +74,87 @@
             echo '<img src="/lnmysr/images/imagenesEstaciones/'.$row['numero'];
             echo '.jpg" class="img-responsive" alt="'.$row['numero'];
             echo '" width="155" height="125">'; 
+        }   
+    }
+
+    // Echo tabla de valores al momento de la consulta
+    // Query Show Last Row Info
+    $query  = "SELECT * FROM estado".$estado. " where numero=".$estacion." order by fecha desc limit 1";
+    $result = mysql_query($query);
+    if (!$result) {
+      die('Invalid query: ' . mysql_error());
+    }else{
+        while ($row = mysql_fetch_array($result)) {
+            $lastValueValitation = 1;
+            echo '<br>';
+            echo '<p><b>Última Lectura: </b>';
+            echo $row['fecha'];
+            echo '</p>';
             echo '</div>';
             echo '</div>';
-        }
-        
-        
-        // Echo tabla de datos
-        
+            echo '<br>';
+            echo '<div class="container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Variables</th>
+                                    <th>Valor</th>
+                                    <th>Estado Actual</th>
+                                    <th>Gráfica</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Temperatura</td>
+                                        <td>'.$row['temt'].'</td>
+                                        <td><img class="img-responsive" style="width:25px;height:50px" src="/lnmysr/images/icons/'.logoTemperatura($row['temt']).'" alt="'.logoTemperatura($row['temt']).'"></td>
+                                        <td>'.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pp</td>
+                                        <td>'.$row['prec'].'</td>
+                                        <td>'.'</td>
+                                        <td>'.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>HR</td>
+                                        <td>'.$row['humr'].'</td>
+                                        <td>'.'</td> 
+                                        <td>'.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pr</td>
+                                        <td>'.$row['humh'].'</td>
+                                        <td>'.'</td>
+                                        <td>'.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rad. G</td>
+                                        <td>'.$row['radg'].'</td>
+                                        <td>'.'</td>
+                                        <td>'.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>VV</td>
+                                        <td>'.$row['velv'].'</td>
+                                        <td>'.'</td>
+                                        <td>'.'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DV</td>
+                                        <td>'.$row['dirv'].'</td>
+                                        <td>'.'</td>
+                                        <td>'.'</td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </div>';
+                }
+    }
+
+    if ($lastValueValitation == 0) {
+        echo '</div>';
+        echo '</div>';
     }
     // Echo tabla de abreviaturas
     echo '<div class="container">
@@ -149,4 +225,30 @@
                     </tbody>
                 </table>
             </div>';
+
+    // Functions
+    // Logo Temperatura
+    function logoTemperatura($t){
+        switch ($t) {
+                case ($t < 0):
+                    $logoTemp = 'temp_0.png';
+                    break;
+                case ($t >= 1 && $t <= 10):
+                    $logoTemp = 'temp_1.png';
+                    break;
+                case ($t >= 11 && $t <= 20):
+                    $logoTemp = 'temp_2.png';
+                    break;
+                case ($t >= 21 && $t <= 34):
+                    $logoTemp = 'temp_3.png';
+                    break;
+                case ($t >= 35):
+                    $logoTemp = 'temp_4.png';
+                    break;
+                default:
+                    $logoTemp = '';
+                    break;
+            }
+        return $logoTemp;    
+    }
 ?>
