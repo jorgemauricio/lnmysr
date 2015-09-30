@@ -143,7 +143,7 @@
                                     <tr>
                                         <td>DV</td>
                                         <td>'.$row['dirv'].'</td>
-                                        <td>'.'</td>
+                                        <td><img class="img-responsive" style="width:50px;height:50px" src="/lnmysr/images/icons/'.logoDV($row['dirv']).'" alt="'.logoDV($row['dirv']).'"></td>
                                         <td>'.'</td>
                                     </tr>
                                 </tbody>
@@ -250,5 +250,41 @@
                     break;
             }
         return $logoTemp;    
+    }
+
+    function logoDV($dv){
+        switch ($dv) {
+                case ($dv >= 0 && $dv <= 44):
+                    $logoDv = 'dv_n.png';
+                    break;
+                case ($dv >= 45 && $dv <= 89):
+                    $logoDv = 'dv_ne.png';
+                    break;
+                case ($dv >= 90 && $dv <= 134):
+                    $logoDv = 'dv_e.png';
+                    break;
+                case ($dv >= 135 && $dv <= 179):
+                    $logoDv = 'dv_se.png';
+                    break;
+                case ($dv >= 180 && $dv <= 224):
+                    $logoDv = 'dv_s.png';
+                    break;
+                case ($dv >= 225 && $dv <= 269):
+                    $logoDv = 'dv_so.png';
+                    break;
+                case ($dv >= 270 && $dv <= 314):
+                    $logoDv = 'dv_o.png';
+                    break;
+                case ($dv >= 315 && $dv <= 359):
+                    $logoDv = 'dv_no.png';
+                    break;
+                case ($dv == 360):
+                    $logoDv = 'dv_n.png';
+                    break;
+                default:
+                    $logoDv = '';
+                    break;
+            }
+        return $logoDv;   
     }
 ?>
