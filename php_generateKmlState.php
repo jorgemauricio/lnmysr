@@ -2,15 +2,6 @@
     include_once('php_dbinfo.php');
     
     //
-    function parseToXML($htmlStr)
-    {
-        $xmlStr=str_replace('<','&lt;',$htmlStr);
-        $xmlStr=str_replace('>','&gt;',$xmlStr);
-        $xmlStr=str_replace('"','&quot;',$xmlStr);
-        $xmlStr=str_replace("'",'&#39;',$xmlStr);
-        $xmlStr=str_replace("&",'&amp;',$xmlStr);
-        return $xmlStr;
-    }
 
     // Declare variables
     $lastValueValitation = 0;
@@ -32,7 +23,7 @@
         while ($row = mysql_fetch_array($result)) {
             echo '<Placemark>';
             echo '<name>'.$row['nombre'].', '.$n_estado.'</name>';
-            echo '<description><![CDATA[<b>Latitud:</b>'.$row['latitud'].'<br/><b>Longitud:</b>'.$row['longitud'].'<br/><a href=\'/LNMySR/Estaciones/ConsultaDiarios15Min?Estado='.$estado.'&Estacion='.$row['numero'].'\'>m&aacute;s informaci&oacute;n</a>]]></description>';
+            echo '<description><![CDATA[<b>Latitud: </b>'.$row['latitud'].'<br/><b>Longitud: </b>'.$row['longitud'].'<br/><a href=\'/LNMySR/Estaciones/ConsultaDiarios15Min?Estado='.$estado.'&Estacion='.$row['numero'].'\'>m&aacute;s informaci&oacute;n</a>]]></description>';
             echo '<Point>';
             echo '<coordinates>'.$row['longitud'].','.$row['latitud'].'</coordinates>';
             echo '</Point>';
