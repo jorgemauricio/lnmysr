@@ -55,7 +55,7 @@
       });
     }
 
-    // Refresh Map Estado
+    // Refresh Map when the user select an Estado
     function refreshMapEstado() {
         map = new google.maps.Map(document.getElementById("map"), {
         center: new google.maps.LatLng(22.1, -102.283),
@@ -71,7 +71,7 @@
       });
     }
 
-    // Refresh Map Municipio
+    // Refresh Map when the user select a Municipio
     function refreshMapMunicipio() {
         map = new google.maps.Map(document.getElementById("map"), {
         center: new google.maps.LatLng(22.1, -102.283),
@@ -86,8 +86,6 @@
         }
       });
     }
-
-    // Create Marker
 
     // Start Resize Map
     google.maps.event.addDomListener(window,"resize",function(){
@@ -139,7 +137,7 @@
         }
     }
 
-    function selectEstado(str){
+    function selectMunicipio(str){
         console.log("valor de estado: ");
         console.log(str);
         estado = str;
@@ -182,7 +180,7 @@
     }
 
 
-    function selectMunicipio(str){
+    function selectEstacion(str){
         console.log("valor de municipio: ");
         console.log(str);
         municipio = str;
@@ -251,7 +249,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <select id="estado" onchange="selectEstado(this.value)" class="form-control" name="estado">
+                            <select id="estado" onchange="selectMunicipio(this.value)" class="form-control" name="estado">
                                 <?php include_once('php_getEstados.php');?>
                             </select> 
                         </div>
@@ -259,7 +257,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="Municipio">Municipio</label>
-                                <select onchange="selectMunicipio(this.value)" class="form-control" id="Municipio" name="Municipio">
+                                <select onchange="selectEstacion(this.value)" class="form-control" id="Municipio" name="Municipio">
                                 </select> 
                             </div>
                         </div>     
