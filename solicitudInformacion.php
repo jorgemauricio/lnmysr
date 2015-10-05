@@ -12,7 +12,6 @@
             //<![CDATA[
 
             // Declare variables
-            var map;
             var estado;
             var estacion;
             var municipio;
@@ -50,11 +49,12 @@
             function selectMunicipio(str){
                 estado = str;
                 if (estado == "99") {
-                    document.getElementById("MunicipioSelect").innerHTML = "<label for=\"municipio\">Municipio:</label><input type=\"text\" class=\"form-control\" name=\"municipio\">";
+                    document.getElementById("MunicipioInput").innerHTML = "<label for=\"municipio\">Municipio:</label><input type=\"text\" class=\"form-control\" name=\"municipio\">";
+                
                 }else{
                     
                 }
-                    urlRequestMunicipios = "php_getMunicipios.php?estado=" + estado;
+                    urlRequestMunicipios = "php_getMunicipiosSolicitudInformacion.php?estado=" + estado;
                     var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function() {
                         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -141,8 +141,7 @@
                                 <?php include_once('php_getEstadosSolicitud.php');?>
                             </select> 
                         </div>
-                       <div id="MunicipioSelect" class="form-group">
-                            
+                       <div id="MunicipioSelect" class="form-group"> 
                        </div>
                        <div id="MunicipioInput" class="form-group">
                        </div>

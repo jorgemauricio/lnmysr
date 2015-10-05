@@ -2,10 +2,12 @@
     include_once('php_dbinfo.php');
     
     $estado = $_GET['estado'];
-    // Query
-    if($estado == 99){
+    
+    // Validacion de parametros de estado 
+    if($estado == 99 || $estado == 0){
         
     }else{
+        // Query
         $query  = "SELECT nombre, indice FROM municipios where idedo ='".$estado."' order by indice asc";
         $result = mysql_query($query);
         if(!$result){
