@@ -8,7 +8,7 @@
 
         // Declare variables
         $nombre = $_POST['nombre'];
-        $amaterno = $_POST['apaterno'];
+        $apaterno = $_POST['apaterno'];
         $amaterno = $_POST['amaterno'];
         $sexo = $_POST['sexo'];
         $dateBirth = $_POST['dateBirth'];
@@ -21,7 +21,11 @@
         $empresa = $_POST['empresa'];
         $cargo = $_POST['cargo'];
         $usoInformacion = $_POST['usoInformacion'];
-        $tipoInformacion = $_POST['tipoInformacion'];
+        if (isset($_POST['tipoInformacion'])) {
+            $tipoInformacion = "Sin datos";
+         }else{
+            $tipoInformacion = $_POST['tipoInformacion'];
+         }
         $nombreProyecto = $_POST['nombreProyecto'];
         $informacionSolicitada = $_POST['informacionSolicitada'];
 
@@ -131,6 +135,18 @@
             $uploadOk = 0;
         }
 
+        // Check upload information
+
+        if ($uploadOk == 1) {
+            $query = "INSERT INTO solicitudes (nombre, apaterno, amaterno, sexo, fecha, pais, estado, municipio, email, escolaridad, ocupacion, empresa, cargo, usoinfo, fininfo, nproyecto, infosol, fsolicitud) VALUES ('".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$fecha."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."')";
+            $result = mysql_query($query);
+            if (!$result) {
+                    die('Invalid query: ' . mysql_error());
+            }else{
+                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
+            }     
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -244,8 +260,8 @@
                 <div class="col-sm-6">
                     <form class="form-horizontal" role="form" action="solicitudInformacion.php" method="post">
                         <div class="form-group">
-                            <label for="usr">Nombre(s):</label>
-                            <input type="text" class="form-control" name="usr">
+                            <label for="nombre">Nombre(s):</label>
+                            <input type="text" class="form-control" name="nombre">
                         </div>
                         <div class="form-group">
                             <label for="apaterno">Apellido Paterno:</label>
@@ -256,8 +272,8 @@
                             <input type="text" class="form-control" name="amaterno" placeholder="">  
                         </div>
                         <div class="form-group">
-                            <label for="estado">Sexo:</label>
-                            <select class="form-control" name="estado">
+                            <label for="sexo">Sexo:</label>
+                            <select class="form-control" name="sexo">
                                 <option value="1">Hombre</option>
                                 <option value="3">Mujer</option>
                             </select>
