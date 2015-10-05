@@ -1,3 +1,138 @@
+<?php
+    include_once('php_dbinfo.php');
+
+    // Declare Global Variables
+    $uploadOk = null;
+    
+    if(isset($_POST["submit"])){
+
+        // Declare variables
+        $nombre = $_POST['nombre'];
+        $amaterno = $_POST['apaterno'];
+        $amaterno = $_POST['amaterno'];
+        $sexo = $_POST['sexo'];
+        $dateBirth = $_POST['dateBirth'];
+        $pais = $_POST['pais'];
+        $estado = $_POST['estado'];
+        $municipio = $_POST['municipio'];
+        $email = $_POST['email'];
+        $escolaridad = $_POST['escolaridad'];
+        $ocupacion = $_POST['ocupacion'];
+        $empresa = $_POST['empresa'];
+        $cargo = $_POST['cargo'];
+        $usoInformacion = $_POST['usoInformacion'];
+        $tipoInformacion = $_POST['tipoInformacion'];
+        $nombreProyecto = $_POST['nombreProyecto'];
+        $informacionSolicitada = $_POST['informacionSolicitada'];
+
+        // Check Variables
+        // Check Nombre
+        if (!$nombre) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Nombre</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Apellido Paterno
+        if (!$apaterno) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Apellido Paterno</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Apellido Materno
+        if (!$amaterno) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Apellido Materno</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Date of Birth
+        if (!$dateBirth) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Fecha de Nacimiento</div>';
+            $uploadOk = 0;
+        }
+
+        // Check País
+        if (!$pais) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin País</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Estado
+        if (!$estado) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Estado</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Municipio
+        if (!$municipio) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Municipio</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Email
+        if (!$email) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Email</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Escolaridad
+        if (!$escolaridad) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Escolaridad</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Ocupación
+        if (!$ocupacion) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Ocupación</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Empresa
+        if (!$empresa) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Institución o Empresa</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Cargo
+        if (!$cargo) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Cargo</div>';
+            $uploadOk = 0;
+        }
+
+        // Check uso información
+        if (!$usoInformacion) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Uso de Información</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Nombre del Proyecto
+        if (!$nombreProyecto) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Nombre del Proyecto</div>';
+            $uploadOk = 0;
+        }
+
+        // Check Escolaridad
+        if (!$informacionSolicitada) {
+            echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error:</strong> Sin Información a Solicitar</div>';
+            $uploadOk = 0;
+        }
+
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -215,7 +350,7 @@
                             <input type="text" class="form-control" name="nombreProyecto"> 
                         </div>
                         <div class="form-group">
-                            <label for="informacionSolicitada">Nombre del Proyecto:</label>
+                            <label for="informacionSolicitada">Información a Solicitar:</label>
                             <textarea onkeyup="showCharacters(this.value)" type="text" class="form-control" name="informacionSolicitada"></textarea>
                             <p>Caracteres restantes: <span id="caracteresRestantes"></p> 
                         </div>
