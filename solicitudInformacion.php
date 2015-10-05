@@ -48,21 +48,22 @@
             function doNothing() {}
 
             function selectMunicipio(str){
-                console.log("valor de estado: ");
-                console.log(str);
                 estado = str;
-                urlRequestMunicipios = "php_getMunicipios.php?estado=" + estado;
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        document.getElementById("Municipio").innerHTML = xmlhttp.responseText;
-                        document.getElementById("Estacion").innerHTML = "";
-                        document.getElementById("answerEstacion").innerHTML = "";
-                    }
+                if (estado == "99") {
+                    document.getElementById("MunicipioSelect").innerHTML = "<label for=\"municipio\">Municipio:</label><input type=\"text\" class=\"form-control\" name=\"municipio\">";
+                }else{
+                    
                 }
-                xmlhttp.open("GET", urlRequestMunicipios, true);
-                xmlhttp.send();
-            }
+                    urlRequestMunicipios = "php_getMunicipios.php?estado=" + estado;
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                            document.getElementById("MunicipioSelect").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                    xmlhttp.open("GET", urlRequestMunicipios, true);
+                    xmlhttp.send();
+                }
 
             function validationForm(str){
                 
@@ -136,14 +137,15 @@
                         </div>
                        <div class="form-group">
                             <label for="estado">Estado:</label>
-                            <select class="form-control" name="estado">
+                            <select onchange="selectMunicipio(this.value)" class="form-control" name="estado">
                                 <?php include_once('php_getEstadosSolicitud.php');?>
                             </select> 
                         </div>
-                        <div class="form-group">
-                            <label for="municipio">Municipio:</label>
-                            <input type="text" class="form-control" name="municipio"> 
-                        </div>
+                       <div id="MunicipioSelect" class="form-group">
+                            
+                       </div>
+                       <div id="MunicipioInput" class="form-group">
+                       </div>
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" name="email" placeholder="">
@@ -321,7 +323,6 @@ El presente documento se regirá por la Ley del Sistema Nacional de Información
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
-
   </div>
 </div>
 
