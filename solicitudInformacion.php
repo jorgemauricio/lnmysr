@@ -21,7 +21,7 @@
         $usoInformacion = $_POST['usoInformacion'];
         $tipoInformacion = $_POST['tipoInformacion'];
         $nombreProyecto = $_POST['nombreProyecto'];
-        $informacionSolicitada = $_POST['informacionSolicitada'];
+        $informacionSolicitada = str_replace(array("\n", "\r"), ' ', $_POST['informacionSolicitada']);
         $uploadOk = 1;
         // Check Variables
         // Check Nombre
@@ -122,10 +122,10 @@
             if (!$result) {
                     die('Invalid query: ' . mysql_error());
             }else{
-                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
-                //$pathForPdf = "php_downloadPDF.php?".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$dateBirth."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."','".$today
-                //header("Location: php_downloadPDF.php");
+                //echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                //<strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
+                $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$estado."&municipio=".$municipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today;
+                header($requestToSend);
             }     
         }
     }
@@ -182,7 +182,6 @@
                 estado = str;
                 if (estado == "99") {
                     document.getElementById("MunicipioInput").innerHTML = "<label for=\"municipio\">Municipio:</label><input type=\"text\" class=\"form-control\" name=\"municipio\">";
-                
                 }else{
                     
                 }
@@ -211,7 +210,7 @@
 
             function validationInfo(str){
                 if (str == "Uso Profesional") {
-                    document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"T_Licenciatura\">Tesis Licenciatura</option><option value=\"T_Maestria\">Tesis Maestría</option><option value=\"T_Doctorado\">Tesis Doctorado</option></select>";
+                    document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"Tesis Licenciatura\">Tesis Licenciatura</option><option value=\"Tesis Maestría\">Tesis Maestría</option><option value=\"Tesis Doctorado\">Tesis Doctorado</option></select>";
                 }else{
                     document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"T_Licenciatura\">No Aplica</option></select>";
                 }
@@ -255,8 +254,8 @@
                         <div class="form-group">
                             <label for="sexo">Sexo:</label>
                             <select class="form-control" name="sexo">
-                                <option value="1">Hombre</option>
-                                <option value="3">Mujer</option>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -297,17 +296,17 @@
                             <label for="ocupacion">Ocupación:</label>
                             <select class="form-control" name="ocupacion">
                                 <option value="0">Selecciona una ocupación</option>
-                                <option value="Primaria">Estudiante</option>
-                                <option value="Secundaria">Profesor/Investigador</option>
-                                <option value="FuncionarioFederal">Funcionario Público Federal</option>
-                                <option value="FuncionarioEstatal">Funcionario Público Estatal</option>
-                                <option value="FuncionarioMunicipal">Funcionario Público Municipal</option>
-                                <option value="FuncionarioOrganismos">Funcionario de Organismos Autónomos</option>
+                                <option value="Estudiante">Estudiante</option>
+                                <option value="Profesor/Investigador">Profesor/Investigador</option>
+                                <option value="Funcionario Federal">Funcionario Público Federal</option>
+                                <option value="Funcionario Estatal">Funcionario Público Estatal</option>
+                                <option value="Funcionario Municipal">Funcionario Público Municipal</option>
+                                <option value="Funcionario de Organismos Autónomos">Funcionario de Organismos Autónomos</option>
                                 <option value="Empresario">Empresario</option>
                                 <option value="Empleado">Empleado</option>
                                 <option value="Profesionista">Profesionista</option>
-                                <option value="Medios">Medios de Comunicación</option>
-                                <option value="AmaCasa">Ama de Casa</option>
+                                <option value="Medios de Comunicación">Medios de Comunicación</option>
+                                <option value="Ama de Casa">Ama de Casa</option>
                                 <option value="Jubilado">Desempleado/Jubilado/Pensionado</option>
                                 <option value="Otro">Otro</option>
                             </select>
