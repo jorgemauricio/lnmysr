@@ -1,6 +1,6 @@
 <?php
     include_once('php_dbinfo.php');
-
+    
     // Declare Global Variables
     $uploadOk = null;
     
