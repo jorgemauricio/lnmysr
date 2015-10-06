@@ -1,11 +1,9 @@
 <?php
     include_once('php_dbinfo.php');
-    
+
     // Declare Global Variables
     $uploadOk = null;
-    
     if(isset($_POST["submit"])){
-
         // Declare variables
         $nombre = $_POST['nombre'];
         $apaterno = $_POST['apaterno'];
@@ -25,7 +23,6 @@
         $nombreProyecto = $_POST['nombreProyecto'];
         $informacionSolicitada = $_POST['informacionSolicitada'];
         $uploadOk = 1;
-
         // Check Variables
         // Check Nombre
         if (!$nombre) {
@@ -33,115 +30,102 @@
             <strong>Error:</strong> Sin Nombre</div>';
             $uploadOk = 0;
         }
-
         // Check Apellido Paterno
         if (!$apaterno) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Apellido Paterno</div>';
             $uploadOk = 0;
         }
-
         // Check Apellido Materno
         if (!$amaterno) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Apellido Materno</div>';
             $uploadOk = 0;
         }
-
         // Check Date of Birth
         if (!$dateBirth) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Fecha de Nacimiento</div>';
             $uploadOk = 0;
         }
-
         // Check País
         if (!$pais) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin País</div>';
             $uploadOk = 0;
         }
-
         // Check Estado
         if (!$estado) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Estado</div>';
             $uploadOk = 0;
         }
-
         // Check Municipio
         if (!$municipio) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Municipio</div>';
             $uploadOk = 0;
         }
-
         // Check Email
         if (!$email) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Email</div>';
             $uploadOk = 0;
         }
-
         // Check Escolaridad
         if (!$escolaridad) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Escolaridad</div>';
             $uploadOk = 0;
         }
-
         // Check Ocupación
         if (!$ocupacion) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Ocupación</div>';
             $uploadOk = 0;
         }
-
         // Check Empresa
         if (!$empresa) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Institución o Empresa</div>';
             $uploadOk = 0;
         }
-
         // Check Cargo
         if (!$cargo) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Cargo</div>';
             $uploadOk = 0;
         }
-
         // Check uso información
         if (!$usoInformacion) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Uso de Información</div>';
             $uploadOk = 0;
         }
-
         // Check Nombre del Proyecto
         if (!$nombreProyecto) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Nombre del Proyecto</div>';
             $uploadOk = 0;
         }
-
         // Check Escolaridad
         if (!$informacionSolicitada) {
             echo '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Error:</strong> Sin Información a Solicitar</div>';
             $uploadOk = 0;
         }
-
         // Check upload information
-
         if ($uploadOk == 1) {
-            $query = "INSERT INTO solicitudes (nombre, apaterno, amaterno, sexo, fecha, pais, estado, municipio, email, escolaridad, ocupacion, empresa, cargo, usoinfo, fininfo, nproyecto, infosol, fsolicitud) VALUES ('".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$dateBirth."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."', NOW())";
+            $today = date("Y-m-d H:i:s");  
+            $query = "INSERT INTO solicitudes (nombre, apaterno, amaterno, sexo, fecha, pais, estado, municipio, email, escolaridad, ocupacion, empresa, cargo, usoinfo, fininfo, nproyecto, infosol, fsolicitud) VALUES ('".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$dateBirth."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."','".$today."')";
             $result = mysql_query($query);
             if (!$result) {
                     die('Invalid query: ' . mysql_error());
             }else{
                 echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
+                //$pathForPdf = "php_downloadPDF.php?".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$dateBirth."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."','".$today
+                //header("Location: php_downloadPDF.php");
             }     
         }
     }
