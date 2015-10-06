@@ -21,13 +21,10 @@
         $empresa = $_POST['empresa'];
         $cargo = $_POST['cargo'];
         $usoInformacion = $_POST['usoInformacion'];
-        if (isset($_POST['tipoInformacion'])) {
-            $tipoInformacion = "Sin datos";
-         }else{
-            $tipoInformacion = $_POST['tipoInformacion'];
-         }
+        $tipoInformacion = $_POST['tipoInformacion'];
         $nombreProyecto = $_POST['nombreProyecto'];
         $informacionSolicitada = $_POST['informacionSolicitada'];
+        $uploadOk = 1;
 
         // Check Variables
         // Check Nombre
@@ -138,7 +135,7 @@
         // Check upload information
 
         if ($uploadOk == 1) {
-            $query = "INSERT INTO solicitudes (nombre, apaterno, amaterno, sexo, fecha, pais, estado, municipio, email, escolaridad, ocupacion, empresa, cargo, usoinfo, fininfo, nproyecto, infosol, fsolicitud) VALUES ('".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$fecha."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."')";
+            $query = "INSERT INTO solicitudes (nombre, apaterno, amaterno, sexo, fecha, pais, estado, municipio, email, escolaridad, ocupacion, empresa, cargo, usoinfo, fininfo, nproyecto, infosol, fsolicitud) VALUES ('".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$dateBirth."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."', NOW())";
             $result = mysql_query($query);
             if (!$result) {
                     die('Invalid query: ' . mysql_error());
@@ -232,7 +229,7 @@
                 if (str == "Uso Profesional") {
                     document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"T_Licenciatura\">Tesis Licenciatura</option><option value=\"T_Maestria\">Tesis Maestría</option><option value=\"T_Doctorado\">Tesis Doctorado</option></select>";
                 }else{
-                    document.getElementById("tipoInformacion").innerHTML = "";
+                    document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"T_Licenciatura\">No Aplica</option></select>";
                 }
             }
 
