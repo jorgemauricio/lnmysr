@@ -19,22 +19,30 @@
     $tipoInformacion = utf8_decode($_GET['tipoInformacion']);
     $nombreProyecto = utf8_decode($_GET['nombreProyecto']);
     $informacionSolicitada = utf8_decode($_GET['informacionSolicitada']);
+    $fsolicitud = utf8_decode($_GET['fsolicitud']);
     $noSolicitud = utf8_decode($_GET['noSolicitud']);
     // PDF Class
     class PDF extends FPDF
     {
         // Cabecera de página
         function Header(){
-            // Logo
-            $this->Image('fpdf17/header_4.png',5,8,200);
-            // Arial bold 12
-            $this->SetFont('Arial','B',12);
-            // Movernos a la derecha
-            $this->Cell(80);
-            // Título
-            $this->Cell(30,50,'FORMATO PARA LA SOLICITUD DE INFORMACIÓN CLIMATOLÓGICA DEL INIFAP',0,0,'C');
-            // Salto de línea
-            $this->Ln(30);
+            if($this->PageNo()==1)
+		    {
+			    // Logo
+	            $this->Image('fpdf17/header_4.png',5,8,200);
+	            // Arial bold 12
+	            $this->SetFont('Arial','B',12);
+	            // Movernos a la derecha
+	            $this->Cell(80);
+	            // Título
+	            $this->Cell(30,50,'FORMATO PARA LA SOLICITUD DE INFORMACIÓN CLIMATOLÓGICA DEL INIFAP',0,0,'C');
+	            // Salto de línea
+	            $this->Ln(30);
+		    }
+		    else
+		    {
+		        
+		    }
         }
         // Pie de página
         function Footer()
@@ -81,6 +89,9 @@
     $pdf->Cell(30,20,'No. Solicitud: '.$noSolicitud,0,0,'C');
     $pdf->Ln(10);
     $pdf->Cell(80);
+    $pdf->Cell(30,20,'Fecha de Solicitud: '.$fsolicitud,0,0,'C');
+    $pdf->Ln(10);
+    $pdf->Cell(80);
     $pdf->Cell(30,20,'Datos del solicitante',0,0,'C');
 	$pdf->Ln(15);
     $pdf->SetFont('Times','',10);
@@ -103,6 +114,22 @@
     $pdf->MultiCell(0,5,'Información que solicita: '.$informacionSolicitada,0,1);
     $pdf->Ln(10);
     $pdf->PrintAviso();
+    $pdf->SetFont('Times','',10);
+    $pdf->Ln(20);
+    $pdf->Cell(80);
+    $pdf->Cell(30,20,'_____________________________________________',0,0,'C');
+    $pdf->Ln(10);
+    $pdf->Cell(80);
+    $pdf->Cell(30,20,'Nombre y firma de quien recibe la información',0,0,'C');
+    $pdf->Ln(20);
+    $pdf->Cell(80);
+    $pdf->Cell(30,20,'Fecha: '.$fsolicitud,0,0,'C');
+    $pdf->Ln(20);
+    $pdf->Cell(80);
+    $pdf->Cell(30,20,'_____________________________________________',0,0,'C');
+    $pdf->Ln(10);
+    $pdf->Cell(80);
+    $pdf->Cell(30,20,'Nombre y firma de quien entrega la información',0,0,'C');
     // $pdf->Output('/lnmysr/documentos/solicitudes/'.$noSolicitud.'.pdf','I');
     //Determinar un nombre temporal de fichero en el directorio actual
 	$file = '../lnmysr/documentos/solicitudes/'.$noSolicitud.'.pdf';

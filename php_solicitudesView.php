@@ -22,9 +22,9 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>No. Solicitud</th>
+                <th>#</th>
                 <th>Nombre</th>
-                <th>Apellido Paterno</th>
+                <th>A. Paterno</th>
                 <th>Email</th>
                 <th>Documento</th>
               </tr>
