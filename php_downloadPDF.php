@@ -2,24 +2,24 @@
 	include_once('php_dbinfo.php'); 
 	include_once('fpdf17/fpdf.php');
     // Declare Variables
-    $nombre = $_GET['nombre'];
-    $apaterno = $_GET['apaterno'];
-    $amaterno = $_GET['amaterno'];
-    $sexo = $_GET['sexo'];
-    $dateBirth = $_GET['dateBirth'];
-    $pais = $_GET['pais'];
-    $estado = $_GET['estado'];
-    $municipio = $_GET['municipio'];
-    $email = $_GET['email'];
-    $escolaridad = $_GET['escolaridad'];
-    $ocupacion = $_GET['ocupacion'];
-    $empresa = $_GET['empresa'];
-    $cargo = $_GET['cargo'];
-    $usoInformacion = $_GET['usoInformacion'];
-    $tipoInformacion = $_GET['tipoInformacion'];
-    $nombreProyecto = $_GET['nombreProyecto'];
-    $informacionSolicitada = $_GET['informacionSolicitada'];
-    $noSolicitud = $_GET['noSolicitud'];
+    $nombre = utf8_decode($_GET['nombre']);
+    $apaterno = utf8_decode($_GET['apaterno']);
+    $amaterno = utf8_decode($_GET['amaterno']);
+    $sexo = utf8_decode($_GET['sexo']);
+    $dateBirth = utf8_decode($_GET['dateBirth']);
+    $pais = utf8_decode($_GET['pais']);
+    $estado = utf8_decode($_GET['estado']);
+    $municipio = utf8_decode($_GET['municipio']);
+    $email = utf8_decode($_GET['email']);
+    $escolaridad = utf8_decode($_GET['escolaridad']);
+    $ocupacion = utf8_decode($_GET['ocupacion']);
+    $empresa = utf8_decode($_GET['empresa']);
+    $cargo = utf8_decode($_GET['cargo']);
+    $usoInformacion = utf8_decode($_GET['usoInformacion']);
+    $tipoInformacion = utf8_decode($_GET['tipoInformacion']);
+    $nombreProyecto = utf8_decode($_GET['nombreProyecto']);
+    $informacionSolicitada = utf8_decode($_GET['informacionSolicitada']);
+    $noSolicitud = utf8_decode($_GET['noSolicitud']);
     // PDF Class
     class PDF extends FPDF
     {
@@ -51,19 +51,20 @@
 		    $this->SetFont('Times','',12);
 		    $this->Cell(80);
 		    // Acuerdo
-		    $this->Cell(30,20,'Está de acuerdo con las condiciones de uso de información de la Red de Estaciones Agroclimatológicas:',0,0,'C');
+		    $this->Cell(30,10,'Está de acuerdo con las condiciones de uso de información de la Red de Estaciones Agroclimatológicas:',0,0,'C');
 		    $this->Ln(10);
 		    $this->Cell(80);
 		    // SI
-		    $this->Cell(30,20,'SI',0,0,'C');
+		    $this->Cell(30,10,'SI',1,0,'C');
 		    $this->Ln(10);
 		    $this->Cell(80);
+		    $this->SetFont('Times','',6);
 		    // Title Acuerdo para el solicitante
-		    $this->Cell(30,20,'ACUERDO PARA EL SOLICITANTE',0,0,'C');
-		    $this->Ln(20);
+		    $this->Cell(30,10,'ACUERDO PARA EL SOLICITANTE',0,0,'C');
+		    $this->Ln(10);
 		    // Body Acuerdo para el solicitante
 		    // Read text file
-		    $txt = file_get_contents('fpdf17/aviso.txt');
+		    $txt = utf8_decode(file_get_contents('fpdf17/aviso.txt'));
 		    // Times 12
 		    $this->SetFont('Times','',6);
 		    // Output justified text
@@ -82,27 +83,33 @@
     $pdf->Cell(80);
     $pdf->Cell(30,20,'Datos del solicitante',0,0,'C');
 	$pdf->Ln(15);
-    $pdf->SetFont('Times','',12);
-    $pdf->Cell(0,10,'Nombre(s): '.$nombre,0,1);
-    $pdf->Cell(0,10,'Apellido Paterno: '.$apaterno,0,1);
-    $pdf->Cell(0,10,'Apellido Materno: '.$amaterno,0,1);
-    $pdf->Cell(0,10,'Sexo: '.$sexo,0,1);
-    $pdf->Cell(0,10,'Fecha de Nacimiento: '.$dateBirth,0,1);
-    $pdf->Cell(0,10,'País: '.$pais,0,1);
-    $pdf->Cell(0,10,'Estado: '.$estado,0,1);
-    $pdf->Cell(0,10,'Municipio: '.$municipio,0,1);
-    $pdf->Cell(0,10,'Email: '.$email,0,1);
-    $pdf->Cell(0,10,'Escolaridad: '.$escolaridad,0,1);
-    $pdf->Cell(0,10,'Ocupación: '.$ocupacion,0,1);
-    $pdf->Cell(0,10,'Institución o Empresa: '.$empresa,0,1);
-    $pdf->Cell(0,10,'Cargo: '.$cargo,0,1);
-    $pdf->Cell(0,10,'Uso de la información: '.$usoInformacion,0,1);
-    $pdf->Cell(0,10,'Fines de uso: '.$tipoInformacion,0,1);
-    $pdf->Cell(0,10,'Nombre del Proyecto: '.$nombreProyecto,0,1);
-    $pdf->MultiCell(0,10,'Información que solicita: '.$informacionSolicitada,0,1);
+    $pdf->SetFont('Times','',10);
+    $pdf->Cell(0,5,'Nombre(s): '.$nombre,0,1);
+    $pdf->Cell(0,5,'Apellido Paterno: '.$apaterno,0,1);
+    $pdf->Cell(0,5,'Apellido Materno: '.$amaterno,0,1);
+    $pdf->Cell(0,5,'Sexo: '.$sexo,0,1);
+    $pdf->Cell(0,5,'Fecha de Nacimiento: '.$dateBirth,0,1);
+    $pdf->Cell(0,5,'País: '.$pais,0,1);
+    $pdf->Cell(0,5,'Estado: '.$estado,0,1);
+    $pdf->Cell(0,5,'Municipio: '.$municipio,0,1);
+    $pdf->Cell(0,5,'Email: '.$email,0,1);
+    $pdf->Cell(0,5,'Escolaridad: '.$escolaridad,0,1);
+    $pdf->Cell(0,5,'Ocupación: '.$ocupacion,0,1);
+    $pdf->Cell(0,5,'Institución o Empresa: '.$empresa,0,1);
+    $pdf->Cell(0,5,'Cargo: '.$cargo,0,1);
+    $pdf->Cell(0,5,'Uso de la información: '.$usoInformacion,0,1);
+    $pdf->Cell(0,5,'Fines de uso: '.$tipoInformacion,0,1);
+    $pdf->Cell(0,5,'Nombre del Proyecto: '.$nombreProyecto,0,1);
+    $pdf->MultiCell(0,5,'Información que solicita: '.$informacionSolicitada,0,1);
     $pdf->Ln(10);
     $pdf->PrintAviso();
-    $pdf->Output();
+    // $pdf->Output('/lnmysr/documentos/solicitudes/'.$noSolicitud.'.pdf','I');
+    //Determinar un nombre temporal de fichero en el directorio actual
+	$file = '../lnmysr/documentos/solicitudes/'.$noSolicitud.'.pdf';
+	//Guardar el PDF en un fichero
+	$pdf->Output($file, 'F');
+	//Redirección
+	header('Location: '.$file);
 ?>
 <!DOCTYPE html>
 <html lang="en">
