@@ -3,6 +3,9 @@
 
     // Declare Global Variables
     $uploadOk = null;
+    $nameEstado = null;
+    $nameMunicipio = null;
+    $noSolicitud = null;
     if(isset($_POST["submit"])){
         // Declare variables
         $nombre = $_POST['nombre'];
@@ -122,9 +125,32 @@
             if (!$result) {
                     die('Invalid query: ' . mysql_error());
             }else{
+                $noSolicitud = mysql_insert_id();
                 //echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 //<strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
-                $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$estado."&municipio=".$municipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today;
+                //Get Name from Estados
+                $queryE  = "SELECT nombre FROM estados where indice = '".$estado."'";
+                $resultE = mysql_query($queryE);
+                if(!$resultE){
+                    die('Invalid query: ' . mysql_error());
+                }else{
+                    while($row= mysql_fetch_array($resultE)){
+                        $nameEstado = $row['nombre'];
+                    }
+                }
+                echo $nameEstado;
+                //Get Name from Municipios
+                $queryM  = "SELECT nombre FROM municipios where indice = '".$municipio."'";
+                $resultM = mysql_query($queryM);
+                if(!$resultM){
+                    die('Invalid query: ' . mysql_error());
+                }else{
+                    while($row= mysql_fetch_array($resultM)){
+                        $nameMunicipio = $row['nombre'];
+                    }
+                }
+                echo $nameMunicipio;
+                $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$nameEstado."&municipio=".$nameMunicipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today."&noSolicitud=".$noSolicitud;
                 header($requestToSend);
             }     
         }
@@ -212,7 +238,7 @@
                 if (str == "Uso Profesional") {
                     document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"Tesis Licenciatura\">Tesis Licenciatura</option><option value=\"Tesis Maestría\">Tesis Maestría</option><option value=\"Tesis Doctorado\">Tesis Doctorado</option></select>";
                 }else{
-                    document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"T_Licenciatura\">No Aplica</option></select>";
+                    document.getElementById("tipoInformacion").innerHTML = "<label for=\"tipoInformacion\">Tipo de Uso</label><select class=\"form-control\" id=\"tipoInformacion\" name=\"tipoInformacion\"><option value=\"No Aplica\">No Aplica</option></select>";
                 }
             }
 

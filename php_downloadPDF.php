@@ -1,4 +1,5 @@
-<?php 
+<?php
+	include_once('php_dbinfo.php'); 
 	include_once('fpdf17/fpdf.php');
     // Declare Variables
     $nombre = $_GET['nombre'];
@@ -18,6 +19,7 @@
     $tipoInformacion = $_GET['tipoInformacion'];
     $nombreProyecto = $_GET['nombreProyecto'];
     $informacionSolicitada = $_GET['informacionSolicitada'];
+    $noSolicitud = $_GET['noSolicitud'];
     // PDF Class
     class PDF extends FPDF
     {
@@ -33,14 +35,6 @@
             $this->Cell(30,50,'FORMATO PARA LA SOLICITUD DE INFORMACIÓN CLIMATOLÓGICA DEL INIFAP',0,0,'C');
             // Salto de línea
             $this->Ln(30);
-            // Num de solicitud
-            $this->Cell(0,0, "Numero de solicitud:", 0, 0 , 'C');
-            // Salto de línea
-            $this->Ln(5);
-            // Datos del solicitante
-            $this->Cell(0,0, "Datos del solicitante", 0, 0 , 'C');
-            // Salto de línea
-            $this->Ln(5);
         }
         // Pie de página
         function Footer()
@@ -82,6 +76,12 @@
     $pdf = new PDF();
     $pdf->AliasNbPages();
     $pdf->AddPage();
+    $pdf->Cell(80);
+    $pdf->Cell(30,20,'No. Solicitud: '.$noSolicitud,0,0,'C');
+    $pdf->Ln(10);
+    $pdf->Cell(80);
+    $pdf->Cell(30,20,'Datos del solicitante',0,0,'C');
+	$pdf->Ln(15);
     $pdf->SetFont('Times','',12);
     $pdf->Cell(0,10,'Nombre(s): '.$nombre,0,1);
     $pdf->Cell(0,10,'Apellido Paterno: '.$apaterno,0,1);
