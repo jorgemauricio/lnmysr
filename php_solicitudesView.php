@@ -26,6 +26,7 @@
                 <th>Nombre</th>
                 <th>A. Paterno</th>
                 <th>Email</th>
+                <th>Fecha de solicitud</th>
                 <th>Documento</th>
               </tr>
             </thead>
@@ -49,6 +50,9 @@
                                 echo ' </td> ';
                                 echo ' <td> ';
                                 echo $row['email'];
+                                echo ' </td> ';
+                                echo ' <td> ';
+                                echo $row['fsolicitud'];
                                 echo ' </td> ';
                                 echo '<td><a href="';
                                 echo '/lnmysr/documentos/Solicitudes/';
