@@ -18,6 +18,4 @@
         echo $row['nombre'];
         echo '</option>';
     }
-    echo '<option value="99">Otro</option>'
-     
 ?>

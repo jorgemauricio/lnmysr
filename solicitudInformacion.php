@@ -176,6 +176,7 @@
             //<![CDATA[
 
             // Declare variables
+            var pais;
             var estado;
             var estacion;
             var municipio;
@@ -210,23 +211,31 @@
 
             function doNothing() {}
 
+            function selectEstado(str){
+                console.log(str);
+                pais = str;
+                if (pais == "Mexico") {
+                    document.getElementById("estadoSelect").innerHTML = '<label for=\"estado\">Estado:</label><select onchange=\"selectMunicipio(this.value)\" class=\"form-control\" id=\"estado\" name=\"estado\"><?php include_once('php_getEstadosSolicitud.php');?></select>'; 
+                }else{
+                    document.getElementById("estadoSelect").innerHTML = '';
+                    document.getElementById("MunicipioSelect").innerHTML = '';
+                    document.getElementById("estadoInput").innerHTML = '<label for=\"estado\">Estado:</label><input type=\"text\" class=\"form-control\" name=\"estado\">';
+                    document.getElementById("MunicipioInput").innerHTML = '<label for=\"municipio\">Municipio:</label><input type=\"text\" class=\"form-control\" name=\"municipio\">';
+                }
+            }
+
             function selectMunicipio(str){
                 estado = str;
-                if (estado == "99") {
-                    document.getElementById("MunicipioInput").innerHTML = "<label for=\"municipio\">Municipio:</label><input type=\"text\" class=\"form-control\" name=\"municipio\">";
-                }else{
-                    
-                }
-                    urlRequestMunicipios = "php_getMunicipiosSolicitudInformacion.php?estado=" + estado;
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = function() {
-                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                            document.getElementById("MunicipioSelect").innerHTML = xmlhttp.responseText;
-                        }
+                urlRequestMunicipios = "php_getMunicipiosSolicitudInformacion.php?estado=" + estado;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        document.getElementById("MunicipioSelect").innerHTML = xmlhttp.responseText;
                     }
-                    xmlhttp.open("GET", urlRequestMunicipios, true);
-                    xmlhttp.send();
                 }
+                xmlhttp.open("GET", urlRequestMunicipios, true);
+                xmlhttp.send();
+            }
 
             function validationForm(str){
                 
@@ -296,14 +305,14 @@
                         </div>
                         <div class="form-group">
                             <label for="pais">País:</label>
-                            <input type="text" class="form-control" name="pais"> 
-                        </div>
-                       <div class="form-group">
-                            <label for="estado">Estado:</label>
-                            <select onchange="selectMunicipio(this.value)" class="form-control" name="estado">
-                                <?php include_once('php_getEstadosSolicitud.php');?>
+                            <select onchange="selectEstado(this.value)" class="form-control" id="pais" name="pais">
+                                <?php include_once('php_getCountries.php');?>
                             </select> 
                         </div>
+                       <div id="estadoSelect" class="form-group"> 
+                       </div>
+                       <div id="estadoInput" class="form-group">
+                       </div>
                        <div id="MunicipioSelect" class="form-group"> 
                        </div>
                        <div id="MunicipioInput" class="form-group">
