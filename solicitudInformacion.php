@@ -129,29 +129,35 @@
                 //echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 //<strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
                 //Get Name from Estados
-                $queryE  = "SELECT nombre FROM estados where indice = '".$estado."'";
-                $resultE = mysql_query($queryE);
-                if(!$resultE){
-                    die('Invalid query: ' . mysql_error());
+                if ($estado == 99) {
+                    $nameEstado = 'Otro';
+                    $nameMunicipio = $municipio;
+                    $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$nameEstado."&municipio=".$nameMunicipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today."&noSolicitud=".$noSolicitud;
+                    header($requestToSend);
                 }else{
-                    while($row= mysql_fetch_array($resultE)){
-                        $nameEstado = $row['nombre'];
+                    $queryE  = "SELECT nombre FROM estados where indice = '".$estado."'";
+                    $resultE = mysql_query($queryE);
+                    if(!$resultE){
+                        die('Invalid query: ' . mysql_error());
+                    }else{
+                        while($row= mysql_fetch_array($resultE)){
+                            $nameEstado = $row['nombre'];
+                        }
                     }
-                }
-                echo $nameEstado;
-                //Get Name from Municipios
-                $queryM  = "SELECT nombre FROM municipios where indice = '".$municipio."'";
-                $resultM = mysql_query($queryM);
-                if(!$resultM){
-                    die('Invalid query: ' . mysql_error());
-                }else{
-                    while($row= mysql_fetch_array($resultM)){
-                        $nameMunicipio = $row['nombre'];
+                    //Get Name from Municipios
+                    $queryM  = "SELECT nombre FROM municipios where indice = '".$municipio."'";
+                    $resultM = mysql_query($queryM);
+                    if(!$resultM){
+                        die('Invalid query: ' . mysql_error());
+                    }else{
+                        while($row= mysql_fetch_array($resultM)){
+                            $nameMunicipio = $row['nombre'];
+                        }
                     }
+                    $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$nameEstado."&municipio=".$nameMunicipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today."&noSolicitud=".$noSolicitud;
+                    header($requestToSend);
                 }
-                echo $nameMunicipio;
-                $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$nameEstado."&municipio=".$nameMunicipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today."&noSolicitud=".$noSolicitud;
-                header($requestToSend);
+                
             }     
         }
     }
