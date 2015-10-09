@@ -120,7 +120,7 @@
         // Check upload information
         if ($uploadOk == 1) {
             $today = date("Y-m-d H:i:s");  
-            $query = "INSERT INTO solicitudes (nombre, apaterno, amaterno, sexo, fecha, pais, estado, municipio, email, escolaridad, ocupacion, empresa, cargo, usoinfo, fininfo, nproyecto, infosol, fsolicitud) VALUES ('".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$dateBirth."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."','".$today."')";
+            echo $query = "INSERT INTO solicitudes (nombre, apaterno, amaterno, sexo, fecha, pais, estado, municipio, email, escolaridad, ocupacion, empresa, cargo, usoinfo, fininfo, nproyecto, infosol, fsolicitud) VALUES ('".$nombre."','".$apaterno."','".$amaterno."','".$sexo."','".$dateBirth."','".$pais."','".$estado."','".$municipio."','".$email."','".$escolaridad."','".$ocupacion."','".$empresa."','".$cargo."','".$usoInformacion."','".$tipoInformacion."','".$nombreProyecto."','".$informacionSolicitada."','".$today."')";
             $result = mysql_query($query);
             if (!$result) {
                     die('Invalid query: ' . mysql_error());
@@ -129,12 +129,7 @@
                 //echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 //<strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
                 //Get Name from Estados
-                if ($estado == 99) {
-                    $nameEstado = 'Otro';
-                    $nameMunicipio = $municipio;
-                    $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$nameEstado."&municipio=".$nameMunicipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today."&noSolicitud=".$noSolicitud;
-                    header($requestToSend);
-                }else{
+                if ($pais == 'Mexico') {
                     $queryE  = "SELECT nombre FROM estados where indice = '".$estado."'";
                     $resultE = mysql_query($queryE);
                     if(!$resultE){
@@ -154,6 +149,11 @@
                             $nameMunicipio = $row['nombre'];
                         }
                     }
+                    $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$nameEstado."&municipio=".$nameMunicipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today."&noSolicitud=".$noSolicitud;
+                    header($requestToSend);
+                }else{
+                    $nameEstado = $estado;
+                    $nameMunicipio = $municipio;
                     $requestToSend = "Location: php_downloadPDF.php?nombre=".$nombre."&apaterno=".$apaterno."&amaterno=".$amaterno."&sexo=".$sexo."&dateBirth=".$dateBirth."&pais=".$pais."&estado=".$nameEstado."&municipio=".$nameMunicipio."&email=".$email."&escolaridad=".$escolaridad."&ocupacion=".$ocupacion."&empresa=".$empresa."&cargo=".$cargo."&usoInformacion=".$usoInformacion."&tipoInformacion=".$tipoInformacion."&nombreProyecto=".$nombreProyecto."&informacionSolicitada=".$informacionSolicitada."&fsolicitud=".$today."&noSolicitud=".$noSolicitud;
                     header($requestToSend);
                 }
@@ -212,10 +212,11 @@
             function doNothing() {}
 
             function selectEstado(str){
-                console.log(str);
                 pais = str;
                 if (pais == "Mexico") {
                     document.getElementById("estadoSelect").innerHTML = '<label for=\"estado\">Estado:</label><select onchange=\"selectMunicipio(this.value)\" class=\"form-control\" id=\"estado\" name=\"estado\"><?php include_once('php_getEstadosSolicitud.php');?></select>'; 
+                    document.getElementById("estadoInput").innerHTML = '';
+                    document.getElementById("MunicipioInput").innerHTML = '';
                 }else{
                     document.getElementById("estadoSelect").innerHTML = '';
                     document.getElementById("MunicipioSelect").innerHTML = '';
