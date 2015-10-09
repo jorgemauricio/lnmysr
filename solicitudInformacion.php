@@ -126,8 +126,6 @@
                     die('Invalid query: ' . mysql_error());
             }else{
                 $noSolicitud = mysql_insert_id();
-                //echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                //<strong>La solicitud de información se realizó satisfactoriamente.</strong></div>';
                 //Get Name from Estados
                 if ($pais == 'Mexico') {
                     $queryE  = "SELECT nombre FROM estados where indice = '".$estado."'";
