@@ -3,6 +3,8 @@
     
     // Declare variables
     $lastValueValitation = 0;
+    $pp = null;
+    $counter = null;
     // GET Variables
     $estado = $_GET['estado'];
     $municipio = $_GET['municipio'];
@@ -155,18 +157,83 @@
         echo '</div>';
         echo '</div>';
     }
-    // Datos Estadísticos
-    $query  = "SELECT * FROM estado".$estado. "diarios where numero=".$estacion." order by fecha desc limit 1";
+    // Datos Estadísticos día anterior
+    $query  = "select * FROM estado".$estado. "diarios where numero=".$estacion." order by fecha desc limit 1";
     $result = mysql_query($query);
     if (!$result) {
-      die('Invalid query: ' . mysql_error());
+        die('Invalid query: ' . mysql_error());
     }else{
         while ($row = mysql_fetch_array($result)) {
-
+            echo '<div class="container">
+                    <h4 class="text-center">Datos Estadísticos</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Pp</th>
+                                <th>T. Máx</th>
+                                <th>T. Mín</th>
+                                <th>T. Med</th>
+                                <th>HR</th>
+                                <th>VV</th>
+                                <th>DV</th>
+                            </tr>
+                        </thead>';
+            echo '<tbody>
+                        <tr>
+                            <td>Ayer '.$row['fecha'].'</td>
+                            <td>'.$row['prec'].'</td>
+                            <td>'.$row['tmax'].'</td>
+                            <td>'.$row['tmin'].'</td>
+                            <td>'.$row['tmed'].'</td>
+                            <td>'.$row['humr'].'</td>
+                            <td>'.$row['velv'].'</td>
+                            <td>'.$row['dirv'].'</td>
+                        </tr>';
+        }
+    }
+    // Datos Estadísticos (Pp) últimos 8 días
+    $query  = "Select sum(prec) as pp from (select * FROM estado".$estado. "diarios where numero=".$estacion." order by fecha desc limit 9) as total";
+    $result = mysql_query($query);
+    if (!$result) {
+        die('Invalid query: ' . mysql_error());
+    }else{
+        while ($row = mysql_fetch_array($result)) {
+            $pp = $row['pp'];
+        }
+    }
+    $counter = 1;
+    // Datos Estadísticos variables que restan de los últimos 8 días
+    $query  = "select * from estado".$estado."diarios where numero=".$estacion." order by fecha desc limit 9";
+    $result = mysql_query($query);
+    if (!$result) {
+        die('Invalid query: ' . mysql_error());
+    }else{
+        while ($row = mysql_fetch_array($result)) {
+            if ($counter == 9) {
+                echo '<tr>
+                        <td>'.$row['fecha'].'</td>
+                        <td>'.$pp.'</td>
+                        <td>'.$row['tmax'].'</td>
+                        <td>'.$row['tmin'].'</td>
+                        <td>'.$row['tmed'].'</td>
+                        <td>'.$row['humr'].'</td>
+                        <td>'.$row['velv'].'</td>
+                        <td>'.$row['dirv'].'</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>';
+                $counter = 1;
+            }else{
+                $counter = $counter + 1;
+            }
+            
         }
     }
     // Echo tabla de abreviaturas
     echo '<div class="container">
+          <h4 class="text-center">Referencia</h4>
                <table class="table">
                    <thead>
                         <tr>
