@@ -151,10 +151,19 @@
                     </div>';
                 }
     }
-
     if ($lastValueValitation == 0) {
         echo '</div>';
         echo '</div>';
+    }
+    // Datos Estadísticos
+    $query  = "SELECT * FROM estado".$estado. "diarios where numero=".$estacion." order by fecha desc limit 1";
+    $result = mysql_query($query);
+    if (!$result) {
+      die('Invalid query: ' . mysql_error());
+    }else{
+        while ($row = mysql_fetch_array($result)) {
+
+        }
     }
     // Echo tabla de abreviaturas
     echo '<div class="container">
