@@ -96,7 +96,7 @@
             echo '</div>';
             echo '<br>';
             echo '<div class="container">
-                        <table class="table">
+                        <table class="table  table-striped">
                             <thead>
                                 <tr>
                                     <th>Variables</th>
@@ -166,7 +166,7 @@
         while ($row = mysql_fetch_array($result)) {
             echo '<div class="container">
                     <h4 class="text-center">Datos Estadísticos</h4>
-                    <table class="table">
+                    <table class="table  table-striped">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -227,8 +227,7 @@
                 $counter = 1;
             }else{
                 $counter = $counter + 1;
-            }
-            
+            } 
         }
     }
     // Historicos button
@@ -242,7 +241,7 @@
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <h4 class="text-center">Referencia</h4>
-               <table class="table">
+               <table class="table  table-striped">
                    <thead>
                         <tr>
                             <th>Abreviatura</th>
