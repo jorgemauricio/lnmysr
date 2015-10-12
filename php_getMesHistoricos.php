@@ -6,7 +6,7 @@
     $anio = $_GET['anio'];
     
     // Query
-    $query  = "SELECT extract(month from fecha1) as mes from estado".$estado." where numero=".$estacion." and extract(year from fecha1) =".$anio." group by extract(month from fecha1) order by extract(month from fecha1) asc";
+    $query  = "SELECT extract(month from fecha1) as mes from estado".$estado."diarios where numero=".$estacion." and extract(year from fecha1) =".$anio." group by extract(month from fecha1) order by extract(month from fecha1) asc";
     $result = mysql_query($query);
     if(!$result){
         die('Invalid query: ' . mysql_error());

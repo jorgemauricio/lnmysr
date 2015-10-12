@@ -83,7 +83,7 @@
 
     function displayInfo(str){
         mes = str;
-        urlRequestEstaciones = "php_getMesHistoricos.php?estado=" + estado + "&estacion=" + estacion + "&anio=" + anio + "&mes=" mes;
+        urlRequestEstaciones = "php_getEstacionInfoHistoricos.php?estado=" + estado + "&estacion=" + estacion + "&anio=" + anio + "&mes=" + mes;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -93,7 +93,7 @@
         }
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("answerEstacion").innerHTML = xmlhttp.responseText;
+                document.getElementById("answerInfo").innerHTML = xmlhttp.responseText;
             }
         }
         xmlhttp.open("GET",urlRequestEstaciones,true);
