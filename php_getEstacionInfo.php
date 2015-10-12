@@ -231,6 +231,14 @@
             
         }
     }
+    // Historicos button
+    if(!isset($_SESSION['userLogged'])){
+        
+    }else{
+        echo '<div class="container">
+            <a href="php_datosHistoricos.php?estacion='.$estacion.'" class="btn btn-success">Datos Históricos</a>
+         </div>';
+    }
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <h4 class="text-center">Referencia</h4>
