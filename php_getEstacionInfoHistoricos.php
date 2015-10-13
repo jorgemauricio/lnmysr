@@ -58,7 +58,7 @@
                                 <td>'.$row['et'].'</td>
                                 <td>'.$row['ep'].'</td>
                             </tr>';  
-                        $dataCSV .=  $row['fecha'].",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV(number_format($row['dirvvmax'],2,'.','')).",".TextoDV(number_format($row['dirv'],2,'.','')).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].",". "\n";
+                        $dataCSV .=  trim($row['fecha'],"00:00").",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV(number_format($row['dirvvmax'],2,'.','')).",".TextoDV(number_format($row['dirv'],2,'.','')).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].",". "\n";
         }
     }
     // Query Totales del mes
