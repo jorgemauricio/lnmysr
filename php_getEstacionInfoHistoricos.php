@@ -32,7 +32,7 @@
                             </tr>
                         </thead>
                         <tbody>';
-    // Query
+    // Query historicos diarios del mes seleccionado
     $query = "select * from estado".$estado."diarios where numero =".$estacion." and extract(year from fecha1) =".$anio." and extract(month from fecha1) =".$mes." order by fecha1 asc";
     $result = mysql_query($query);
     if (!$result) {
@@ -47,8 +47,8 @@
                                 <td>'.$row['tmed'].'</td>
                                 <td>'.$row['velvmax'].'</td>
                                 <td>'.$row['velv'].'</td>
-                                <td>'.$row['dirvvmax'].'</td>
-                                <td>'.$row['dirv'].'</td>
+                                <td>'.TextoDV(number_format($row['dirvvmax'],2,'.','')).'</td>
+                                <td>'.TextoDV(number_format($row['dirv'],2,'.','')).'</td>
                                 <td>'.$row['radg'].'</td>
                                 <td>'.$row['humr'].'</td>
                                 <td>'.$row['et'].'</td>
@@ -56,7 +56,30 @@
                             </tr>';   
         }
     }
-
+    // Query Totales del mes
+    $query = "select sum(prec) as precS, avg(tmax) as tmaxA, avg(tmin) as tminA, avg(tmed) as tmedA, avg(velvmax) as velvmaxA, avg(velv) as velvA, avg(dirvvmax) as dirvvmaxA, avg(dirv) as dirvA, avg(radg) as radgA, avg(humr) as humrA, sum(et) as etS, sum(ep) as epS from estado".$estado."diarios where numero =".$estacion." and extract(year from fecha1) =".$anio." and extract(month from fecha1) =".$mes;
+    $result = mysql_query($query);
+    if (!$result) {
+      die('Invalid query: ' . mysql_error());
+    }else{
+        while ($row = mysql_fetch_array($result)){
+                        echo '<tr>
+                                <td><b>Totales</b></td>
+                                <td><b>'.number_format($row['precS'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['tmaxA'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['tminA'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['tmedA'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['velvmaxA'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['velvA'],2,'.','').'</b></td>
+                                <td><b>'.TextoDV(number_format($row['dirvvmaxA'],2,'.','')).'</b></td>
+                                <td><b>'.TextoDV(number_format($row['dirvA'],2,'.','')).'</b></td>
+                                <td><b>'.number_format($row['radgA'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['humrA'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['etS'],2,'.','').'</b></td>
+                                <td><b>'.number_format($row['epS'],2,'.','').'</b></td>
+                            </tr>';   
+        }
+    }
     echo        '</tbody>
             </table>
         </div>';    
@@ -131,3 +154,40 @@
                     </tbody>
                 </table>
             </div>';
+    // Funciones
+    function TextoDV($dv){
+        switch ($dv) {
+                case ($dv >= 0 && $dv <= 44):
+                    $dv = $dv . ' N';
+                    break;
+                case ($dv >= 45 && $dv <= 89):
+                    $dv =  $dv . ' NE';
+                    break;
+                case ($dv >= 90 && $dv <= 134):
+                    $dv =  $dv . ' E';
+                    break;
+                case ($dv >= 135 && $dv <= 179):
+                    $dv =  $dv . ' SE';
+                    break;
+                case ($dv >= 180 && $dv <= 224):
+                    $dv =  $dv . ' S';
+                    break;
+                case ($dv >= 225 && $dv <= 269):
+                    $dv =  $dv . ' SO';
+                    break;
+                case ($dv >= 270 && $dv <= 314):
+                    $dv =  $dv . ' O';
+                    break;
+                case ($dv >= 315 && $dv <= 359):
+                    $dv =  $dv . ' NO';
+                    break;
+                case ($dv == 360):
+                    $dv =  $dv . ' N';
+                    break;
+                default:
+                    $dv = '';
+                    break;
+            }
+        return $dv;   
+    }
+?>
