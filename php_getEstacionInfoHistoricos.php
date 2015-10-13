@@ -10,7 +10,11 @@
     $estacion = $_GET['estacion'];
     $anio = $_GET['anio'];
     $mes = $_GET['mes'];
-
+    $dataCSV = "Fecha, Pp, T. Máx, T. Mín, T. Med, VV Máx, VV, DWW, DV, Rag. G, HR, ET, EP \n";
+    // CSV File Name
+    $fileLocation = "documentos/downloadHistoricos/";
+    $today = date("Y-m-d__H-i-s"); ;
+    $fileNameCSV = "historicos_". $today . "__" . $estado . "_" . $estacion . "_" . $anio . "_" . $mes . "__" . rand() . ".csv";
     // echo historicos del mes
     echo '<div class="container">
                     <table class="table table-condensed">
@@ -40,7 +44,7 @@
     }else{
         while ($row = mysql_fetch_array($result)){
                         echo '<tr>
-                                <td>'.$row['fecha'].'</td>
+                                <td>'.trim($row['fecha'],"00:00").'</td>
                                 <td>'.$row['prec'].'</td>
                                 <td>'.$row['tmax'].'</td>
                                 <td>'.$row['tmin'].'</td>
@@ -53,7 +57,8 @@
                                 <td>'.$row['humr'].'</td>
                                 <td>'.$row['et'].'</td>
                                 <td>'.$row['ep'].'</td>
-                            </tr>';   
+                            </tr>';  
+                        $dataCSV .=  $row['fecha'].",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV(number_format($row['dirvvmax'],2,'.','')).",".TextoDV(number_format($row['dirv'],2,'.','')).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].",". "\n";
         }
     }
     // Query Totales del mes
@@ -77,13 +82,23 @@
                                 <td><b>'.number_format($row['humrA'],2,'.','').'</b></td>
                                 <td><b>'.number_format($row['etS'],2,'.','').'</b></td>
                                 <td><b>'.number_format($row['epS'],2,'.','').'</b></td>
-                            </tr>';   
+                            </tr>';  
+
+                             $dataCSV .=  "Totales".",".$row['precS'].",".$row['tmaxA'].",".$row['tminA'].",".$row['tmedA'].",".$row['velvmaxA'].",".$row['velvA'].",".TextoDV(number_format($row['dirvvmaxA'],2,'.','')).",".TextoDV(number_format($row['dirvA'],2,'.','')).",".$row['radgA'].",".$row['humrA'].",".$row['etS'].",".$row['epS'].",". "\n"; 
         }
     }
+    // Save the csv to directory
+    $handle = fopen($fileLocation.$fileNameCSV,'w');
+    fwrite($handle, $dataCSV);
+    fclose($handle);
+    // Close table
     echo        '</tbody>
             </table>
-        </div>';    
-
+        </div>';
+    // Echo botón descarga de tabla de datos    
+    echo '<div class="container">
+             <a target="_blank" href="'.$fileLocation.$fileNameCSV.'" class="btn btn-success" role="button">Descarga</a>
+        </div>';
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <h4 class="text-center">Referencia</h4>
