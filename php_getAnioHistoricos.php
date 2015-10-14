@@ -5,7 +5,7 @@
     $estacion = $_GET['estacion'];
     
     // Query
-    $query  = "SELECT extract(year from fecha1) as anio from estado".$estado."diarios where numero=".$estacion." group by extract(year from fecha1) order by extract(year from fecha1) asc";
+    $query  = "SELECT extract(year from fecha) as anio from estado".$estado."diarios where numero=".$estacion." group by extract(year from fecha) order by extract(year from fecha) asc";
     $result = mysql_query($query);
     if(!$result){
         die('Invalid query: ' . mysql_error());

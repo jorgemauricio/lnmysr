@@ -35,6 +35,9 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("estacion").innerHTML = xmlhttp.responseText;
+                document.getElementById("anio").innerHTML = "";
+                document.getElementById("mes").innerHTML = "";
+                document.getElementById("answerInfo").innerHTML = "";
             }
         }
         xmlhttp.open("GET",urlRequestEstaciones,true);
@@ -55,6 +58,8 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("anio").innerHTML = xmlhttp.responseText;
+                document.getElementById("mes").innerHTML = "";
+                document.getElementById("answerInfo").innerHTML = "";
             }
         }
         xmlhttp.open("GET",urlRequestEstaciones,true);
@@ -75,6 +80,7 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("mes").innerHTML = xmlhttp.responseText;
+                document.getElementById("answerInfo").innerHTML = "";
             }
         }
         xmlhttp.open("GET",urlRequestEstaciones,true);

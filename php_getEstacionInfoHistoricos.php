@@ -11,6 +11,8 @@
     $anio = $_GET['anio'];
     $mes = $_GET['mes'];
     $dataCSV = "Fecha, Pp, T. Máx, T. Mín, T. Med, VV Máx, VV, DWW, DV, Rag. G, HR, ET, EP \n";
+    $arrayMeses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+    $mesNumero = 0;
     // CSV File Name
     $fileLocation = "documentos/downloadHistoricos/";
     $today = date("Y-m-d__H-i-s"); ;
@@ -37,7 +39,7 @@
                         </thead>
                         <tbody>';
     // Query historicos diarios del mes seleccionado
-    $query = "select * from estado".$estado."diarios where numero =".$estacion." and extract(year from fecha1) =".$anio." and extract(month from fecha1) =".$mes." order by fecha1 asc";
+    $query = "select * from estado".$estado."diarios where numero =".$estacion." and extract(year from fecha) =".$anio." and extract(month from fecha) =".$mes." order by fecha asc";
     $result = mysql_query($query);
     if (!$result) {
       die('Invalid query: ' . mysql_error());
@@ -62,7 +64,7 @@
         }
     }
     // Query Totales del mes
-    $query = "select sum(prec) as precS, avg(tmax) as tmaxA, avg(tmin) as tminA, avg(tmed) as tmedA, avg(velvmax) as velvmaxA, avg(velv) as velvA, avg(dirvvmax) as dirvvmaxA, avg(dirv) as dirvA, avg(radg) as radgA, avg(humr) as humrA, sum(et) as etS, sum(ep) as epS from estado".$estado."diarios where numero =".$estacion." and extract(year from fecha1) =".$anio." and extract(month from fecha1) =".$mes;
+    $query = "select sum(prec) as precS, avg(tmax) as tmaxA, avg(tmin) as tminA, avg(tmed) as tmedA, avg(velvmax) as velvmaxA, avg(velv) as velvA, avg(dirvvmax) as dirvvmaxA, avg(dirv) as dirvA, avg(radg) as radgA, avg(humr) as humrA, sum(et) as etS, sum(ep) as epS from estado".$estado."diarios where numero =".$estacion." and extract(year from fecha) =".$anio." and extract(month from fecha) =".$mes;
     $result = mysql_query($query);
     if (!$result) {
       die('Invalid query: ' . mysql_error());
@@ -98,6 +100,62 @@
     // Echo botón descarga de tabla de datos    
     echo '<div class="container">
              <a target="_blank" href="'.$fileLocation.$fileNameCSV.'" class="btn btn-success" role="button">Descarga</a>
+        </div>';
+    // Echo tabla de promedios mensuales
+    echo '<div class="container">
+            <h4 class="text-center">Promedio Mensual</h4>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Año</th>
+                        <th>Pp</th>
+                        <th>T. Máx</th>
+                        <th>T. Mín</th>
+                        <th>T. Med</th>
+                        <th>VV Máx</th>
+                        <th>VV</th>
+                        <th>DVV Máx</th>
+                        <th>DV</th>
+                        <th>Rag. G</th>
+                        <th>HR</th>
+                        <th>ET</th>
+                        <th>EP</th>
+                    </tr>
+                </thead>
+                <tbody>';
+    // Tabla de promedios mensuales
+    foreach ($arrayMeses as $value) {
+        $query = "select sum(prec) as precS, avg(tmax) as tmaxA, avg(tmin) as tminA, avg(tmed) as tmedA, avg(velvmax) as velvmaxA, avg(velv) as velvA, avg(dirvvmax) as dirvvmaxA, avg(dirv) as dirvA, avg(radg) as radgA, avg(humr) as humrA, sum(et) as etS, sum(ep) as epS from estado".$estado."diarios where numero =".$estacion." and extract(year from fecha) =".$anio." and extract(month from fecha) =".$mesNumero;
+            $result = mysql_query($query);
+            if (!$result) {
+              die('Invalid query: ' . mysql_error());
+            }else{
+                while ($row = mysql_fetch_array($result)){
+                                echo '<tr>
+                                        <td>'.$arrayMeses[$mesNumero].'</b></td>
+                                        <td>'.$anio.'</b></td>
+                                        <td>'.number_format($row['precS'],2,'.','').'</td>
+                                        <td>'.number_format($row['tmaxA'],2,'.','').'</td>
+                                        <td>'.number_format($row['tminA'],2,'.','').'</td>
+                                        <td>'.number_format($row['tmedA'],2,'.','').'</td>
+                                        <td>'.number_format($row['velvmaxA'],2,'.','').'</td>
+                                        <td>'.number_format($row['velvA'],2,'.','').'</td>
+                                        <td>'.TextoDV(number_format($row['dirvvmaxA'],2,'.','')).'</td>
+                                        <td>'.TextoDV(number_format($row['dirvA'],2,'.','')).'</td>
+                                        <td>'.number_format($row['radgA'],2,'.','').'</td>
+                                        <td>'.number_format($row['humrA'],2,'.','').'</td>
+                                        <td>'.number_format($row['etS'],2,'.','').'</td>
+                                        <td>'.number_format($row['epS'],2,'.','').'</td>
+                                    </tr>';  
+                }
+            }
+            $mesNumero = $mesNumero + 1;
+    }
+    
+    // Close table
+    echo        '</tbody>
+            </table>
         </div>';
     // Echo tabla de abreviaturas
     echo '<div class="container">
