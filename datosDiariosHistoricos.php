@@ -111,11 +111,14 @@
   </head>
     <?php include("includes/header.html");?>
     <!-- Validación Acceso -->
+    <!--
     <?php
         if(!isset($_SESSION['userLogged'])){
-            echo '<div class="container">
-                    <div class="jumbotron">
-                        <h3>Para acceder a esta sección debes de entrar al sistema</h3>      
+            echo '<div class="container-fluid"> 
+                    <div class="alert alert-danger">
+                        <strong>Acceso Restringido: </strong>Inicia sesión en el sistema para acceder a esta página.
+                    </div>
+                    <div class="container">   
                         <a href="login.php" class="btn btn-success" role="button">Acceder al sistema</a>
                     </div>
                 </div>';
@@ -129,7 +132,7 @@
                     <div class="form-group">
                             <label for="estado">Estado:</label>
                             <select id="estado" onchange="selectEstacion(this.value)" class="form-control" name="estado">
-                                <?php include_once(\'php_getEstados.php\');?>
+                                <?php include_once("php_getEstados.php");?>
                             </select> 
                     </div>
                     <div class="form-group">
@@ -153,8 +156,11 @@
                 </div>
         </body>';
         }
-    ?>            
-    <!--
+    ?> 
+    
+    -->
+    <!-- Validación Acceso -->   
+    <h1 class="text-center">Red Nacional de Estaciones Agrometeorológicas Automatizadas INIFAP</h1>       
     <div class="container-fluid">
         <body>
             <div class="container">
@@ -162,7 +168,7 @@
                     <div class="form-group">
                             <label for="estado">Estado:</label>
                             <select id="estado" onchange="selectEstacion(this.value)" class="form-control" name="estado">
-                                <?php include_once('php_getEstados.php');?>
+                                <?php include_once("php_getEstados.php");?>
                             </select> 
                     </div>
                     <div class="form-group">
@@ -184,7 +190,7 @@
                 <br>
                 <div id="answerInfo" class="container">
                 </div>
-        </body> -->
+        </body> 
     <?php include("includes/footer.html");?> 
 </html>
 <script>
