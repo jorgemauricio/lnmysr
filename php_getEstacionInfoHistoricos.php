@@ -1,10 +1,14 @@
 <?php
     include_once('php_dbinfo.php');
+    include "libchart/libchart/classes/libchart.php";
     
     // Declare variables
     $lastValueValitation = 0;
     $pp = null;
     $counter = null;
+    // libchart
+    $chart = new VerticalBarChart(800, 600);
+    $dataSet = new XYDataSet();
     // GET Variables
     $estado = $_GET['estado'];
     $estacion = $_GET['estacion'];
@@ -60,6 +64,7 @@
                                 <td>'.$row['et'].'</td>
                                 <td>'.$row['ep'].'</td>
                             </tr>';  
+                        // Data CSV
                         $dataCSV .=  trim($row['fecha'],"00:00").",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV(number_format($row['dirvvmax'],2,'.','')).",".TextoDV(number_format($row['dirv'],2,'.','')).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].",". "\n";
         }
     }
@@ -101,6 +106,7 @@
     echo '<div class="container">
              <a target="_blank" href="'.$fileLocation.$fileNameCSV.'" class="btn btn-success" role="button">Descarga</a>
         </div>';
+    
     // Echo tabla de promedios mensuales
     echo '<div class="container">
             <h4 class="text-center">Promedio Mensual</h4>
@@ -147,7 +153,8 @@
                                         <td>'.number_format($row['humrA'],2,'.','').'</td>
                                         <td>'.number_format($row['etS'],2,'.','').'</td>
                                         <td>'.number_format($row['epS'],2,'.','').'</td>
-                                    </tr>';  
+                                    </tr>'; 
+                                    $dataSet->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['precS'],2,'.','')));
                 }
             }
             $mesNumero = $mesNumero + 1;
@@ -157,6 +164,12 @@
     echo        '</tbody>
             </table>
         </div>';
+    // LibChart
+    $chart ->setDataSet($dataSet);
+    $chart->setTitle("Precipitación Mensual Acumulada");
+    $chart->render("documentos/downloadHistoricos/demo1.png");
+    // Echo Image Chart
+    echo '<img src="documentos/downloadHistoricos/demo1.png" class="img-rounded" alt="Cinque Terre" width="800" height="600">';
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <h4 class="text-center">Referencia</h4>
