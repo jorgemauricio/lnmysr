@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <link href="/LNMYSR/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <title>LNMySR</title>
+    <title><?php session_start();?>LNMySR</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -110,8 +110,51 @@
   </script>
   </head>
     <?php include("includes/header.html");?>
-    <h1 class="text-center">Red Nacional de Estaciones Agrometeorológicas Automatizadas INIFAP</h1>
-    <br>
+    <!-- Validación Acceso -->
+    <?php
+        if(!isset($_SESSION['userLogged'])){
+            echo '<div class="container">
+                    <div class="jumbotron">
+                        <h3>Para acceder a esta sección debes de entrar al sistema</h3>      
+                        <a href="login.php" class="btn btn-success" role="button">Acceder al sistema</a>
+                    </div>
+                </div>';
+        }else{
+                echo '<div class="container-fluid">
+        <h1 class="text-center">Red Nacional de Estaciones Agrometeorológicas Automatizadas INIFAP</h1>
+        <br>
+        <body>
+            <div class="container">
+                <form class="form-horizontal" role="form" action="#" method="post">
+                    <div class="form-group">
+                            <label for="estado">Estado:</label>
+                            <select id="estado" onchange="selectEstacion(this.value)" class="form-control" name="estado">
+                                <?php include_once(\'php_getEstados.php\');?>
+                            </select> 
+                    </div>
+                    <div class="form-group">
+                            <label for="estacion">Estación:</label>
+                            <select onchange="selectAnio(this.value)" class="form-control" id="estacion" name="estacion">
+                            </select> 
+                    </div>
+                    <div class="form-group">
+                            <label for="anio">Año:</label>
+                            <select onchange="selectMonth(this.value)" class="form-control" id="anio" name="anio">
+                            </select> 
+                    </div>
+                    <div class="form-group">
+                            <label for="mes">Mes:</label>
+                            <select onchange="displayInfo(this.value)" class="form-control" id="mes" name="mes">
+                            </select> 
+                    </div>    
+                </form>
+                <br>
+                <div id="answerInfo" class="container">
+                </div>
+        </body>';
+        }
+    ?>            
+    <!--
     <div class="container-fluid">
         <body>
             <div class="container">
@@ -141,7 +184,7 @@
                 <br>
                 <div id="answerInfo" class="container">
                 </div>
-        </body>
+        </body> -->
     <?php include("includes/footer.html");?> 
 </html>
 <script>
