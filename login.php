@@ -32,9 +32,7 @@
                 if (!isset($_SESSION['userLogged'])) {
             
 	                $_SESSION['userLogged'] = $usr;
-	                echo '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	                <strong>Bienvenido</strong></div>';
-	                //header("Location: Index.php");
+	                header("Location: datosDiariosHistoricos.php");
                 }
                 
             }else{

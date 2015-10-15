@@ -31,14 +31,28 @@
                                     <li><a href="pronosticoEstacional.php">Pronóstico estacional</a></li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Estaciones<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="mapaEstaciones.php">Mapa Estaciones</a></li>
-                                    <li><a href="datosDiarios.php">Datos diarios</a></li>
-                                </ul>
-                            </li>
-                            
+                            <!-- Estaciones-->
+                            <!-- Validación inicio de sesión-->
+                             <?php
+                                if(!isset($_SESSION['userLogged'])){
+                                    echo '<li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Estaciones<span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="mapaEstaciones.php">Mapa Estaciones</a></li>
+                                                    <li><a href="datosDiarios.php">Datos diarios</a></li>
+                                                </ul>
+                                        </li>';
+                                }else{
+                                        echo '<li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Estaciones<span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="mapaEstaciones.php">Mapa Estaciones</a></li>
+                                                    <li><a href="datosDiarios.php">Datos diarios</a></li>
+                                                    <li><a href="datosDiariosHistoricos.php">Datos Historicos</a></li>
+                                                </ul>
+                                        </li>';
+                                }
+                            ?>                            
                             <!-- Publicaciones -->
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Publicaciones<span class="caret"></span></a>

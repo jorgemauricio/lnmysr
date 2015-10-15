@@ -1,5 +1,6 @@
 <?php
     include_once('php_dbinfo.php');
+    session_start();
     
     // Declare variables
     $lastValueValitation = 0;
@@ -235,7 +236,7 @@
         
     }else{
         echo '<div class="container">
-            <a href="php_datosHistoricos.php?estacion='.$estacion.'" class="btn btn-success">Datos Históricos</a>
+            <a href="datosDiariosHistoricos.php" class="btn btn-success">Datos Históricos</a>
          </div>';
     }
     // Echo tabla de abreviaturas
