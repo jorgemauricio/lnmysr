@@ -117,7 +117,14 @@
     echo '<div class="container">
              <a target="_blank" href="'.$fileLocation.$fileNameCSV.'.csv" class="btn btn-success" role="button">Descarga</a>
         </div>';
-    
+    // Save Search in the DB
+    $query = "INSERT INTO consultasWeb (fecha, estado, estacion, anio, mes, name) VALUES (NOW(),'".$estado."','".$estacion."','".$anio."','".$mes."','".$fileNameCSV."')";
+    $result = mysql_query($query);
+    if (!$result) {
+      die('Invalid query: ' . mysql_error());
+    }else{
+                      
+    }
     // Echo tabla de promedios mensuales
     echo '<div class="container">
             <h4 class="text-center">Promedio Mensual</h4>
@@ -186,6 +193,16 @@
     echo        '</tbody>
             </table>
         </div>';
+    
+    // ZipArchive
+    $zip = new ZipArchive();
+    $filename = $fileNameCSV.".zip";
+
+    if ($zip->open("documentos/downloadHistoricos/".$fileNameCSV.".zip", ZipArchive::CREATE)!==TRUE) {
+        exit("cannot open <$filename>\n");
+    }
+
+    $zip->addFile("documentos/downloadHistoricos/".$fileNameCSV.".csv");
     // LibChart
     echo '<div class="container">
             <h4 class="text-center">Gráficas Promedio Mensual</h4>
@@ -198,10 +215,11 @@
         $chart->setTitle($arrayVariables[$counter]);
         $chart->render("documentos/downloadHistoricos/".$fileNameCSV."_".$arrayVariables[$counter].".png");
         echo '<div class="col-sm-4">
-                <h6 class="text-center">'.$arrayVariables[$counter].'</h6>
+                <h5 class="text-center">'.$arrayVariables[$counter].'</h5>
                 <img src="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="img-thumbnail" alt="Cinque Terre" width="250" height="150">
                 <a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="btn btn-success btn-xs" role="button">Descarga</a>
                 </div>';
+        $zip->addFile("documentos/downloadHistoricos/".$fileNameCSV."_".$arrayVariables[$counter].".png"); // Add image to the zip file
         if ($counter == 2 || $counter == 5 || $counter == 8) {
             echo '</div>
                     <div class="row">';
@@ -211,6 +229,11 @@
     echo '</div>
             </div>';
     echo '<br>';
+
+    // Zip Archive
+    echo "numfiles: " . $zip->numFiles . "\n";
+    echo "status:" . $zip->status . "\n";
+    $zip->close();
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <h4 class="text-center">Referencia</h4>

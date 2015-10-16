@@ -14,7 +14,7 @@
 <?php include("includes/header.html");?>
 <?php include_once('php_dbinfo.php');?>
 
-    <h1 class="text-center">Notas</h1>
+    <h1 class="text-center">Reporte Históricos</h1>
     <br>
     <div class="container-fluid">
         <body>    
@@ -22,33 +22,50 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Título</th>
-                <th>Documento</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Estación</th>
+                <th>Año</th>
+                <th>Mes</th>
+                <th>Información</th>
               </tr>
             </thead>
             <tbody>
                 <?php
-                            //select all records from notasportada table
-                            $query = 'SELECT * FROM notasportada';
+                            //select all records form tblmember table
+                            $query = 'SELECT * FROM consultasWeb';
                             //execute the query using mysql_query
                             $result = mysql_query($query);
                             //then using while loop, it will display all the records inside the table
                             while ($row = mysql_fetch_array($result)) {
                                 echo ' <tr> ';
                                 echo ' <td> ';
-                                echo $row['titulo'];
+                                echo $row['fecha'];
+                                echo ' </td> ';
+                                echo ' <td>';
+                                echo $row['estado'];
                                 echo ' </td>';
-                                echo '<td><a href="/LNMYSR/documentos/notas/';
-                                echo $row['linkpdf'];
-                                echo '" class="btn btn-success" target="_blank" role="button">Ver</a>';
+                                echo ' <td>';
+                                echo $row['estacion'];
+                                echo ' </td>';
+                                echo ' <td>';
+                                echo $row['anio'];
+                                echo ' </td>';
+                                echo ' <td>';
+                                echo $row['mes'];
+                                echo ' </td>';
+                                echo '<td><a href="/LNMYSR/documentos/downloadHistoricos/';
+                                echo $row['name'];
+                                echo '.zip" class="btn btn-success" target="_blank" role="button">Ver</a>';
                                 echo '</td>';
                             }   
+ 
                 ?>
             </tbody>
           </table>
         </div>
-        </body>
     </div>
+</body>
 <?php include("includes/footer.html");?> 
 </html>
 
