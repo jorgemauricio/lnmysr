@@ -34,6 +34,7 @@
     $fileNameCSV = "historicos_". $today . "__" . $estado . "_" . $estacion . "_" . $anio . "_" . $mes . "__" . rand();
     // echo historicos del mes
     echo '<div class="container">
+                    <h4 class="text-center">Datos Diarios Mensuales</h4>
                     <table class="table table-condensed">
                         <thead>
                             <tr>
@@ -227,15 +228,15 @@
         $counter = $counter + 1;
     }
     echo '</div>
-            </div>';
-    echo '<br>';
+            </div>
+            <br>';
 
     // Zip Archive
-    echo "numfiles: " . $zip->numFiles . "\n";
-    echo "status:" . $zip->status . "\n";
     $zip->close();
+    echo '<a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV.'.zip" class="btn btn-success" role="button">Descarga Archivo ZIP</a>';
     // Echo tabla de abreviaturas
     echo '<div class="container">
+          <br>
           <h4 class="text-center">Referencia</h4>
                <table class="table  table-striped">
                    <thead>
