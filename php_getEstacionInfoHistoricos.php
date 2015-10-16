@@ -5,22 +5,33 @@
     // Declare variables
     $lastValueValitation = 0;
     $pp = null;
-    $counter = null;
+    $counter = 0;
     // libchart
-    $chart = new VerticalBarChart(800, 600);
-    $dataSet = new XYDataSet();
+    $serie1 = new XYDataSet();
+    $serie2 = new XYDataSet();
+    $serie3 = new XYDataSet();
+    $serie4 = new XYDataSet();
+    $serie5 = new XYDataSet();
+    $serie6 = new XYDataSet();
+    $serie7 = new XYDataSet();
+    $serie8 = new XYDataSet();
+    $serie9 = new XYDataSet();
+    $serie10 = new XYDataSet();
+    $serie11 = new XYDataSet();
+    $serie12 = new XYDataSet();
     // GET Variables
     $estado = $_GET['estado'];
     $estacion = $_GET['estacion'];
     $anio = $_GET['anio'];
     $mes = $_GET['mes'];
-    $dataCSV = "Fecha, Pp, T. Máx, T. Mín, T. Med, VV Máx, VV, DWW, DV, Rag. G, HR, ET, EP \n";
+    $dataCSV = "Fecha, Pp, T_Max, T_Min, T_Med, VV_Max, VV, DWW, DV, Rag_G, HR, ET, EP \n";
+    $arrayVariables = array("Pp","T_Max", "T_Min", "T_Med", "VV_Max", "VV", "DWW", "DV", "Rag_G", "HR", "ET", "EP");
     $arrayMeses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
     $mesNumero = 0;
     // CSV File Name
     $fileLocation = "documentos/downloadHistoricos/";
-    $today = date("Y-m-d__H-i-s"); ;
-    $fileNameCSV = "historicos_". $today . "__" . $estado . "_" . $estacion . "_" . $anio . "_" . $mes . "__" . rand() . ".csv";
+    $today = date("Y-m-d_H-i-s"); ;
+    $fileNameCSV = "historicos_". $today . "__" . $estado . "_" . $estacion . "_" . $anio . "_" . $mes . "__" . rand();
     // echo historicos del mes
     echo '<div class="container">
                     <table class="table table-condensed">
@@ -95,7 +106,7 @@
         }
     }
     // Save the csv to directory
-    $handle = fopen($fileLocation.$fileNameCSV,'w');
+    $handle = fopen($fileLocation.$fileNameCSV.".csv",'w');
     fwrite($handle, $dataCSV);
     fclose($handle);
     // Close table
@@ -104,7 +115,7 @@
         </div>';
     // Echo botón descarga de tabla de datos    
     echo '<div class="container">
-             <a target="_blank" href="'.$fileLocation.$fileNameCSV.'" class="btn btn-success" role="button">Descarga</a>
+             <a target="_blank" href="'.$fileLocation.$fileNameCSV.'.csv" class="btn btn-success" role="button">Descarga</a>
         </div>';
     
     // Echo tabla de promedios mensuales
@@ -154,22 +165,52 @@
                                         <td>'.number_format($row['etS'],2,'.','').'</td>
                                         <td>'.number_format($row['epS'],2,'.','').'</td>
                                     </tr>'; 
-                                    $dataSet->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['precS'],2,'.','')));
+                                    $serie1->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['precS'],2,'.','')));
+                                    $serie2->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['tmaxA'],2,'.','')));
+                                    $serie3->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['tminA'],2,'.','')));
+                                    $serie4->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['tmedA'],2,'.','')));
+                                    $serie5->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['velvmaxA'],2,'.','')));
+                                    $serie6->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['velvA'],2,'.','')));
+                                    $serie7->addPoint(new Point($arrayMeses[$mesNumero],TextoDV(number_format($row['dirvvmaxA'],2,'.',''))));
+                                    $serie8->addPoint(new Point($arrayMeses[$mesNumero],TextoDV(number_format($row['dirvA'],2,'.',''))));
+                                    $serie9->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['radgA'],2,'.','')));
+                                    $serie10->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['humrA'],2,'.','')));
+                                    $serie11->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['etS'],2,'.','')));
+                                    $serie12->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['epS'],2,'.','')));
                 }
             }
             $mesNumero = $mesNumero + 1;
     }
-    
+    $tempArray = array($serie1, $serie2, $serie3, $serie4, $serie5, $serie6, $serie7, $serie8, $serie9, $serie10, $serie11, $serie12);
     // Close table
     echo        '</tbody>
             </table>
         </div>';
     // LibChart
-    $chart ->setDataSet($dataSet);
-    $chart->setTitle("Precipitación Mensual Acumulada");
-    $chart->render("documentos/downloadHistoricos/demo1.png");
-    // Echo Image Chart
-    echo '<img src="documentos/downloadHistoricos/demo1.png" class="img-rounded" alt="Cinque Terre" width="800" height="600">';
+    echo '<div class="container">
+            <h4 class="text-center">Gráficas Promedio Mensual</h4>
+            <div class="row">';
+    foreach ($arrayVariables as $value) {
+        $chart = new LineChart(800, 600);
+        $dataSet = new XYSeriesDataSet();
+        $dataSet->addSerie($arrayVariables[$counter], $tempArray[$counter]);
+        $chart ->setDataSet($dataSet);
+        $chart->setTitle($arrayVariables[$counter]);
+        $chart->render("documentos/downloadHistoricos/".$fileNameCSV."_".$arrayVariables[$counter].".png");
+        echo '<div class="col-sm-4">
+                <h6 class="text-center">'.$arrayVariables[$counter].'</h6>
+                <img src="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="img-thumbnail" alt="Cinque Terre" width="250" height="150">
+                <a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="btn btn-success btn-xs" role="button">Descarga</a>
+                </div>';
+        if ($counter == 2 || $counter == 5 || $counter == 8) {
+            echo '</div>
+                    <div class="row">';
+        }
+        $counter = $counter + 1;
+    }
+    echo '</div>
+            </div>';
+    echo '<br>';
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <h4 class="text-center">Referencia</h4>
