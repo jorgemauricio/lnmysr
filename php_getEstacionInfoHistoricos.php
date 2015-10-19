@@ -232,8 +232,8 @@
             <br>';
 
     // Zip Archive
-    $zip->close();
-    echo '<a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV.'.zip" class="btn btn-success" role="button">Descarga Archivo ZIP</a>';
+    $zip->close(); // Close
+    echo '<a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV.'.zip" class="btn btn-success" role="button">Descarga Archivo ZIP</a>'; // Download Button
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <br>
