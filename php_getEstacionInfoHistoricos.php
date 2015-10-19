@@ -25,6 +25,7 @@
     $anio = $_GET['anio'];
     $mes = $_GET['mes'];
     $dataCSV = "Fecha, Pp, T_Max, T_Min, T_Med, VV_Max, VV, DWW, DV, Rag_G, HR, ET, EP \n";
+    $dataCSV_PM = "Mes, Anio, Pp, T_Max, T_Min, T_Med, VV_Max, VV, DWW, DV, Rag_G, HR, ET, EP \n";
     $arrayVariables = array("Pp","T_Max", "T_Min", "T_Med", "VV_Max", "VV", "DWW", "DV", "Rag_G", "HR", "ET", "EP");
     $arrayMeses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
     $mesNumero = 0;
@@ -173,6 +174,7 @@
                                         <td>'.number_format($row['etS'],2,'.','').'</td>
                                         <td>'.number_format($row['epS'],2,'.','').'</td>
                                     </tr>'; 
+                                    // Generate information for the graphs
                                     $serie1->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['precS'],2,'.','')));
                                     $serie2->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['tmaxA'],2,'.','')));
                                     $serie3->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['tminA'],2,'.','')));
@@ -185,16 +187,28 @@
                                     $serie10->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['humrA'],2,'.','')));
                                     $serie11->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['etS'],2,'.','')));
                                     $serie12->addPoint(new Point($arrayMeses[$mesNumero],number_format($row['epS'],2,'.','')));
+
+                                    // Save the information for the CSV
+                                    $dataCSV_PM .= $arrayMeses[$mesNumero].",".$anio.",".number_format($row['precS'],2,'.','').",".number_format($row['tmaxA'],2,'.','').",".number_format($row['tminA'],2,'.','').",".number_format($row['tmedA'],2,'.','').",".number_format($row['velvmaxA'],2,'.','').",".number_format($row['velvA'],2,'.','').",".TextoDV(number_format($row['dirvvmaxA'],2,'.','')).",".TextoDV(number_format($row['dirvA'],2,'.','')).",".$row['radgA'].",".$row['humrA'].",".$row['etS'].",".$row['epS'].",". "\n";
+
                 }
             }
             $mesNumero = $mesNumero + 1;
     }
+    // Save the csv to directory
+    $handle = fopen($fileLocation.$fileNameCSV."_PM.csv",'w');
+    fwrite($handle, $dataCSV_PM);
+    fclose($handle);
+    // Array Series
     $tempArray = array($serie1, $serie2, $serie3, $serie4, $serie5, $serie6, $serie7, $serie8, $serie9, $serie10, $serie11, $serie12);
     // Close table
     echo        '</tbody>
             </table>
         </div>';
-    
+    // Echo botón descarga de tabla de datos PM 
+    echo '<div class="container">
+             <a target="_blank" href="'.$fileLocation.$fileNameCSV.'_PM.csv" class="btn btn-success" role="button">Descarga</a>
+        </div>';
     // ZipArchive
     $zip = new ZipArchive();
     $filename = $fileNameCSV.".zip";
@@ -202,18 +216,19 @@
     if ($zip->open("documentos/downloadHistoricos/".$fileNameCSV.".zip", ZipArchive::CREATE)!==TRUE) {
         exit("cannot open <$filename>\n");
     }
-
+    // Add CSV and CSV_PM to ZIP
     $zip->addFile("documentos/downloadHistoricos/".$fileNameCSV.".csv");
+    $zip->addFile("documentos/downloadHistoricos/".$fileNameCSV."_PM.csv");
     
     // Dynamic Pills 
     echo '<div class="container">
             <h4 class="text-center">Gráficas Promedio Mensual</h4>
-            <ul class="nav nav-pills nav-justified">';
+            <ul class="nav nav-tabs nav-justified">';
     foreach ($arrayVariables as $value){
         if ($counter == 0) {
-            echo '<li class="active"><a data-toggle="pill" href="#'.$arrayVariables[$counter].'">'.$arrayVariables[$counter].'</a></li>';
+            echo '<li class="active"><a data-toggle="tab" href="#'.$arrayVariables[$counter].'">'.$arrayVariables[$counter].'</a></li>';
         }else{
-            echo '<li><a data-toggle="pill" href="#'.$arrayVariables[$counter].'">'.$arrayVariables[$counter].'</a></li>';
+            echo '<li><a data-toggle="tab" href="#'.$arrayVariables[$counter].'">'.$arrayVariables[$counter].'</a></li>';
         }
         $counter = $counter + 1;
     }
@@ -245,6 +260,7 @@
     // Zip Archive
     $zip->close(); // Close
     echo '<div class="container">
+            <h4 class="text-center">Descarga de Información de la Consulta</h4>
             <a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV.'.zip" class="btn btn-success" role="button">Descarga Archivo ZIP</a>
             </div>'; // Download Button
     // Echo tabla de abreviaturas
