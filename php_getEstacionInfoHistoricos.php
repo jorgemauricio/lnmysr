@@ -204,10 +204,22 @@
     }
 
     $zip->addFile("documentos/downloadHistoricos/".$fileNameCSV.".csv");
-    // LibChart
+    
+    // Dynamic Pills 
     echo '<div class="container">
             <h4 class="text-center">Gráficas Promedio Mensual</h4>
-            <div class="row">';
+            <ul class="nav nav-pills nav-justified">';
+    foreach ($arrayVariables as $value){
+        if ($counter == 0) {
+            echo '<li class="active"><a data-toggle="pill" href="#'.$arrayVariables[$counter].'">'.$arrayVariables[$counter].'</a></li>';
+        }else{
+            echo '<li><a data-toggle="pill" href="#'.$arrayVariables[$counter].'">'.$arrayVariables[$counter].'</a></li>';
+        }
+        $counter = $counter + 1;
+    }
+    echo '</ul>';
+    echo '<div class="tab-content">';
+    $counter = 0;             
     foreach ($arrayVariables as $value) {
         $chart = new LineChart(800, 600);
         $dataSet = new XYSeriesDataSet();
@@ -215,25 +227,26 @@
         $chart ->setDataSet($dataSet);
         $chart->setTitle($arrayVariables[$counter]);
         $chart->render("documentos/downloadHistoricos/".$fileNameCSV."_".$arrayVariables[$counter].".png");
-        echo '<div class="col-sm-4">
-                <h5 class="text-center">'.$arrayVariables[$counter].'</h5>
-                <img src="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="img-thumbnail" alt="Cinque Terre" width="250" height="150">
-                <a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="btn btn-success btn-xs" role="button">Descarga</a>
-                </div>';
-        $zip->addFile("documentos/downloadHistoricos/".$fileNameCSV."_".$arrayVariables[$counter].".png"); // Add image to the zip file
-        if ($counter == 2 || $counter == 5 || $counter == 8) {
-            echo '</div>
-                    <div class="row">';
+        if ($counter == 0) {
+            echo '<div id="'.$arrayVariables[$counter].'" class="tab-pane fade in active">';
+        }else{
+            echo '<div id="'.$arrayVariables[$counter].'" class="tab-pane fade">';
         }
+        
+        echo '<img src="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="img-thumbnail" alt="Cinque Terre">
+                <a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV."_".$arrayVariables[$counter].'.png" class="btn btn-success btn-xs" role="button">Descargar Gráfica</a>
+            </div>';
+        $zip->addFile("documentos/downloadHistoricos/".$fileNameCSV."_".$arrayVariables[$counter].".png"); // Add image to the zip file
         $counter = $counter + 1;
     }
     echo '</div>
             </div>
             <br>';
-
     // Zip Archive
     $zip->close(); // Close
-    echo '<a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV.'.zip" class="btn btn-success" role="button">Descarga Archivo ZIP</a>'; // Download Button
+    echo '<div class="container">
+            <a target="_blank" href="documentos/downloadHistoricos/'.$fileNameCSV.'.zip" class="btn btn-success" role="button">Descarga Archivo ZIP</a>
+            </div>'; // Download Button
     // Echo tabla de abreviaturas
     echo '<div class="container">
           <br>
