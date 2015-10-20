@@ -7,6 +7,7 @@
     $pp = null;
     $counter = null;
     $arrayVariables = array("Pp","Temt","Dirv", "Velv", "Radg", "Humr", "Humh", "Eto");
+    $arrayFechas= array();
     $arrayPp = array();
     $arrayTemt = array();
     $arrayDirv= array();
@@ -101,6 +102,7 @@
       die('Invalid query: ' . mysql_error());
     }else{
         while ($row = mysql_fetch_array($result)){
+            $arrayFechas[] = $row['fecha'];
             $arrayPp[] = $row['prec'];
             $arrayTemt[] = $row['temt'];
             $arrayDirv[] = $row['dirv'];
@@ -112,7 +114,10 @@
         }
     }
 
-    
+    echo '<div>
+            <h3 class="text-center">Rango de Horario</h3>
+            <h4 class="text-center">'.$arrayFechas[0].'-'.$arrayFechas[count($arrayFechas)-1].'</h4>
+        </div>';
     echo '<div class="container">
           <h4 class="text-center">Media y Desviación Estandar</h4>
                <table class="table  table-striped">
