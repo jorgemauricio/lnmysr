@@ -188,6 +188,8 @@
                     </div>    
                 </form>
                 <br>
+                <div id="p_bar" class="container">
+                </div>
                 <div id="answerInfo" class="container">
                 </div>
         </body> 
