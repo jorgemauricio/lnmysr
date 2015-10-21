@@ -93,6 +93,7 @@
 
         echo '</div>';
         echo '</div>';
+        echo '</div>';
 
     // Echo tabla de valores al momento de la consulta
     // Query Show Last Row Info
@@ -115,8 +116,8 @@
     }
 
     echo '<div>
-            <h3 class="text-center">Rango de Horario</h3>
-            <h4 class="text-center">'.$arrayFechas[0].'-'.$arrayFechas[count($arrayFechas)-1].'</h4>
+            <h4 class="text-center">Rango de Horario</h4>
+            <h5 class="text-center">'.$arrayFechas[0].'-'.$arrayFechas[count($arrayFechas)-1].'</h5>
         </div>';
     echo '<div class="container">
           <h4 class="text-center">Media y Desviación Estandar</h4>
@@ -131,43 +132,43 @@
                     <tbody>
                     <tr>
                         <td>'.$arrayVariables[0].'</td>
-                        <td>'.meanOfVariable($arrayPp).'</td>
-                        <td>'.stDev($arrayPp).'</td>
+                        <td>'.number_format(meanOfVariable($arrayPp),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayPp),2,'.','').'</td>
                     </tr>
                     <tr>
                         <td>'.$arrayVariables[1].'</td>
-                        <td>'.meanOfVariable($arrayTemt).'</td>
-                        <td>'.stDev($arrayPp).'</td>
+                        <td>'.number_format(meanOfVariable($arrayTemt),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayTemt),2,'.','').'</td>
                     </tr>
                     <tr>
                         <td>'.$arrayVariables[2].'</td>
-                        <td>'.meanOfVariable($arrayDirv).'</td>
-                        <td>'.stDev($arrayDirv).'</td>
+                        <td>'.number_format(meanOfVariable($arrayDirv),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayDirv),2,'.','').'</td>
                     </tr>
                     <tr>
                         <td>'.$arrayVariables[3].'</td>
-                        <td>'.meanOfVariable($arrayVelv).'</td>
-                        <td>'.stDev($arrayVelv).'</td>
+                        <td>'.number_format(meanOfVariable($arrayVelv),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayVelv),2,'.','').'</td>
                     </tr>
                     <tr>
                         <td>'.$arrayVariables[4].'</td>
-                        <td>'.meanOfVariable($arrayRadg).'</td>
-                        <td>'.stDev($arrayRadg).'</td>
+                        <td>'.number_format(meanOfVariable($arrayRadg),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayRadg),2,'.','').'</td>
                     </tr>
                     <tr>
                         <td>'.$arrayVariables[5].'</td>
-                        <td>'.meanOfVariable($arrayHumr).'</td>
-                        <td>'.stDev($arrayHumr).'</td>
+                        <td>'.number_format(meanOfVariable($arrayHumr),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayHumr),2,'.','').'</td>
                     </tr>
                     <tr>
                         <td>'.$arrayVariables[6].'</td>
-                        <td>'.meanOfVariable($arrayHumh).'</td>
-                        <td>'.stDev($arrayHumh).'</td>
+                        <td>'.number_format(meanOfVariable($arrayHumh),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayHumh),2,'.','').'</td>
                     </tr>
                     <tr>
                         <td>'.$arrayVariables[7].'</td>
-                        <td>'.meanOfVariable($arrayEto).'</td>
-                        <td>'.stDev($arrayEto).'</td>
+                        <td>'.number_format(meanOfVariable($arrayEto),2,'.','').'</td>
+                        <td>'.number_format(stDev($arrayEto),2,'.','').'</td>
                     </tr>
                     </tbody>
                 </table>
@@ -260,18 +261,14 @@
     function stDev($arr)
     {
         // Calculates the standard deviation for all non-zero items in an array
-     
         $n = count($arr);   // Counts non-zero elements in the array.
         $avg = array_sum($arr) / $n;     // Calculates the arithmetic mean.
         $sum = 0;        
-     
-        foreach( $arr as $key=>$a )
+        foreach( $arr as $a )
         {
             $sum = $sum + pow( $a - $avg , 2 );
         }
-     
-        $stdev = sqrt( $sum / $n ) ;
-     
+        $stdev = sqrt($sum/$n);
         return $stdev;
     }
     // Logo Temperatura
