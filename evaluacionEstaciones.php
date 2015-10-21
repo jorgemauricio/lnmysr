@@ -150,7 +150,7 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="noResultados">No. Resultados:</label>
+                                <label for="noResultados">Rango de Horario:</label>
                                 <select onchange="numberOfResultados(this.value)" class="form-control" id="noResultados" name="noResultados">
                                 </select> 
                             </div>
