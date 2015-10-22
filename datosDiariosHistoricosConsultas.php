@@ -13,7 +13,6 @@
 
 <?php include("includes/header.html");?>
 <?php include_once('php_dbinfo.php');?>
-
     <h1 class="text-center">Reporte Históricos</h1>
     <br>
     <div class="container-fluid">
