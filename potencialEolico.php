@@ -88,15 +88,10 @@
 
     function displayInfo(str){
         estacion = str;
-        document.getElementById("noResultados").innerHTML = '<option value="0">Selecciona un horario</option><option value="4">1 hr</option><option value="8">2 hrs</option><option value="12">3 hrs</option><option value="16">4 hrs</option><option value="20">5 hrs</option><option value="24">6 hrs</option><option value="28">7 hrs</option><option value="32">8 hrs</option><option value="36">9 hrs</option><option value="40">10 hrs</option><option value="44">11 hrs</option><option value="48">12 hrs</option>';
-        
-    }
-
-    function numberOfResultados(str){
         if (str == 0) {
             document.getElementById("answerEstacion").innerHTML = "";
         }else{
-            urlRequestEstaciones = "evaluacionEstacionesInfo.php?estado=" + estado + "&municipio=" + municipio + "&estacion=" + estacion + "&noResultados=" + str;
+            urlRequestEstaciones = "potencialEolicoCalculo.php?estado=" + estado + "&municipio=" + municipio + "&estacion=" + estacion;
             if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
                 xmlhttp = new XMLHttpRequest();
@@ -112,7 +107,6 @@
             xmlhttp.open("GET",urlRequestEstaciones,true);
             xmlhttp.send();
         }
-        
     }
     //]]>
 
@@ -126,7 +120,7 @@
             <div class="container">
                 <form class="form-horizontal" role="form" action="datosDiarios.php" method="post">
                     <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="estado">Estado:</label>
                             <select id="estado" onchange="selectMunicipio(this.value)" class="form-control" name="estado">
@@ -134,24 +128,17 @@
                             </select> 
                         </div>
                     </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="Municipio">Municipio:</label>
                                 <select onchange="selectEstacion(this.value)" class="form-control" id="Municipio" name="Municipio">
                                 </select> 
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="Estacion">Estación:</label>
                                 <select onchange="displayInfo(this.value)" class="form-control" id="Estacion" name="Estacion">
-                                </select> 
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="noResultados">Rango de Horario:</label>
-                                <select onchange="numberOfResultados(this.value)" class="form-control" id="noResultados" name="noResultados">
                                 </select> 
                             </div>
                         </div>     
