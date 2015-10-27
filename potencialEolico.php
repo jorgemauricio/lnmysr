@@ -113,7 +113,7 @@
   </script>
   </head>
     <?php include("includes/header.html");?>
-    <h1 class="text-center">Red Nacional de Estaciones Agrometeorológicas Automatizadas INIFAP</h1>
+    <h1 class="text-center">Cálculo del Potencial Eólico por Estación</h1>
     <br>
     <div class="container-fluid">
         <body>
