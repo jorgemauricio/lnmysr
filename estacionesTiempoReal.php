@@ -55,6 +55,10 @@
       });
     }
 
+    // Start Monitor
+    function startMonitor(){
+
+    }
     // Refresh Map when the user select an Estado
     function refreshMapEstado() {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -120,22 +124,6 @@
     }
 
     function doNothing() {}
-
-    function determineMaxMin(temp_lat, temp_lng, temp_i){
-        if (temp_i == 0) {
-            latMunicipio = temp_lat;
-            lngMunicipio = temp_lng;
-        }else{
-            if (temp_lat > latMunicipio) {
-                latMunicipio = temp_lat;
-                console.log(latMunicipio);
-            };
-            if (temp_lng < lngMunicipio) {
-                lngMunicipio = temp_lng;
-                console.log(lngMunicipio);
-            };
-        }
-    }
 
     function selectMunicipio(str){
         console.log("valor de estado: ");

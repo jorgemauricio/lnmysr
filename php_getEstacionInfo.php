@@ -89,6 +89,7 @@
     }else{
         while ($row = mysql_fetch_array($result)) {
             $lastValueValitation = 1;
+            $pr = pow(($row['humr']/100),0.125)*(112+(0.9*$row['temt']))+(0.1*$row['temt'])-112;
             echo '<br>';
             echo '<p><b>Última Lectura: </b>';
             echo $row['fecha'];
@@ -127,7 +128,7 @@
                                     </tr>
                                     <tr>
                                         <td>Pr</td>
-                                        <td>'.$row['humh'].'</td>
+                                        <td>'.number_format($pr,2,'.','').'</td>
                                         <td>'.'</td>
                                         <td>'.'</td>
                                     </tr>
