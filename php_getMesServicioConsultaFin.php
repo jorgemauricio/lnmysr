@@ -4,9 +4,17 @@
     $estado = $_GET['estado'];
     $estacion = $_GET['estacion'];
     $anioFin = $_GET['anioFin'];
+    $mesInicio = $_GET['mesInicio'];
+    $tipo = $_GET['tipo'];
+    $query = "";
     
     // Query
-    $query  = "SELECT extract(month from fecha) as mes from estado".$estado."diarios where numero=".$estacion." and extract(year from fecha) =".$anioFin." group by extract(month from fecha) order by extract(month from fecha) asc";
+    if ($tipo == "p_diario") {
+        $query  = "SELECT extract(month from fecha) as mes from estado".$estado."diarios where numero=".$estacion." and extract(year from fecha) =".$anioFin." group by extract(month from fecha) order by extract(month from fecha) asc";
+    }elseif ($tipo == "v_min") {
+        $query  = "SELECT extract(month from fecha1) as mes from estado".$estado." where numero=".$estacion." and extract(year from fecha1)=".$anioFin." and extract(month from fecha1) > ".$mesInicio." group by extract(month from fecha1) order by extract(month from fecha1) asc";
+    }
+    
     $result = mysql_query($query);
     if(!$result){
         die('Invalid query: ' . mysql_error());
@@ -19,6 +27,12 @@
         echo '">';
         echo numberToMonth($row['mes']);
         echo '</option>';
+    }
+
+    if ($mesInicio == date('m')) {
+        echo '<option value="'.$mesInicio.'">'.numberToMonth($mesInicio).'</option>';
+    }else{
+        echo '<option value="'.date('m').'">'.numberToMonth(date('m')).'</option>';
     }
 
     function numberToMonth($t){

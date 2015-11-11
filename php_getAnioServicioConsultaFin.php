@@ -4,6 +4,7 @@
     $estado = $_GET['estado'];
     $estacion = $_GET['estacion'];
     $anioInicio = $_GET['anioInicio'];
+    $tipo = $_GET['tipo'];
     $query = "";
     // Query
     if ($tipo == "p_diario") {
@@ -24,5 +25,9 @@
         echo '">';
         echo $row['anio'];
         echo '</option>';
+    }
+
+    if ($anioInicio == date('Y')) {
+        echo '<option value="'.$anioInicio.'">'.$anioInicio.'</option>';
     }
 ?>

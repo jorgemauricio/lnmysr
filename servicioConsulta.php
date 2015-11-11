@@ -134,6 +134,7 @@
     }
 
     function selectAnioFin(str){
+        mesInicio = str;
         urlRequestEstaciones = "php_getAnioServicioConsultaFin.php?estado=" + estado + "&estacion=" + estacion + "&anioInicio=" + anioInicio + "&tipo=" + tipoConsulta;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -155,8 +156,7 @@
 
     function selectMonthFin(str){
         anioFin = str;
-        console.log(anioFin);
-        urlRequestEstaciones = "php_getMesServicioConsultaFin.php?estado=" + estado + "&estacion=" + estacion + "&anioFin=" + anioFin + "&tipo=" + tipoConsulta;
+        urlRequestEstaciones = "php_getMesServicioConsultaFin.php?estado=" + estado + "&estacion=" + estacion + "&anioFin=" + anioFin + "&mesInicio=" + mesInicio + "&tipo=" + tipoConsulta;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -175,8 +175,8 @@
     }
 
     function displayInfo(str){
-        mes = str;
-        urlRequestEstaciones = "php_getEstacionInfoHistoricos.php?estado=" + estado + "&estacion=" + estacion + "&anio=" + anio + "&mes=" + mes;
+        mesFin = str;
+        urlRequestEstaciones = "php_getServicioConsultaInfo.php?estado=" + estado + "&estacion=" + estacion + "&anioInicio=" + anioInicio +"&anioFin=" + anioFin + "&mesInicio=" + mesInicio + "&mesFin=" + mesFin + "&tipo=" + tipoConsulta;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -247,7 +247,7 @@
     
     -->
     <!-- Validación Acceso -->   
-    <h1 class="text-center">Red Nacional de Estaciones Agrometeorológicas Automatizadas INIFAP</h1>       
+    <h1 class="text-center">Servicio de Consulta</h1>       
     <div class="container-fluid">
         <body>
             <div class="container">
