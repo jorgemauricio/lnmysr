@@ -28,6 +28,7 @@
         tipoConsulta = str;
         document.getElementById("estado").innerHTML = '<?php include_once("php_getEstados.php");?>';
         document.getElementById("municipio").innerHTML = "";
+        document.getElementById("estacion").innerHTML = "";
         document.getElementById("anioInicio").innerHTML = "";
         document.getElementById("anioFin").innerHTML = "";
         document.getElementById("mesInicio").innerHTML = "";
@@ -48,6 +49,7 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("municipio").innerHTML = xmlhttp.responseText;
+                document.getElementById("estacion").innerHTML = "";
                 document.getElementById("anioInicio").innerHTML = "";
                 document.getElementById("anioFin").innerHTML = "";
                 document.getElementById("mesInicio").innerHTML = "";
@@ -87,7 +89,7 @@
     function selectAnioInicio(str){
         estacion = str;
         console.log(estacion);
-        urlRequestEstaciones = "php_getAnioServicioConsultaInicio.php?estado=" + estado + "&estacion=" + estacion;
+        urlRequestEstaciones = "php_getAnioServicioConsultaInicio.php?estado=" + estado + "&estacion=" + estacion + "&tipo=" + tipoConsulta;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -111,7 +113,7 @@
     function selectMonthInicio(str){
         anioInicio = str;
         console.log(anioInicio);
-        urlRequestEstaciones = "php_getMesServicioConsultaInicio.php?estado=" + estado + "&estacion=" + estacion + "&anio=" + anioInicio;
+        urlRequestEstaciones = "php_getMesServicioConsultaInicio.php?estado=" + estado + "&estacion=" + estacion + "&anioInicio=" + anioInicio + "&tipo=" + tipoConsulta;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -132,7 +134,7 @@
     }
 
     function selectAnioFin(str){
-        urlRequestEstaciones = "php_getAnioServicioConsultaFin.php?estado=" + estado + "&estacion=" + estacion + "&anioInicio=" + anioInicio;
+        urlRequestEstaciones = "php_getAnioServicioConsultaFin.php?estado=" + estado + "&estacion=" + estacion + "&anioInicio=" + anioInicio + "&tipo=" + tipoConsulta;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -154,7 +156,7 @@
     function selectMonthFin(str){
         anioFin = str;
         console.log(anioFin);
-        urlRequestEstaciones = "php_getMesServicioConsultaFin.php?estado=" + estado + "&estacion=" + estacion + "&anioFin=" + anioFin;
+        urlRequestEstaciones = "php_getMesServicioConsultaFin.php?estado=" + estado + "&estacion=" + estacion + "&anioFin=" + anioFin + "&tipo=" + tipoConsulta;
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();

@@ -3,10 +3,16 @@
     // Get Variables
     $estado = $_GET['estado'];
     $estacion = $_GET['estacion'];
-    $anio = $_GET['anio'];
-    
+    $anio = $_GET['anioInicio'];
+    $tipo = $_GET['tipo'];
+    $query = "";
     // Query
-    $query  = "SELECT extract(month from fecha) as mes from estado".$estado."diarios where numero=".$estacion." and extract(year from fecha) =".$anio." group by extract(month from fecha) order by extract(month from fecha) asc";
+    if ($tipo == "p_diario") {
+        $query  = "SELECT extract(month from fecha) as mes from estado".$estado."diarios where numero=".$estacion." and extract(year from fecha) =".$anio." group by extract(month from fecha) order by extract(month from fecha) asc";
+    }elseif ($tipo == "v_min"){
+        $query  = "SELECT extract(month from fecha1) as mes from estado".$estado." where numero=".$estacion." and extract(year from fecha1) =".$anio." group by extract(month from fecha1) order by extract(month from fecha1) asc";
+    }
+    
     $result = mysql_query($query);
     if(!$result){
         die('Invalid query: ' . mysql_error());
