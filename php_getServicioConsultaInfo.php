@@ -10,6 +10,7 @@
     $mesInicio = $_GET['mesInicio'];
     $anioFin = $_GET['anioFin'];
     $mesFin = $_GET['mesFin'];
+    $lastDay = 0;
 
     // Declare variables
     $lastValueValitation = 0;
@@ -28,7 +29,7 @@
 
     // Query 
     if ($tipo == "p_diario") {
-        $query = "select * from estado".$estado."diarios where numero=".$estacion." and fecha between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-01' order by fecha asc";
+        $query = "select * from estado".$estado."diarios where numero=".$estacion." and fecha between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-".lastDayOfMonth($mesFin)."' order by fecha asc";
         $result = mysql_query($query);
         if (!$result) {
           die('Invalid query: ' . mysql_error());
@@ -46,7 +47,7 @@
                  <a target="_blank" href="'.$fileLocation.$fileNameCSV.'.csv" class="btn btn-success" role="button">Descarga</a>
             </div>';
     }elseif ($tipo == "v_min") {
-        $query = "select * from estado".$estado." where numero=".$estacion." and fecha1 between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-01' order by fecha1 asc";
+        $query = "select * from estado".$estado." where numero=".$estacion." and fecha1 between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-".lastDayOfMonth($mesFin)."' order by fecha1 asc";
         $result = mysql_query($query);
         if (!$result) {
           die('Invalid query: ' . mysql_error());
@@ -57,7 +58,7 @@
          }
         // Save the csv to directory
         $handle = fopen($fileLocation.$fileNameCSV.".csv",'w');
-        fwrite($handle, $dataCSV_V_Min);
+        fwrite($handle, $dataCSV_V_Min);                                                                                
         fclose($handle);
         // Echo botón descarga de tabla de datos PM 
         echo '<div class="container">
@@ -65,8 +66,53 @@
             </div>';
     }
 
-    // Save the csv to directory
+    
     // Funciones
+    function lastDayOfMonth($month){
+        switch ($month) {
+            case 1:
+                $lastDay = 31;
+                break;
+            case 2:
+                $lastDay = 28;
+                break;
+            case 3:
+                $lastDay = 31;
+                break;
+            case 4:
+                $lastDay = 30;
+                break;
+            case 5:
+                $lastDay = 31;
+                break;
+            case 6:
+                $lastDay = 30;
+                break;
+            case 7:
+                $lastDay = 31;
+                break;
+            case 8:
+                $lastDay = 31;
+                break;
+            case 9:
+                $lastDay = 30;
+                break;
+            case 10:
+                $lastDay = 31;
+                break;
+            case 11:
+                $lastDay = 30;
+                break;
+            case 12:
+                $lastDay = 31;
+                break;
+            default:
+                
+                break;
+        }
+        return $lastDay;
+    }
+
     function TextoDV($dv){
         switch ($dv) {
                 case ($dv >= 0 && $dv <= 44):
