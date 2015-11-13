@@ -18,7 +18,7 @@
     $counter = 0;
     $query = "";
    
-    $dataCSV_V_Min = "Numero, Fecha, Temt, Dirv, Velv, Radg, Humr, Humh , Eto \n";
+    $dataCSV_V_Min = "Numero, Fecha, Prec, Temt, Dirv, Velv, Radg, Humr, Humh , Eto \n";
     $dataCSV_P_Diarios = "Numero, Fecha, Pp, T_Max, T_Min, T_Med, VV_Max, VV, DWW, DV, Rag_G, HR, ET, EP \n";
     
     // CSV File Name
@@ -35,7 +35,7 @@
           die('Invalid query: ' . mysql_error());
         }else{
             while ($row = mysql_fetch_array($result)){
-                 $dataCSV_P_Diarios.= $row['numero'].",".$row['fecha'].",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV(number_format($row['dirvvmax'])).",".TextoDV(number_format($row['dirv'])).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].","."\n";
+                 $dataCSV_P_Diarios.= $row['numero'].",".$row['fecha'].",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV(number_format($row['dirvvmax'],2,'.','')).",".TextoDV(number_format($row['dirv'],2,'.','')).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].","."\n";
              }
          }
         // Save the csv to directory
@@ -53,7 +53,7 @@
           die('Invalid query: ' . mysql_error());
         }else{
             while ($row = mysql_fetch_array($result)){
-                $dataCSV_V_Min.= $row['numero'].",".$row['fecha1'].",".$row['prec'].",".$row['temt'].",".TextoDV(number_format($row['dirv'])).",".$row['velv'].",".$row['radg'].",".$row['humr'].",".$row['humh'].",".$row['eto'].",". "\n";
+                $dataCSV_V_Min.= $row['numero'].",".$row['fecha1'].",".$row['prec'].",".$row['temt'].",".TextoDV(number_format($row['dirv'],2,'.','')).",".$row['velv'].",".$row['radg'].",".$row['humr'].",".$row['humh'].",".$row['eto'].",". "\n";
              }
          }
         // Save the csv to directory
