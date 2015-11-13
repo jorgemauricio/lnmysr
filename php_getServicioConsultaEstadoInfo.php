@@ -17,24 +17,23 @@
     $counter = 0;
     $query = "";
    
-    $dataCSV_V_Min = "Numero, Fecha, Prec, Temt, Dirv, Velv, Radg, Humr, Humh , Eto \n";
-    $dataCSV_P_Diarios = "Numero, Fecha, Pp, T_Max, T_Min, T_Med, VV_Max, VV, DWW, DV, Rag_G, HR, ET, EP \n";
+    $dataCSV_V_Min = "Nombre, Numero, Fecha, Prec, Temt, Dirv, Velv, Radg, Humr, Humh , Eto \n";
+    $dataCSV_P_Diarios = "Nombre, Numero, Fecha, Pp, T_Max, T_Min, T_Med, VV_Max, VV, DWW, DV, Rag_G, HR, ET, EP \n";
     
     // CSV File Name
     $fileLocation = "documentos/Servicio_Consulta/";
     $today = date("Y-m-d_H-i-s"); ;
     $fileNameCSV = "Servicio_Consulta". $today . "__" . $estado . "_" . $anioInicio . "_" . $anioFin . "__" . rand();
-    
 
     // Query 
     if ($tipo == "p_diario") {
-        $query = "select * from estado".$estado."diarios where fecha between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-".lastDayOfMonth($mesFin)."' order by numero, fecha asc";
+        $query = "select * from estado".$estado."diarios inner join estaciones on estado".$estado."diarios.numero=estaciones.numero where estado".$estado."diarios.fecha between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-".lastDayOfMonth($mesFin)."' order by estado".$estado."diarios.numero, estado".$estado."diarios.fecha asc";
         $result = mysql_query($query);
         if (!$result) {
           die('Invalid query: ' . mysql_error());
         }else{
             while ($row = mysql_fetch_array($result)){
-                 $dataCSV_P_Diarios.= $row['numero'].",".$row['fecha'].",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV($row['dirvvmax']).",".TextoDV($row['dirv']).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].","."\n";
+                 $dataCSV_P_Diarios.= $row['nombre'].",".$row['numero'].",".$row['fecha'].",".$row['prec'].",".$row['tmax'].",".$row['tmin'].",".$row['tmed'].",".$row['velvmax'].",".$row['velv'].",".TextoDV($row['dirvvmax']).",".TextoDV($row['dirv']).",".$row['radg'].",".$row['humr'].",".$row['et'].",".$row['ep'].","."\n";
              }
          }
         // Save the csv to directory
@@ -46,13 +45,13 @@
                  <a target="_blank" href="'.$fileLocation.$fileNameCSV.'.csv" class="btn btn-success" role="button">Descarga</a>
             </div>';
     }elseif ($tipo == "v_min") {
-        $query = "select * from estado".$estado." where fecha1 between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-".lastDayOfMonth($mesFin)."' order by numero, fecha1 asc";
+        $query = "select * from estado".$estado." inner join estaciones on estado".$estado.".numero=estaciones.numero where estado".$estado.".fecha1 between '".$anioInicio."-".$mesInicio."-01' and '".$anioFin."-".$mesFin."-".lastDayOfMonth($mesFin)."' order by estado".$estado.".numero, estado".$estado.".fecha1 asc";
         $result = mysql_query($query);
         if (!$result) {
           die('Invalid query: ' . mysql_error());
         }else{
             while ($row = mysql_fetch_array($result)){
-                $dataCSV_V_Min.= $row['numero'].",".$row['fecha1'].",".$row['prec'].",".$row['temt'].",".TextoDV($row['dirv']).",".$row['velv'].",".$row['radg'].",".$row['humr'].",".$row['humh'].",".$row['eto'].",". "\n";
+                $dataCSV_V_Min.= $row['nombre'].",".$row['numero'].",".$row['fecha1'].",".$row['prec'].",".$row['temt'].",".TextoDV($row['dirv']).",".$row['velv'].",".$row['radg'].",".$row['humr'].",".$row['humh'].",".$row['eto'].",". "\n";
              }
          }
         // Save the csv to directory

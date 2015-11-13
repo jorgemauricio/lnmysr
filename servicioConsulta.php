@@ -247,7 +247,7 @@
     
     -->
     <!-- Validación Acceso -->   
-    <h1 class="text-center">Servicio de Consulta</h1>       
+    <h1 class="text-center">Servicio de Consulta por Estación</h1>       
     <div class="container-fluid">
         <body>
             <div class="container">

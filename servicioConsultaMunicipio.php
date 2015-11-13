@@ -241,7 +241,6 @@
         </body>';
         }
     ?> 
-    
     -->
     <!-- Validación Acceso -->   
     <h1 class="text-center">Servicio de Consulta Por Municipio</h1>       
