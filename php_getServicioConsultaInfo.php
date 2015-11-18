@@ -24,7 +24,7 @@
     // CSV File Name
     $fileLocation = "documentos/Servicio_Consulta/";
     $today = date("Y-m-d_H-i-s"); ;
-    $fileNameCSV = "Servicio_Consulta". $today . "__" . $estado . "_" . $estacion . "_" . $anioInicio . "_" . $anioFin . "__" . rand();
+    $fileNameCSV = "Servicio_Consulta__". $today . "__" . $estado . "_" . $estacion . "_" . $anioInicio . "_" . $anioFin . "__" . rand();
     
     "select * from estado".$estado."diarios inner join estaciones on 
     estado".$estado."diarios.numero=estaciones.numero where estado".$estado."diarios.fecha 

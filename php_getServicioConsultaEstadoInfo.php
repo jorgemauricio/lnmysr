@@ -23,7 +23,7 @@
     // CSV File Name
     $fileLocation = "documentos/Servicio_Consulta/";
     $today = date("Y-m-d_H-i-s"); ;
-    $fileNameCSV = "Servicio_Consulta". $today . "__" . $estado . "_" . $anioInicio . "_" . $anioFin . "__" . rand();
+    $fileNameCSV = "Servicio_Consulta__". $today . "__" . $estado . "_" . $anioInicio . "_" . $anioFin . "__" . rand();
 
     // Query 
     if ($tipo == "p_diario") {
